@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="运维笔记" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="更新微服务jar包，采用spring cloud自动熔断机制">
+<meta name="keywords" content="jenkins pipeline">
+<meta property="og:type" content="article">
+<meta property="og:title" content="持续部署jar包应用 微服务">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;27&#x2F;jenkins&#x2F;app-spring-cloud&#x2F;index.html">
+<meta property="og:site_name" content="运维笔记">
+<meta property="og:description" content="更新微服务jar包，采用spring cloud自动熔断机制">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-11-27T03:28:13.288Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2019/11/27/jenkins/app-spring-cloud/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>持续部署jar包应用 微服务 | 运维笔记</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">运维笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-标签"></i>Tags<span class="badge">17</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories<span class="badge">5</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-归档"></i>Archives<span class="badge">11</span></a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/27/jenkins/app-spring-cloud/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          持续部署jar包应用 微服务
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-11-27 11:28:13" itemprop="dateCreated datePublished" datetime="2019-11-27T11:28:13+08:00">2019-11-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/jenkins/" itemprop="url" rel="index">
+                    <span itemprop="name">jenkins</span>
+                  </a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/jenkins/pipeline/" itemprop="url" rel="index">
+                    <span itemprop="name">pipeline</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">更新微服务jar包，采用spring cloud自动熔断机制</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line">    jenkins 项目名gprp_mllearning_center_master_pro_CI</span><br><span class="line">    jenkins GUI上的变量配置</span><br><span class="line"></span><br><span class="line">        String: NODE, REPO_URL, BRANCH, EMAIL, credentialsId, FILENAME, SERVER, TAG</span><br><span class="line"></span><br><span class="line">        * NODE: 发布机节点</span><br><span class="line">        * REPO_URL: git项目仓库地址</span><br><span class="line">        * BRANCH: 发布的分支</span><br><span class="line">        * EMAIL: 项目负责人</span><br><span class="line">        * credentialsId: 拉取代码的public key，要有写权限</span><br><span class="line">        * FILENAME: 包名</span><br><span class="line">        * SERVER: 远程主机</span><br><span class="line">        * TAG: 选择回退到哪个tag版本，TAG值：</span><br><span class="line">	        0:正常发布新版本</span><br><span class="line">	        1:不打包，直接进行远程服务重启</span><br><span class="line">	        2:不打包，发送上一个版本到服务器，并重启</span><br><span class="line">	        其他，则回退到该tag版本git checkout tag，并发布</span><br><span class="line">		* DeployNum: 发布数</span><br><span class="line">		* FILE_DIR: 包文件url,如target/mllearning_center.jar</span><br><span class="line"></span><br><span class="line">*/</span><br><span class="line">node(NODE) &#123;</span><br><span class="line">    try&#123;</span><br><span class="line">        String ENV=&quot;&quot;</span><br><span class="line">        String haproxyPre=&quot;&quot;</span><br><span class="line">        String backup_dir=&quot;/data1/gprp/$&#123;JOB_NAME&#125;&quot;</span><br><span class="line">        env.GROUP=JOB_NAME.split(&quot;_&quot;)[0]</span><br><span class="line">        env.APP_NAME=JOB_NAME.split(&quot;_$&#123;BRANCH&#125;_&quot;)[0].split(&quot;$&#123;env.GROUP&#125;_&quot;)[1] //全局变量</span><br><span class="line">        String file=&quot;&quot;</span><br><span class="line">        echo &quot;TAG: $&#123;TAG&#125;&quot;</span><br><span class="line">        //本轮发布计数</span><br><span class="line">        DeployCurNum=0</span><br><span class="line">        //总共需要发布的节点</span><br><span class="line">        DeployAllNum=SERVER.tokenize(&apos;,&apos;).size()</span><br><span class="line">        echo &quot;deployallnum: $&#123;DeployAllNum&#125;&quot;</span><br><span class="line">    </span><br><span class="line">        SERVER=SERVER.split(&apos;&quot;&apos;)[1].split(&apos;,&apos;)</span><br><span class="line">        //总共剩余未发布的节点</span><br><span class="line">        DeployLeftNum=DeployAllNum</span><br><span class="line">        node_ip_list=&quot;&quot;</span><br><span class="line">        int DeployNum= env.DeployNum</span><br><span class="line">       </span><br><span class="line">        file = &quot;./target/$&#123;filename&#125;&quot;</span><br><span class="line">        if(TAG == &quot;0&quot;)&#123;</span><br><span class="line">            compile(FILE_DIR, backup_dir)</span><br><span class="line">        &#125;else if(TAG != &quot;2&quot; &amp;&amp; TAG != &quot;1&quot; &amp;&amp; TAG != &quot;0&quot;)&#123;</span><br><span class="line">            sh &quot;git checkout $&#123;TAG&#125;&quot;</span><br><span class="line">            compile(FILE_DIR, backup_dir)</span><br><span class="line">        &#125;</span><br><span class="line">        for (int i = 0; i &lt; DeployAllNum; i++)&#123;</span><br><span class="line">            //构造本轮的发布列表</span><br><span class="line">            node_ip_list=SERVER[i] + &quot;,&quot; + node_ip_list</span><br><span class="line">            DeployCurNum=DeployCurNum + 1</span><br><span class="line">            DeployLeftNum=DeployLeftNum - 1</span><br><span class="line">            //如果本轮当前已下线节点数量少于每一轮需要发布的数量,并且仍有未下线的节点,则继续构造本轮的发布列表</span><br><span class="line">            if ( DeployCurNum &lt; DeployNum &amp;&amp; DeployLeftNum != 0 )&#123;</span><br><span class="line">                continue                        </span><br><span class="line">            &#125;</span><br><span class="line">            if(TAG != &quot;2&quot;)&#123;</span><br><span class="line">                sendPackage(node_ip_list)</span><br><span class="line">            &#125;</span><br><span class="line">            restartService(node_ip_list)</span><br><span class="line">            DeployCurNum=0</span><br><span class="line">            node_ip_list=&quot;&quot;</span><br><span class="line">        &#125;</span><br><span class="line">        stage(&apos;通知负责人&apos;)&#123;</span><br><span class="line">            emailext body: &quot;构建项目:$&#123;BUILD_URL&#125;\r\n构建完成&quot;, subject: &quot;构建项目$&#123;JOB_NAME&#125;【成功】&quot;, to: &quot;$&#123;EMAIL&#125;&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; catch (e) &#123;</span><br><span class="line">        echo &quot;$&#123;e.toString()&#125;&quot;</span><br><span class="line">        emailext body: &quot;构建项目:$&#123;BUILD_URL&#125;\r\n构建失败，\r\n错误消息：$&#123;e.toString()&#125;&quot;, subject: &quot;构建项目$&#123;JOB_NAME&#125;【失败】&quot;, to: &quot;$&#123;EMAIL&#125;&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">def compile(String file,String backup_dir)&#123;</span><br><span class="line">    stage(&apos;检出代码&apos;)&#123;</span><br><span class="line">        git branch: &quot;$&#123;BRANCH&#125;&quot;,credentialsId: &quot;$&#123;credentialsId&#125;&quot;, url: &quot;$&#123;REPO_URL&#125;&quot;</span><br><span class="line">        echo &quot;检测若为master分支时，不可拉取snapshot包或取名包含snapshot的包名&quot;</span><br><span class="line">        if (BRANCH == &apos;master&apos;) &#123;</span><br><span class="line">            sh &apos;&apos;&apos;</span><br><span class="line">                if [[ `sed -n &apos;/dependencies/,/dependencies/p&apos; pom.xml| grep &apos;SNAPSHOT&apos;` ]];then</span><br><span class="line">                    exit 1</span><br><span class="line">                fi</span><br><span class="line">            &apos;&apos;&apos;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    stage(&apos;编译&apos;)&#123;</span><br><span class="line">        if (BRANCH == &quot;master&quot;)&#123;</span><br><span class="line">            ENV = &quot;pro&quot;</span><br><span class="line">        &#125;else if(BRANCH == &quot;develop&quot;)&#123;</span><br><span class="line">            ENV = &quot;fat&quot;</span><br><span class="line">        &#125;else if(BRANCH == &quot;release&quot;)&#123;</span><br><span class="line">            ENV = &quot;uat&quot;</span><br><span class="line">        &#125;</span><br><span class="line">        if(PACKAGE_COMMAND != &apos;&apos;)&#123;</span><br><span class="line">            sh &quot;$PACKAGE_COMMAND&quot;</span><br><span class="line">        &#125;else &#123;</span><br><span class="line">            sh &quot;/usr/local/maven/bin/mvn -Dmaven.test.skip=true  clean package -U&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    stage(&apos;备份&apos;)&#123;</span><br><span class="line">        sh &quot;if [[ ! -d $&#123;backup_dir&#125; ]];then mkdir $&#123;backup_dir&#125;;fi&quot;</span><br><span class="line">        //suf=`date \&apos;+%s\&apos;`</span><br><span class="line">        sh &quot;/bin/cp -a $&#123;file&#125; $&#123;backup_dir&#125;/$&#123;filename&#125;-`date \&apos;+%s\&apos;`&quot;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">def sendPackage(String node_ip_list)&#123;</span><br><span class="line">    stage(&quot;发包: $&#123;node_ip_list&#125;&quot;)&#123;</span><br><span class="line">        sh &quot;sudo  salt  -L \&quot;$&#123;node_ip_list&#125;\&quot; cp.get_file  salt://$&#123;JOB_NAME&#125;/$&#123;FILE_DIR&#125;  /workspace/gprp/$&#123;env.GROUP&#125;_$&#123;env.APP_NAME&#125;/$&#123;filename&#125;&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">def restartService(String node_ip_list)&#123;</span><br><span class="line">    stage(&quot;重启服务$&#123;node_ip_list&#125;&quot;)&#123;</span><br><span class="line">        //sh &quot;sudo  salt -L \&quot;$&#123;node_ip_list&#125;\&quot;  --async   cmd.run  \&quot;sudo supervisorctl restart $&#123;env.GROUP&#125;_$&#123;env.APP_NAME&#125;\&quot;&quot;</span><br><span class="line">        sh &quot;sudo  salt -L \&quot;$&#123;node_ip_list&#125;\&quot; cmd.run  \&quot;/workspace/gprp/$&#123;env.GROUP&#125;_$&#123;APP_NAME&#125;/stop.sh\&quot;&quot;</span><br><span class="line">        sh &quot;sudo  salt -L \&quot;$&#123;node_ip_list&#125;\&quot; --async cmd.run  \&quot;/workspace/gprp/$&#123;env.GROUP&#125;_$&#123;APP_NAME&#125;/start.sh\&quot;&quot;</span><br><span class="line"></span><br><span class="line">        List l_node_ip_list = node_ip_list.split(&apos;,&apos;)</span><br><span class="line">        if (URL_CHECK != &apos;&apos;)&#123;</span><br><span class="line">            for (String node_ip : l_node_ip_list)&#123;</span><br><span class="line">                // 最后一个参数为请求超时次数，每次5秒，默认为40*5秒</span><br><span class="line">                //sh &quot;/var/lib/jenkins/4399scripts/gprp/check_url.sh \&quot;http://$&#123;node_ip&#125;:$&#123;URL_CHECK&#125;\&quot; 30&quot;</span><br><span class="line">                sh &quot;sudo salt $&#123;node_ip&#125; cmd.script salt://4399scripts/gprp/check_url_post.sh \&quot;$&#123;node_ip&#125; &apos;$&#123;URL_CHECK&#125;&apos; $&#123;GROUP&#125;_$&#123;APP_NAME&#125; 20\&quot;&quot;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="check-url-post-sh"><a href="#check-url-post-sh" class="headerlink" title="check_url_post.sh"></a>check_url_post.sh</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">#xujingbin 20180816</span><br><span class="line"># 传入参数</span><br><span class="line"># $0 jrl</span><br><span class="line"># $1 node_ip</span><br><span class="line"># $2 url_check</span><br><span class="line"># $3 app_name</span><br><span class="line"># $4 time_out</span><br><span class="line">signal=1</span><br><span class="line">if [[ $4 != &quot;&quot; ]];then</span><br><span class="line">  timeout=$4</span><br><span class="line">else</span><br><span class="line">  timeout=40</span><br><span class="line">fi</span><br><span class="line">get_lan_ip()&#123;</span><br><span class="line">  wan_ip=$1</span><br><span class="line">  if [ $&#123;wan_ip&#125; == &apos;42.12.12.12&apos; ];then</span><br><span class="line">    echo &apos;10.0.0.91&apos;</span><br><span class="line">&#125;</span><br><span class="line">#wan_ip=`echo $1 | awk -F &apos;://&apos; &apos;&#123;print $2&#125;&apos; |awk -F &apos;:&apos; &apos;&#123;print $1&#125;&apos;`</span><br><span class="line">wan_ip=$1</span><br><span class="line">url_check=`echo $2 | cut -d &apos;?&apos; -f 1`</span><br><span class="line">data=`echo $2 | cut -d &apos;?&apos; -f 2`</span><br><span class="line">log_file=&quot;console.boot.log&quot;</span><br><span class="line">app_name=$3</span><br><span class="line">lan_ip=`get_lan_ip $&#123;wan_ip&#125;`</span><br><span class="line">while [[ &quot;$signal&quot; -ne &quot;$timeout&quot; ]];do</span><br><span class="line">  sleep 5</span><br><span class="line">  curl -s --connect-time 4 -H &quot;Content-Type:application/json&quot; -X POST -d $&#123;data&#125; http://$&#123;lan_ip&#125;:$&#123;url_check&#125; &gt; /dev/null &amp;&amp; break || echo &quot;wait for server starting ....   5*$&#123;signal&#125; 秒&quot; &amp;&amp; let signal++</span><br><span class="line">done</span><br><span class="line">if [[ &quot;$signal&quot; -eq &quot;$timeout&quot; ]];then</span><br><span class="line">  echo &quot;服务没起来...&quot;</span><br><span class="line">  tail -200 /workspace/gprp/$&#123;app_name&#125;/logs/$&#123;log_file&#125;</span><br><span class="line">  exit 1</span><br><span class="line">fi</span><br><span class="line">echo &quot;service start success&quot;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/pipeline/" rel="tag"># pipeline</a>
+              <a href="/tags/jenkins/" rel="tag"># jenkins</a>
+              <a href="/tags/%E6%8C%81%E7%BB%AD%E9%83%A8%E7%BD%B2/" rel="tag"># 持续部署</a>
+              <a href="/tags/%E5%BA%94%E7%94%A8/" rel="tag"># 应用</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/11/27/jenkins/hadoop/" rel="prev" title="打包jar文件到hdfs，用spark跑定时任务">
+      <i class="fa fa-chevron-left"></i> 打包jar文件到hdfs，用spark跑定时任务
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/11/27/jenkins/app-nginx/" rel="next" title="持续部署war包应用nginx">
+      持续部署war包应用nginx <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#check-url-post-sh"><span class="nav-number">1.</span> <span class="nav-text">check_url_post.sh</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">xujingbin</p>
+  <div class="site-description" itemprop="description">个人运维笔记</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xujingbin</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
