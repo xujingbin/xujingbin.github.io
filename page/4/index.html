@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="运维笔记" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="个人运维笔记">
+<meta property="og:type" content="website">
+<meta property="og:title" content="运维笔记">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;page&#x2F;4&#x2F;index.html">
+<meta property="og:site_name" content="运维笔记">
+<meta property="og:description" content="个人运维笔记">
+<meta property="og:locale" content="zh-CN">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/page/4/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: true,
+    isPost: false,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>运维笔记</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">运维笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">23</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">10</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">55</span></a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/db/etcd/etcd/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/16/db/etcd/etcd/" class="post-title-link" itemprop="url">db/etcd/etcd</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-22 16:42:03" itemprop="dateModified" datetime="2019-11-22T16:42:03+08:00">2019-11-22</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>github下载二进制包<br>拷贝二进制etcd,etcdctl文件到/usr/local/bin下<br>分别3个创建配置文件/etc/etcd/etcd.yml<br>v3 v2区别<a href="https://blog.csdn.net/kozazyh/article/details/79586530" target="_blank" rel="noopener">https://blog.csdn.net/kozazyh/article/details/79586530</a><br>备份恢复参考<a href="https://blog.csdn.net/ygqygq2/article/details/82753840" target="_blank" rel="noopener">https://blog.csdn.net/ygqygq2/article/details/82753840</a></p>
+<h2 id="管理界面https-github-com-kopeio-etcd-manager"><a href="#管理界面https-github-com-kopeio-etcd-manager" class="headerlink" title="管理界面https://github.com/kopeio/etcd-manager"></a>管理界面<a href="https://github.com/kopeio/etcd-manager" target="_blank" rel="noopener">https://github.com/kopeio/etcd-manager</a></h2><p>要在在该管理界面显示目录需单独创建目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">name: etcd-3</span><br><span class="line">data-dir: /data/etcd</span><br><span class="line">listen-client-urls: http://192.168.62.140:2379,http://127.0.0.1:2379</span><br><span class="line">advertise-client-urls: http://192.168.62.140:2379,http://127.0.0.1:2379</span><br><span class="line">listen-peer-urls: http://192.168.62.140:2380</span><br><span class="line">initial-advertise-peer-urls: http://192.168.62.140:2380</span><br><span class="line">initial-cluster: etcd-1=http://192.168.62.210:2380,etcd-2=http://192.168.62.154:2380,etcd-3=http://192.168.62.140:2380</span><br><span class="line">initial-cluster-token: etcd-cluster-token</span><br><span class="line">initial-cluster-state: new</span><br></pre></td></tr></table></figure>
+<p>分别执行：etcd –config-file=/etc/etcd/etcd.yml &amp;</p>
+<h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">列出成员节点</span><br><span class="line">etcdctl member list</span><br><span class="line">检查集群健康状态</span><br><span class="line">etcdctl cluster-health</span><br><span class="line">./etcdctl \</span><br><span class="line">--ca-file=/etc/etcd/ssl/ca.pem \</span><br><span class="line">--cert-file=/etc/etcd/ssl/server.pem \</span><br><span class="line">--key-file=/etc/etcd/ssl/server-key.pem \</span><br><span class="line">--endpoints=&quot;https://172.16.8.100:2379,\</span><br><span class="line">https://172.16.8.101:2379,\</span><br><span class="line">https://172.16.8.102:2379&quot; cluster-health</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">etcdctl --endpoints=&apos;https://127.0.0.1:2379&apos; --ca-file=ca.crt --cert-file=server.crt --key-file=server.key ls /</span><br><span class="line"></span><br><span class="line">[root@node119 prometheus]# kubectl -n kube-system exec -it etcd-node119 -- sh</span><br><span class="line">/ # cd /etc/kubernetes/pki/etcd/</span><br><span class="line">export ETCDCTL_API=3; etcdctl --endpoints=&apos;https://127.0.0.1:23</span><br><span class="line">79&apos; --cacert=&quot;ca.crt&quot; --cert=&quot;server.crt&quot; --key=&quot;server.key&quot; get / --prefix --keys-only</span><br><span class="line"></span><br><span class="line">或者直接在节点运行,需拷贝etcdctl到节点上</span><br><span class="line">ETCDCTL_API=3 etcdctl --endpoints=&apos;https://127.0.0.1:2379&apos; --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key get / --prefix --keys-only</span><br><span class="line">创建目录：</span><br><span class="line">/usr/local/etcd-v3.2.26-linux-amd64/bin/etcdctl --endpoints=$ENDPOINTS put /test3 &apos;etcdv3_dir_$2H#%gRe3*t&apos;</span><br></pre></td></tr></table></figure>
+
+<h1 id="监控"><a href="#监控" class="headerlink" title="监控"></a>监控</h1><p><a href="https://github.com/etcd-io/etcd/blob/master/Documentation/metrics.md" target="_blank" rel="noopener">https://github.com/etcd-io/etcd/blob/master/Documentation/metrics.md</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/vsftpd/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/16/vsftpd/" class="post-title-link" itemprop="url">vsftpd</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><a href="http://blog.csdn.net/a2500100455/article/details/48135943" target="_blank" rel="noopener">http://blog.csdn.net/a2500100455/article/details/48135943</a></p>
+<p>FTP的登录一般有三种方式，分别是：</p>
+<p>匿名用户形式：默认安装的情况下，系统只提供匿名用户访问，只需要输入用户anonymous/ftp，并将自己的Email作为口令即可登录。<br>本地用户形式：以/etc/passwd中的用户名为认证方式。<br>虚拟用户形式：支持将用户名和密码保存在文件或数据库中，将登录用户映射到指定的系统账号（/sbin/nologin）来访问资源，其中这些虚拟用户是FTP的用户。<br>194安装教程安装<a href="https://www.cnblogs.com/acpp/archive/2010/02/08/1665876.html" target="_blank" rel="noopener">https://www.cnblogs.com/acpp/archive/2010/02/08/1665876.html</a></p>
+<h3 id="创建账户、更改账户"><a href="#创建账户、更改账户" class="headerlink" title="创建账户、更改账户"></a>创建账户、更改账户</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">不需要重启</span><br><span class="line">vim account.txt</span><br><span class="line">rm -f /etc/vsftpd/account.db</span><br><span class="line">db_load -T -t hash -f ./account.txt /etc/vsftpd/account.db</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/gitbook/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/16/gitbook/" class="post-title-link" itemprop="url">gitbook</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>GitBook 是一个基于 Node.js 的命令行工具，可使用 Github/Git 和 Markdown 来制作精美的电子书。</p>
+<p>安装gitbook之前得先安装nodejs</p>
+<p>npm install -g gitbook-cli</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">$ gitbook -h</span><br><span class="line"></span><br><span class="line">Usage: gitbook [options] [command]</span><br><span class="line"></span><br><span class="line">Commands:</span><br><span class="line"></span><br><span class="line">build [options] [source_dir] 编译指定目录，输出Web格式(_book文件夹中)</span><br><span class="line"></span><br><span class="line">serve [options] [source_dir] 监听文件变化并编译指定目录，同时会创建一个服务器用于预览Web</span><br><span class="line"></span><br><span class="line">pdf [options] [source_dir] 编译指定目录，输出PDF</span><br><span class="line"></span><br><span class="line">epub [options] [source_dir] 编译指定目录，输出epub</span><br><span class="line"></span><br><span class="line">mobi [options] [source_dir] 编译指定目录，输出mobi</span><br><span class="line"></span><br><span class="line">init [source_dir]   通过SUMMARY.md生成作品目录</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line"></span><br><span class="line">-h, --help     output usage information</span><br><span class="line"></span><br><span class="line">-V, --version  output the version number</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装完成后，可使用gitbook搭建一个demo-web站点"><a href="#安装完成后，可使用gitbook搭建一个demo-web站点" class="headerlink" title="安装完成后，可使用gitbook搭建一个demo-web站点"></a>安装完成后，可使用gitbook搭建一个demo-web站点</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">cd /home/apps/gitbook</span><br><span class="line">mkdir demo</span><br><span class="line">cd demo</span><br><span class="line"># 初始化之后会看到两个文件，README.md ，SUMMARY.md</span><br><span class="line">gitbook init</span><br><span class="line"># 生成静态站点，当前目录会生成_book目录，即web静态站点</span><br><span class="line">gitbook build ./</span><br><span class="line"># 启动web站点，默认浏览地址：http://localhost:4000</span><br><span class="line">gitbook serve ./</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">or   gitbook serve --lrport 35288 --port 4001 /path2/your_another_doc_dir/  </span><br><span class="line"></span><br><span class="line">## 持续集成原理，通过gitlab-runner注册该节点192.168.62.174到gitlab中心，提交dev代码时自动拉取到该节点上，自动同步到项目目录/workspace/gprp/ucentergitbook，当该目录变动时程序会自动重启，目前重启时间29.6s（耗时长应该是插件比较多，文件比较多的原因）， 20180822</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+</blockquote>
+<p>gitbook 好卡啊 我可以发布到我的个人网站吗?</p>
+<p>当然可以，gitbook build之后的_book 就是一个完整的web目录, 你可以放置到你的个人网站上.</p>
+<p>一个更好的做法是直接发布到github的gh-pages上, 由于gitbook每次build都会重新生成整个目录.所以你需要利用gulp-gh-pages或grunt-gh-pages等工具进行发布.</p>
+<p><a href="https://github.com/regularjs/guide/tree/master" target="_blank" rel="noopener">你可以参考我的做法</a>, 这样一键gulp deploy可以完成指定目录_book发布gh-pages.</p>
+<blockquote>
+</blockquote>
+<h3 id="nodejs官网"><a href="#nodejs官网" class="headerlink" title="nodejs官网"></a><a href="https://nodejs.org/en/" target="_blank" rel="noopener">nodejs官网</a></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">nodejs http://www.runoob.com/nodejs/nodejs-install-setup.html</span><br><span class="line"></span><br><span class="line">1、下载二进制文件后 设置环境变量、/etc/profile:</span><br><span class="line"></span><br><span class="line">export NODE_HOME=/usr/local/node-v6.11.1-linux-x64</span><br><span class="line"></span><br><span class="line">export PATH=$NODE_HOME/bin:$PATH</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">2、下载源码，你需要在https://nodejs.org/en/download/下载最新的Nodejs版本，本文以v0.10.24为例:</span><br><span class="line"></span><br><span class="line">wget http://nodejs.org/dist/v0.10.24/node-v0.10.24.tar.gz</span><br><span class="line"></span><br><span class="line">tar zxvf node-v0.10.24.tar.gz</span><br><span class="line"></span><br><span class="line">3、 编译安装</span><br><span class="line"></span><br><span class="line">cd node-v0.10.24</span><br><span class="line"></span><br><span class="line">./configure --prefix=/usr/local/node/0.10.24</span><br><span class="line"></span><br><span class="line">make</span><br><span class="line"></span><br><span class="line">make install</span><br><span class="line"></span><br><span class="line">vim /etc/profile</span><br><span class="line"></span><br><span class="line">export NODE_HOME=/usr/local/node/0.10.24</span><br><span class="line"></span><br><span class="line">export PATH=$NODE_HOME/bin:$PATH</span><br><span class="line"></span><br><span class="line">source /etc/profile</span><br><span class="line"></span><br><span class="line">node -v</span><br><span class="line"></span><br><span class="line">输出 v0.10.24 表示配置成功</span><br><span class="line"></span><br><span class="line">npm模块安装路径</span><br><span class="line"></span><br><span class="line">/usr/local/node/0.10.24/lib/node_modules/</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="SUMMARY-md-自动生成脚本"><a href="#SUMMARY-md-自动生成脚本" class="headerlink" title="SUMMARY.md 自动生成脚本"></a>SUMMARY.md <a href="https://www.npmjs.com/package/gitbook-summary" target="_blank" rel="noopener">自动生成脚本</a></h3><p>npm install -g gitbook-summary</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Generate a SUMMARY.md Simply</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$ cd /path/to/your/book/</span><br><span class="line"></span><br><span class="line">$ book sm -i _book   (排除_book目录)</span><br><span class="line"></span><br><span class="line">sed -i -e &apos;/- Node Modules/,11d&apos; SUMMARY.md</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="gitlab-runner"><a href="#gitlab-runner" class="headerlink" title="gitlab-runner"></a>gitlab-runner</h3><p>以gitlab-runner用户运行</p>
+<p>在gitlab项目-settings-Pipelines创建token </p>
+<p>参考 <a href="https://segmentfault.com/a/1190000007180257" target="_blank" rel="noopener">https://segmentfault.com/a/1190000007180257</a></p>
+<p>官方文档 <a href="https://docs.gitlab.com/runner/register/index.html" target="_blank" rel="noopener">https://docs.gitlab.com/runner/register/index.html</a></p>
+<p>.gitlab-ci.yml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">before_script:</span><br><span class="line"></span><br><span class="line">  - export NODE_HOME=/usr/local/node-v6.11.1-linux-x64</span><br><span class="line"></span><br><span class="line">  - export PATH=$NODE_HOME/bin:$PATH</span><br><span class="line"></span><br><span class="line">deploy:</span><br><span class="line"></span><br><span class="line">  stage: deploy</span><br><span class="line"></span><br><span class="line">  script:</span><br><span class="line"></span><br><span class="line">    - id</span><br><span class="line"></span><br><span class="line">    - rsync -avz ./  /workspace/gprp/ucentergitbook/</span><br><span class="line"></span><br><span class="line">    - cd /workspace/gprp/ucentergitbook</span><br><span class="line"></span><br><span class="line">    - book ms -i _book</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h3><p>先把插件写进book.json，然后用gitlab-runner运行gitbook install，会安装缺少的插件</p>
+<p><a href="http://www.chengweiyang.cn/gitbook/plugins/functional/codeblock-filename.html" target="_blank" rel="noopener">http://www.chengweiyang.cn/gitbook/plugins/functional/codeblock-filename.html</a></p>
+<p><a href="http://www.cnblogs.com/zhangjk1993/p/5066771.html" target="_blank" rel="noopener">http://www.cnblogs.com/zhangjk1993/p/5066771.html</a></p>
+<h3 id="隐藏掉Published-with-GitBook"><a href="#隐藏掉Published-with-GitBook" class="headerlink" title="隐藏掉Published with GitBook"></a>隐藏掉Published with GitBook</h3><p><a href="https://www.jianshu.com/p/9c706dfa2d4e" target="_blank" rel="noopener">https://www.jianshu.com/p/9c706dfa2d4e</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/java%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/16/java%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="post-title-link" itemprop="url">java内存管理</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>线程数：<a href="http://sesame.iteye.com/blog/622670" target="_blank" rel="noopener">http://sesame.iteye.com/blog/622670</a></p>
+<p><a href="http://blog.csdn.net/OyangYujun/article/details/41173747" target="_blank" rel="noopener">http://blog.csdn.net/OyangYujun/article/details/41173747</a></p>
+<p><a href="https://www.cnblogs.com/happyPawpaw/p/3868363.html" target="_blank" rel="noopener">https://www.cnblogs.com/happyPawpaw/p/3868363.html</a></p>
+<p>-vmargs -Xms128M -Xmx512M -XX:PermSize=64M -XX:MaxPermSize=128M<br>-vmargs 说明后面是VM的参数，所以后面的其实都是JVM的参数了<br>-Xms128m JVM初始分配的堆内存</p>
+<p>-Xmn 9G 设置年轻代为9G<br>-Xmx512m JVM最大允许分配的堆内存，按需分配<br>-XX:PermSize=64M JVM初始分配的非堆内存<br>-XX:MaxPermSize=128M JVM最大允许分配的非堆内存，按需分配</p>
+<p> 可以看出JVM主要管理两种类型的内存：堆和非堆。简单来说堆就是Java代码可及的内存，是留给开发人员使用的；非堆就是JVM留给自己用的，<br> 所以方法区、JVM内部处理或优化所需的内存(如JIT编译后的代码缓存)、每个类结构(如运行时常数池、字段和方法数据)以及方法和构造方法的代码都在非堆内存中。</p>
+<h3 id="gc内存优化"><a href="#gc内存优化" class="headerlink" title="gc内存优化"></a>gc内存优化</h3><p><a href="http://unixboy.iteye.com/blog/174173" target="_blank" rel="noopener">http://unixboy.iteye.com/blog/174173</a></p>
+<h3 id="gc-log-解读"><a href="#gc-log-解读" class="headerlink" title="gc.log 解读"></a>gc.log 解读</h3><p><a href="http://blog.csdn.net/renfufei/article/details/49230943" target="_blank" rel="noopener">http://blog.csdn.net/renfufei/article/details/49230943</a></p>
+<h3 id="jvm"><a href="#jvm" class="headerlink" title="jvm"></a>jvm</h3><p><a href="http://blog.csdn.net/lklinkang/article/details/6139763" target="_blank" rel="noopener">http://blog.csdn.net/lklinkang/article/details/6139763</a></p>
+<p> 学习开源项目的启动脚本是个不错的主意，比如ElasticSearch家的，Cassandra家的。</p>
+<p><a href="http://github.com/vipshop/vjtools" target="_blank" rel="noopener">http://github.com/vipshop/vjtools</a></p>
+<p>打印各种参数java -XX:+UseConcMarkSweepGC -XX:+PrintFlagsFinal -version| grep GCThreads</p>
+<ol start="2">
+<li><p>加大Integer Cache： -XX:AutoBoxCacheMax=20000<br>Integer i=3;这语句有着 int自动装箱成Integer的过程，JDK默认只缓存 -128 ~ +127的Integer 和 Long，超出范围的数字就要即时构建新的Integer对象。设为20000后，我们应用的QPS有足足4%的提升。为什么是2万呢，因为-XX:+AggressiveOpts里也是这个值。详见《Java Integer(-128~127)值的==和equals比较产生的思考》。 </p>
+</li>
+<li><p>启动时访问并置零内存页面： -XX:+AlwaysPreTouch<br>启动时就把参数里说好了的内存全部舔一遍，可能令得启动时慢上一点，但后面访问时会更流畅，比如页面会连续分配，比如不会在晋升老生代时才去访问页面使得GC停顿时间加长。ElasticSearch和Cassandra都打开了它。</p>
+</li>
+<li><p>SecureRandom生成加速： -Djava.security.egd=file:/dev/./urandom<br>此江湖偏方原因是Tomcat的SecureRandom显式使用SHA1PRNG算法时，初始因子默认从/dev/random读取会存在堵塞。额外效果是SecureRandom的默认算法也变成更合适的SHA1了。详见 《SecureRandom的江湖偏方与真实效果》</p>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/jumpserver/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/16/jumpserver/" class="post-title-link" itemprop="url">jumpserver</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-09-25 10:42:28" itemprop="dateModified" datetime="2019-09-25T10:42:28+08:00">2019-09-25</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">python3.6 -m venv defmanager</span><br><span class="line">source /opt/py3/bin/activate </span><br><span class="line">cd /opt/jumpserver </span><br><span class="line">./jms start all -d </span><br><span class="line">cd coco </span><br><span class="line">./cocod start -d</span><br><span class="line">deactivate</span><br></pre></td></tr></table></figure>
+
+<h3 id="升级"><a href="#升级" class="headerlink" title="升级"></a>升级</h3><p><a href="http://docs.jumpserver.org/zh/docs/upgrade.html" target="_blank" rel="noopener">http://docs.jumpserver.org/zh/docs/upgrade.html</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/markdown/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/16/markdown/" class="post-title-link" itemprop="url">markdown</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="教程网址"><a href="#教程网址" class="headerlink" title="教程网址"></a>教程网址</h3><ul>
+<li>教程 <a href="http://www.jianshu.com/p/q81RER" target="_blank" rel="noopener">http://www.jianshu.com/p/q81RER</a>   <a href="http://blog.csdn.net/phunxm/article/details/49565427" target="_blank" rel="noopener">http://blog.csdn.net/phunxm/article/details/49565427</a></li>
+<li>插入图片 <a href="https://www.jianshu.com/p/280c6a6f2594" target="_blank" rel="noopener">https://www.jianshu.com/p/280c6a6f2594</a></li>
+<li>为知markdown: <a href="http://www.wiz.cn/feature-markdown.html" target="_blank" rel="noopener">http://www.wiz.cn/feature-markdown.html</a></li>
+</ul>
+<h3 id="MarkDown快捷键"><a href="#MarkDown快捷键" class="headerlink" title="MarkDown快捷键"></a>MarkDown快捷键</h3><p>通用工具</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">段落引用 &gt; Ctrl + Q</span><br><span class="line">新的段落--- Ctrl + R</span><br><span class="line">列表项 - Ctrl + U</span><br><span class="line">有序列表项 1. 2. Ctrl + O</span><br><span class="line">斜体文本CONTENT Ctrl + I</span><br><span class="line">插入粗体 Ctrl + B</span><br><span class="line">删除当前行 Ctrl + D</span><br><span class="line">搜索 Ctrl + F</span><br><span class="line">搜索文档 Ctrl + Alt + F</span><br><span class="line">插入图像 Ctrl + G</span><br><span class="line">插入标题 Ctrl + H</span><br><span class="line">插入代码 Ctrl + K</span><br><span class="line">插入超链接 Ctrl + L</span><br><span class="line">創建新文稿 Ctrl + Alt + N</span><br><span class="line">主題切换 Ctrl + Alt + J</span><br><span class="line">编辑模式 Ctrl + M</span><br><span class="line">阅读模式 Ctrl + Alt + M</span><br><span class="line">全屏 F11</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/apollo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/16/apollo/" class="post-title-link" itemprop="url">apollo</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="apollo"><a href="#apollo" class="headerlink" title="apollo"></a>apollo</h2><p><a href="https://github.com/ctripcorp/apollo" target="_blank" rel="noopener">https://github.com/ctripcorp/apollo</a></p>
+<p>portal通过admin来管理config所以要给portal开通每个admin的8090端口</p>
+<p>升级账户管理</p>
+<p><a href="https://github.com/ctripcorp/apollo/wiki/Portal-%E5%AE%9E%E7%8E%B0%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E5%8A%9F%E8%83%BD" target="_blank" rel="noopener">https://github.com/ctripcorp/apollo/wiki/Portal-%E5%AE%9E%E7%8E%B0%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E5%8A%9F%E8%83%BD</a></p>
+<h3 id="新增uat环境，"><a href="#新增uat环境，" class="headerlink" title="新增uat环境，"></a>新增uat环境，</h3><h4 id="建立数据库uatApolloConfigDB"><a href="#建立数据库uatApolloConfigDB" class="headerlink" title="建立数据库uatApolloConfigDB"></a>建立数据库uatApolloConfigDB</h4><ul>
+<li>更改uat-apolloconfigdb.sql:</li>
+</ul>
+<p>`CREATE DATABASE IF NOT EXISTS uatApolloConfigDB DEFAULT CHARACTER SET = utf8mb4;</p>
+<p>Use uatApolloConfigDB;`</p>
+<p><code>ServerConfig       (&#39;eureka.service.url&#39;, &#39;default&#39;, &#39;http://42.62.2.211:8080/eureka/&#39;, &#39;Eureka服务Url，多个service以英文逗号分隔&#39;),</code></p>
+<ul>
+<li>导入数据：</li>
+</ul>
+<p><code>/usr/local/mysql/bin/mysql -uroot -p</code>cat /etc/savep <code>uatApolloConfigDB &lt; ./uat-apolloconfigdb.sql</code></p>
+<ul>
+<li>创建apollo账户</li>
+</ul>
+<p><code>grant all privileges on uatApolloConfigDB.* to &#39;apollo&#39;@&#39;10.0.0.211&#39;;</code></p>
+<h4 id="更改构建脚本uat-build-sh"><a href="#更改构建脚本uat-build-sh" class="headerlink" title="更改构建脚本uat-build.sh"></a>更改构建脚本uat-build.sh</h4><p>apollo_config_db_url=jdbc:mysql://10.0.0.198:3306/uatApolloConfigDB?characterEncoding=utf8</p>
+<h3 id="访问feed项目的本地配置"><a href="#访问feed项目的本地配置" class="headerlink" title="访问feed项目的本地配置"></a>访问feed项目的本地配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://10.0.0.218:8080/configs/feed/default/application?ip=10.0.0.213</span><br></pre></td></tr></table></figure>
+<h3 id="删除应用"><a href="#删除应用" class="headerlink" title="删除应用"></a>删除应用</h3><p><a href="https://github.com/ctripcorp/apollo/wiki/%E9%83%A8%E7%BD%B2&amp;%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98#51-%E5%A6%82%E4%BD%95%E5%88%A0%E9%99%A4%E5%BA%94%E7%94%A8" target="_blank" rel="noopener">https://github.com/ctripcorp/apollo/wiki/%E9%83%A8%E7%BD%B2&amp;%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98#51-%E5%A6%82%E4%BD%95%E5%88%A0%E9%99%A4%E5%BA%94%E7%94%A8</a></p>
+<h3 id="apollo-client部署到仓库"><a href="#apollo-client部署到仓库" class="headerlink" title="apollo client部署到仓库"></a>apollo client部署到仓库</h3><p>应该是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn clean deploy -DskipTests -pl apollo-client -am $META_SERVERS_OPTS</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/db/es/install/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/16/db/es/install/" class="post-title-link" itemprop="url">db/es/install</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-08-15 10:17:15" itemprop="dateModified" datetime="2019-08-15T10:17:15+08:00">2019-08-15</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="efk日志收集系统安装"><a href="#efk日志收集系统安装" class="headerlink" title="efk日志收集系统安装"></a>efk日志收集系统安装</h1><p>elasticsearch和kibana是单实例进程部署在一个节点上，fluentd是易daemonset对象部署在k8s集群上,需要开放es和kibana两个端口，默认是5601和9200</p>
+<h2 id="es-install"><a href="#es-install" class="headerlink" title="es install"></a>es install</h2><ol>
+<li><p>下载二进制包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.2.0-linux-x86_64.tar.gz</span><br><span class="line">tar zxf elasticsearch-7.2.0-linux-x86_64.tar.gz  -C /usr/local/</span><br><span class="line">cd /usr/local/elasticsearch-7.2.0/</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>优化内核参数</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">    1. /etc/security/limits.conf /etc/security/limits.d/90-nproc.conf设置完后需要重新登录该用户</span><br><span class="line">* soft nofile 65536</span><br><span class="line">* hard nofile 65536</span><br><span class="line">    2. /etc/sysctl.conf</span><br><span class="line">vm.max_map_count = 655360</span><br><span class="line">sysctl -p</span><br></pre></td></tr></table></figure></li>
+<li><p>磁盘挂载、用户创建<br>创建数据盘并挂载到/data,<br>创建运行用户 <code>useradd es;chown -R es:es /data /usr/local/elasticsearch-7.2.0;su - es</code></p>
+</li>
+<li><p>修改配置文件,其它数据库可能需要调优，但总得来说，Elasticsearch 不需要。 如果你遇到了性能问题，解决方法通常是更好的数据布局或者更多的节点。 在 Elasticsearch 中很少有“神奇的配置项”， 如果存在，我们也已经帮你优化了！<a href="https://www.elastic.co/guide/cn/elasticsearch/guide/current/important-configuration-changes.html" target="_blank" rel="noopener">https://www.elastic.co/guide/cn/elasticsearch/guide/current/important-configuration-changes.html</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1. config/elasticsearch.yml 修改数据目录</span><br><span class="line">path.data: /data/es</span><br><span class="line">path.logs: /data/logs/es</span><br><span class="line">cluster.initial_master_nodes:</span><br><span class="line">2. config/jvm.options jvm参数设置为机器内存一半的值</span><br><span class="line">-Xms8g</span><br><span class="line">-Xmx8g</span><br></pre></td></tr></table></figure></li>
+<li><p>运行程序<br>bin/elasticsearch -d</p>
+</li>
+</ol>
+<h2 id="kibana-install"><a href="#kibana-install" class="headerlink" title="kibana install"></a>kibana install</h2><ol>
+<li>下载二进制包</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://artifacts.elastic.co/downloads/kibana/kibana-7.2.0-linux-x86_64.tar.gz</span><br><span class="line">tar zxf kibana-7.2.0-linux-x86_64.tar.gz -C /usr/local/</span><br><span class="line">cd /usr/local/kibana-7.2.0-linux-x86_64/</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>配置启动用户及配置文件修改</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">chown -R es:es /usr/local/kibana-7.2.0-linux-x86_64/</span><br><span class="line">su - es</span><br><span class="line">config/kibana.yml</span><br><span class="line">server.host: &quot;192.168.67.114&quot;</span><br><span class="line">elasticsearch.hosts: [&quot;http://192.168.67.114:9200&quot;]</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>运行程序<br><code>nohup bin/kibana &amp;</code></li>
+</ol>
+<h3 id="fluentd-install根据业务定制"><a href="#fluentd-install根据业务定制" class="headerlink" title="fluentd install根据业务定制"></a>fluentd install根据业务定制</h3>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/db/es/commands/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/16/db/es/commands/" class="post-title-link" itemprop="url">db/es/commands</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-08-14 09:38:55" itemprop="dateModified" datetime="2019-08-14T09:38:55+08:00">2019-08-14</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><a href="https://www.elastic.co/guide/cn/elasticsearch/guide/current/_search_lite.html" target="_blank" rel="noopener">https://www.elastic.co/guide/cn/elasticsearch/guide/current/_search_lite.html</a></p>
+<p>命令 <a href="https://blog.csdn.net/pilihaotian/article/details/52452014" target="_blank" rel="noopener">https://blog.csdn.net/pilihaotian/article/details/52452014</a></p>
+<p>查看统计信息<code>curl &#39;10.0.0.198:9200/_cluster/stats?pretty&#39;</code></p>
+<p>查看相应指标</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">GET /_cat/nodes?help</span><br><span class="line"></span><br><span class="line">GET /_cat/nodes?v&amp;h=ip,port,heapPercent,heapMax</span><br></pre></td></tr></table></figure>
+
+
+
+<p>查看文档数量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">curl -XGET &apos;http://10.0.0.43:9200/_count?pretty&apos; -d &apos;</span><br><span class="line">&#123;</span><br><span class="line">    &quot;query&quot;: &#123;</span><br><span class="line">        &quot;match_all&quot;: &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&apos;</span><br></pre></td></tr></table></figure>
+
+<p>查看索引</p>
+<figure class="highlight plain"><figcaption><span>'localhost:9200/_cat/indices?v'```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">查看数据`curl &apos;localhost:9200/application_component_day/_search?q=*&amp;pretty&apos;`</span><br><span class="line"></span><br><span class="line">查看节点`curl &apos;10.0.0.198:9200/_cat/nodes?v&amp;pretty&apos;`</span><br><span class="line"></span><br><span class="line">聚合</span><br><span class="line"></span><br><span class="line">https://www.elastic.co/guide/en/elasticsearch/reference/current/fielddata.html</span><br></pre></td></tr></table></figure>
+
+<p>PUT megacorp/_mapping/employee/</p>
+<p>{</p>
+<p>  “properties”: {</p>
+<pre><code>&quot;interests&quot;: { 
+
+  &quot;type&quot;:    &quot;text&quot;,
+
+  &quot;fielddata&quot;: true
+
+}</code></pre><p>  }</p>
+<p>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">web管理https://github.com/lmenezes/cerebro</span><br><span class="line"></span><br><span class="line">下载release二进制版本，跑起来，进入页面链接http://10.0.0.195:9200</span><br><span class="line"></span><br><span class="line">给所有索引创建副本</span><br></pre></td></tr></table></figure>
+<p>curl -XPUT <a href="http://10.0.0.218:9200/_all/_settings" target="_blank" rel="noopener">http://10.0.0.218:9200/_all/_settings</a> -d’{“index.number_of_replicas”: “1” }’</p>
+<pre><code>
+kibana控制台操作 https://www.cnblogs.com/cjsblog/p/9476813.html https://www.elastic.co/guide/en/kibana/current/index.html
+
+kibana 配置文件https://www.elastic.co/guide/en/kibana/6.6/settings.html
+
+es 优化https://blog.51cto.com/13527416/2132270?from=timeline
+</code></pre>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/db/solr/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/16/db/solr/" class="post-title-link" itemprop="url">db/solr</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="http-lucene-apache-org-solr-guide-7-4-defining-fields-html-example-field-definition"><a href="#http-lucene-apache-org-solr-guide-7-4-defining-fields-html-example-field-definition" class="headerlink" title="http://lucene.apache.org/solr/guide/7_4/defining-fields.html#example-field-definition"></a><a href="http://lucene.apache.org/solr/guide/7_4/defining-fields.html#example-field-definition" target="_blank" rel="noopener">http://lucene.apache.org/solr/guide/7_4/defining-fields.html#example-field-definition</a></h1><p>索引？存储？<br>通过indexed=true可以使得一个field可以被搜索，如果你有一个字段title设置的是indexed=true，那么q=title:csdn就是在搜索标题中含有csdn的document。如果你设置indexed=false，就算你有符合的数据也无法搜索出来。<br>stored=true意味着你可以在结果中看到这个field，通过fl参数可以控制是否在结果中显示，如果你设置stored=false，就算你有符合的数据看不到该field。</p>
+<h3 id="导入mysql数据"><a href="#导入mysql数据" class="headerlink" title="导入mysql数据"></a>导入mysql数据</h3><p><a href="https://blog.csdn.net/weixin_39082031/article/details/79074078" target="_blank" rel="noopener">https://blog.csdn.net/weixin_39082031/article/details/79074078</a></p>
+<h3 id="solr-cloud"><a href="#solr-cloud" class="headerlink" title="solr cloud"></a>solr cloud</h3><h4 id="导入配置文件到zk"><a href="#导入配置文件到zk" class="headerlink" title="导入配置文件到zk"></a>导入配置文件到zk</h4><p>bin/solr zk upconfig -d collection6/conf -n collection6</p>
+<h3 id="API"><a href="#API" class="headerlink" title="API"></a>API</h3><p><a href="http://lucene.apache.org/solr/guide/7_4/collections-api.html#splitshard" target="_blank" rel="noopener">http://lucene.apache.org/solr/guide/7_4/collections-api.html#splitshard</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">split shard</span><br><span class="line"></span><br><span class="line">curl localhost:8983/solr/admin/collections?&apos;action=SPLITSHARD&amp;collection=collection6&amp;shard=shard1&apos;</span><br><span class="line"></span><br><span class="line">删除shard</span><br><span class="line"></span><br><span class="line">curl localhost:8983/solr/admin/collections?&apos;action=DELETESHARD&amp;collection=collection6&amp;shard=shard1&apos;</span><br></pre></td></tr></table></figure>
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+  </div>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">xujingbin</p>
+  <div class="site-description" itemprop="description">个人运维笔记</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xujingbin</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

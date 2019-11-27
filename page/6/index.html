@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="运维笔记" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="个人运维笔记">
+<meta property="og:type" content="website">
+<meta property="og:title" content="运维笔记">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;page&#x2F;6&#x2F;index.html">
+<meta property="og:site_name" content="运维笔记">
+<meta property="og:description" content="个人运维笔记">
+<meta property="og:locale" content="zh-CN">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/page/6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: true,
+    isPost: false,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>运维笔记</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">运维笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">23</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">10</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">55</span></a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/db/mysql/%E5%AE%9E%E6%93%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/16/db/mysql/%E5%AE%9E%E6%93%8D/" class="post-title-link" itemprop="url">db/mysql/实操</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="慢查询太多，针对某库设置慢查询阀值："><a href="#慢查询太多，针对某库设置慢查询阀值：" class="headerlink" title="慢查询太多，针对某库设置慢查询阀值："></a>慢查询太多，针对某库设置慢查询阀值：</h3><ol>
+<li>登录</li>
+</ol>
+<p>use gprp_ms</p>
+<p>set long_query_time=3;</p>
+<ol start="2">
+<li>刷新日志 </li>
+</ol>
+<p>mv /tmp/slowquery.log /tmp/slowquery.log-bak</p>
+<p>/usr/local/mysql/bin/mysqladmin flush-logs -uroot  -p<code>cat /etc/savep</code> -S /tmp/mysql.sock</p>
+<ol start="3">
+<li>日志切割</li>
+</ol>
+<p><a href="http://www.ttlsa.com/mysql/mysql-slow-log-and-error-log-to-date-cutting/" target="_blank" rel="noopener">http://www.ttlsa.com/mysql/mysql-slow-log-and-error-log-to-date-cutting/</a></p>
+<h3 id="5-7-6之后版本初始化数据库"><a href="#5-7-6之后版本初始化数据库" class="headerlink" title="5.7.6之后版本初始化数据库"></a>5.7.6之后版本初始化数据库</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">cd /usr/local/mysql</span><br><span class="line">chown -R mysql:mysql .</span><br><span class="line">./bin/mysqld --initialize-insecure --user=mysql --basedir=/usr/local/mysql --datadir=/data/mysql/data</span><br><span class="line">./bin/mysql_ssl_rsa_setup</span><br><span class="line">chown -R root .</span><br><span class="line">chown -R mysql /data/mysql/</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>MySQL 5.7.6之前的版本执行这个脚本初始化系统数据库</li>
+</ul>
+<p>./bin/mysql_install_db –user=mysql –basedir=/usr/local/mysql –datadir=/data/mysql/data</p>
+<h3 id="关闭启动"><a href="#关闭启动" class="headerlink" title="关闭启动"></a>关闭启动</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysqladmin -uroot -h127.0.0.1 -p`cat /etc/savep7` -P3307 shutdown</span><br><span class="line"></span><br><span class="line">mysqld_safe --defaults-file=/etc/my3307.cnf --user=mysql &amp;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="登录"><a href="#登录" class="headerlink" title="登录"></a>登录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/mysql/bin/mysql -uroot -p`cat /etc/savep3307` -S /tmp/mysql3307.sock</span><br></pre></td></tr></table></figure>
+
+<h3 id="设置密码"><a href="#设置密码" class="headerlink" title="设置密码"></a>设置密码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">update mysql.user set authentication_string = password(&apos;Root12!@&apos;) where user = &apos;root&apos;;</span><br><span class="line"></span><br><span class="line">GRANT SELECT, INSERT, UPDATE, CREATE, ALTER ON adgame_promotion.* TO &apos;adgame&apos;@&apos;10.%&apos; IDENTIFIED BY &apos;AD#online439&apos;;</span><br><span class="line">revoke all on *.* from dba@localhost;</span><br></pre></td></tr></table></figure>
+
+<h3 id="主从切换"><a href="#主从切换" class="headerlink" title="主从切换"></a>主从切换</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">启动</span><br><span class="line"></span><br><span class="line">/bin/sh /usr/local/mysql/bin/mysqld_safe --defaults-file=/etc/my.cnf --user=mysql&amp;</span><br><span class="line"></span><br><span class="line">停止从库</span><br><span class="line"></span><br><span class="line">stop slave io_thread</span><br><span class="line"></span><br><span class="line">show slave status\G  (</span><br><span class="line"></span><br><span class="line">查看</span><br><span class="line"></span><br><span class="line">Slave_SQL_Running_State: Slave has read allrelay log; waiting for more updates</span><br><span class="line"></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h3 id="mysql5-7-198binlog-恢复"><a href="#mysql5-7-198binlog-恢复" class="headerlink" title="mysql5.7 198binlog 恢复"></a>mysql5.7 198binlog 恢复</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/mysql/bin/mysqlbinlog --stop-position=527064411 --database=devApolloConfigDB /data/mysql/data/mysql-bin.000007 /data/mysql/data/mysql-bin.000008  &gt; /tmp/sql;</span><br><span class="line">use  devApolloConfigDB；</span><br><span class="line">source /tmp/sql</span><br></pre></td></tr></table></figure>
+
+<h3 id="转存到其他库"><a href="#转存到其他库" class="headerlink" title="转存到其他库"></a>转存到其他库</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/mysql/bin/mysqldump -uroot -p`cat /etc/savep` --opt adgame_promotion |/usr/local/mysql/bin/mysql -h10.0.0.198 -P3307 -uadgame -p adgame_promotion</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql5.5以上</span><br><span class="line">create database gprp_event_analysis default character set utf8mb4;</span><br></pre></td></tr></table></figure>
+
+<h3 id="innobackupex"><a href="#innobackupex" class="headerlink" title="innobackupex"></a>innobackupex</h3><p><code>innobackupex --defaults-file=/etc/my3309.cnf --ibbackup xtrabackup_51 --apply-log . --user=root --password=&#39;luJwmPeAmm2cUYGzx8Xj&#39;</code></p>
+<h3 id="master宕机后-从库报错处理"><a href="#master宕机后-从库报错处理" class="headerlink" title="master宕机后 从库报错处理"></a>master宕机后 从库报错处理</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">在source那边，执行：</span><br><span class="line"></span><br><span class="line">flush logs;</span><br><span class="line">show master status;</span><br><span class="line"></span><br><span class="line">记下File, Position。</span><br><span class="line"></span><br><span class="line">在target端，执行：</span><br><span class="line"></span><br><span class="line">CHANGE MASTER TO MASTER_LOG_FILE=&apos;testdbbinlog.000008&apos;,MASTER_LOG_POS=107;</span><br><span class="line">slave start;</span><br><span class="line">show slave status \G</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/db/mysql/%E5%AF%86%E7%A0%81%E4%BF%AE%E6%94%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/16/db/mysql/%E5%AF%86%E7%A0%81%E4%BF%AE%E6%94%B9/" class="post-title-link" itemprop="url">db/mysql/密码修改</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>方法1： 用SET PASSWORD命令</p>
+<p>　　mysql -u root</p>
+<p>　　mysql&gt; SET PASSWORD FOR ‘root’@’localhost’ = PASSWORD(‘newpass’);</p>
+<p>方法2：用mysqladmin</p>
+<p>　　mysqladmin -u root password “newpass”</p>
+<p>　　如果root已经设置过密码，采用如下方法</p>
+<p>　　mysqladmin -u root password oldpass “newpass”</p>
+<p>方法3： 用UPDATE直接编辑user表</p>
+<p>　　mysql -u root</p>
+<p>　　mysql&gt; use mysql;</p>
+<p>　　mysql&gt; UPDATE user SET Password = PASSWORD(‘newpass’) WHERE user = ‘root’;</p>
+<p>　　mysql&gt; FLUSH PRIVILEGES;</p>
+<p>在丢失root密码的时候，可以这样</p>
+<p>　　mysqld_safe –skip-grant-tables&amp;</p>
+<p>　　mysql -u root mysql</p>
+<p>　　mysql&gt; UPDATE user SET password=PASSWORD(“new password”) WHERE user=’root’;</p>
+<p>　　mysql&gt; FLUSH PRIVILEGES;</p>
+<p>4、切换到mysql数据库，更新 user 表：</p>
+<p>update user set authentication_string = password(‘123456’),password_expired = ‘N’, password_last_changed = now() where user = ‘root’;</p>
+<p>在之前的版本中，密码字段的字段名是 password，5.7版本改为了 authentication_string</p>
+<p>5、退出 mysql，编辑 /etc/my.cnf 文件，删除 skip-grant-tables=1的内容</p>
+<p>6、重启mysqld 服务，再用新密码登录即可</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/db/cachecloud/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/16/db/cachecloud/" class="post-title-link" itemprop="url">db/cachecloud</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-27 17:06:47" itemprop="dateModified" datetime="2019-11-27T17:06:47+08:00">2019-11-27</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="cachecloud"><a href="#cachecloud" class="headerlink" title="cachecloud"></a>cachecloud</h2><p><a href="https://github.com/sohutv/cachecloud" target="_blank" rel="noopener">https://github.com/sohutv/cachecloud</a></p>
+<p>编译：mvn clean compile install -Ponline</p>
+<p><a href="https://cachecloud.github.io/2017/02/06/1.3.%E6%9C%BA%E5%99%A8%E7%9B%91%E6%8E%A7%E5%8A%9F%E8%83%BD/" target="_blank" rel="noopener">https://cachecloud.github.io/2017/02/06/1.3.%E6%9C%BA%E5%99%A8%E7%9B%91%E6%8E%A7%E5%8A%9F%E8%83%BD/</a></p>
+<p>删除的app_desc表数据</p>
+<p>mysql&gt; delete from app_desc where app_id=11\G</p>
+<p>Query OK, 1 row affected (0.00 sec)</p>
+<p>cachecloud 删除数据库app_desc表相关数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO `app_desc` VALUES(37,&apos;主站相似度计算 赖晓航 250:6380-6383&apos;,1,2,&apos;存临时数据的，计算的时候中间会用到,另几个实例添加失败10.0.0.253:6379:7168\n10.0.0.253:6380:71</span><br><span class="line">68\n10.0.0.253:6381:7168\n10.0.0.253:6382:7168&apos;,&apos;2017-09-30 14:53:41&apos;,&apos;2017-09-30 14:53:41&apos;,6,&apos;赖晓航&apos;,1,0,0,0,0,0,0,90,NULL,0,&apos;548bf53f4427e0a</span><br><span class="line">f3e3dab6f1d79acef&apos;,3,&apos;&apos;)</span><br></pre></td></tr></table></figure>
+<h2 id="删除下线实例"><a href="#删除下线实例" class="headerlink" title="删除下线实例"></a>删除下线实例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">delete from instance_statistics where inst_id in (select id from instance_info where status=2);</span><br><span class="line">delete from instance_info where status=2;</span><br></pre></td></tr></table></figure>
+
+<h3 id="删除下线应用"><a href="#删除下线应用" class="headerlink" title="删除下线应用"></a>删除下线应用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">delete from app_desc where status=3;</span><br></pre></td></tr></table></figure>
+
+<h3 id="删除驳回的应用"><a href="#删除驳回的应用" class="headerlink" title="删除驳回的应用"></a>删除驳回的应用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">delete from app_desc where status=4;</span><br></pre></td></tr></table></figure>
+<h3 id="添加机器"><a href="#添加机器" class="headerlink" title="添加机器"></a>添加机器</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mac本地cd /project/cachecloud</span><br><span class="line">rsync -avz cachecloud-init.sh 目标机器</span><br><span class="line">rsync -avz redis.tar.gz 目标机器</span><br><span class="line">修改cachecloud-init.sh对应的redis版本，执行sh cachecloud-init.sh cachecloud</span><br><span class="line">修改目标机器的/etc/ssh/sshd_config的密码登录权限开放，重启sshd</span><br><span class="line">在cachecloud web管理器上添加机器</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/db/mongodb/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/16/db/mongodb/" class="post-title-link" itemprop="url">db/mongodb</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="安装配置http-www-cnblogs-com-kgdxpr-p-3519352-html"><a href="#安装配置http-www-cnblogs-com-kgdxpr-p-3519352-html" class="headerlink" title="安装配置http://www.cnblogs.com/kgdxpr/p/3519352.html"></a>安装配置<a href="http://www.cnblogs.com/kgdxpr/p/3519352.html" target="_blank" rel="noopener">http://www.cnblogs.com/kgdxpr/p/3519352.html</a></h1><p>“show dbs” 命令可以显示所有数据的列表。<br>执行 “db” 命令可以显示当前数据库对象或集合。<br>运行”use”命令，可以连接到一个指定的数据库。</p>
+<p>use DATABASE_NAME  如果数据库不存在，则创建数据库，否则切换到指定数据库。</p>
+<p>性能指标<a href="http://www.soso.io/article/73032.html" target="_blank" rel="noopener">http://www.soso.io/article/73032.html</a></p>
+<p>6.需要重点关注的 mongodb 性能指标<br>关注主要性能指标：<br>1）Faults：显示 mongodb 每秒页面故障的数量，这个是 mongodb 映射到虚拟地址空间，而不是物理内存。这个值如果飙高的话，可能意味着机器没有足够的内存来存储数据和索引。<br>2）Flushes：每秒做了多少次 fsync，显示多少次数据被刷新进了磁盘。<br>3）locked：写锁。<br>4）idx miss：索引未命中比例。<br>5）qr | qw：读写锁的请求队列长度。<br>6）conn： 当前已经建立的连接数。 </p>
+<p>7.严重的空间碎片问题<br>mongodb 如果数据修改很频繁，会出现比较严重的空间碎片问题，表现在磁盘文件扩张与实际数据量不相符，内存不够用，索引命中率低，查询效率降低。<br>碎片整理，目前我们采用的版本没有太有效的方法。<br>可以用 db.repaireDatabase() 来整理数据库，这个过程非常的慢。<br>如果是 master/slave 模式，则相当于执行一次主从切换，然后从新建立从库。<br>如果是 replSet 架构，可以停掉数据库，然后删除数据目录，从新从复制组中全同步数据，这个时候要考虑 oplog 的尺寸。<br>一个大体的步骤：<br>1）先调用rs.freeze(1200)，将每个不想让它成为 primary 的机器让它在 1200 秒内无法成为 primary(这步也可以不做)；<br>2）将 primary stepDown，不出意外新的 primary 会起来；<br>3）将原 primary kill 掉；<br>4）删掉所有 data 数据(调用 repair 很慢，真不如干掉重新来)；<br>5）再重启动原 primary 的进程；<br>6）以此循环完成整个复制组的全部重建。</p>
+<p><a href="http://www.runoob.com/mongodb/nosql.html" target="_blank" rel="noopener">http://www.runoob.com/mongodb/nosql.html</a></p>
+<p>设置下密码比较好吧 在mongodb主上创建角色管理员（需要在no auth下创建，配置文件auth=false 重启mongodb） - use admin - 创建管理员账号<br>db.createUser({user:”admin”,pwd:”XXXX”,roles:[{“role”:”userAdminAnyDatabase”,”db”:”admin”}]})</p>
+<ul>
+<li>db.getUser(‘admin’); - 授予超级管理员权限：db.grantRolesToUser( “admin” , [ { role: “root”, db: “admin” }]) - 添加监控账号<br>db.createUser({user:”zabbixuser”,pwd:”zabbixusermy4399”,roles:[{role:”clusterMonitor”,db:”admin”}]}); <blockquote>
+<p>创建某个数据库普通用户（在 auth下创建,配置文件auth=true 重启mongodb） </p>
+</blockquote>
+</li>
+<li>use admin <ul>
+<li>db.auth(“admin”,”XXXX”); </li>
+<li>use dbname</li>
+</ul>
+</li>
+<li>db.createUser({user:”XXXUser”,pwd:”XXX”,roles:[{role:”dbOwner”,db:”dbname”}]}); <ul>
+<li>db.auth(“xyzcsUser”,”Cd_#edx4gg”); - db.users.find()</li>
+</ul>
+</li>
+</ul>
+<h3 id="登录"><a href="#登录" class="headerlink" title="登录"></a>登录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">bin/mongo 10.0.0.218:27017/admin -u personas1 -p personas1  认证登录</span><br><span class="line">bin/mongo --host 127.0.0.1 --port 27017 -u &apos;admin&apos; -p &apos;gprp218!!&apos; --authenticationDatabase &quot;admin&quot; 认证登录</span><br><span class="line">bin/mongod --shutdown --dbpath /share/mongodb/27017/data/  停止</span><br><span class="line">bin/mongod -f /etc/mongo/mongodb.conf 启动</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/db/glusterFS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/16/db/glusterFS/" class="post-title-link" itemprop="url">db/glusterFS</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><a href="https://www.cnblogs.com/terrycy/p/5915263.html" target="_blank" rel="noopener">https://www.cnblogs.com/terrycy/p/5915263.html</a></p>
+<p><a href="https://wiki.centos.org/SpecialInterestGroup/Storage/gluster-Quickstart" target="_blank" rel="noopener">https://wiki.centos.org/SpecialInterestGroup/Storage/gluster-Quickstart</a></p>
+<h3 id="server-data1-gfs"><a href="#server-data1-gfs" class="headerlink" title="server: /data1/gfs"></a>server: /data1/gfs</h3><p>194 195</p>
+<p>查看状态 gluster peer status</p>
+<p>加入节点 gluster peer probe 10.0.21.242</p>
+<p>移除节点 gluster peer detach 10.0.21.242</p>
+<p>查看逻辑卷状态 gluster volume info</p>
+<h4 id="client-tmp-gfs"><a href="#client-tmp-gfs" class="headerlink" title="client: /tmp/gfs"></a>client: /tmp/gfs</h4><p>211</p>
+<p>92</p>
+<p>45 46</p>
+<h3 id="添加客户端："><a href="#添加客户端：" class="headerlink" title="添加客户端："></a>添加客户端：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">yum -y install glusterfs glusterfs-fuse</span><br><span class="line"></span><br><span class="line">mkdir /tmp/gfs;chmod 777 /tmp/gfs</span><br><span class="line"></span><br><span class="line">mount -t glusterfs 10.0.0.194:/gv1 /tmp/gfs</span><br><span class="line"></span><br><span class="line">mount -t fuse.glusterfs</span><br><span class="line"></span><br><span class="line">echo &quot;10.0.0.194:/gfs /tmp/gfs glusterfs defaults 0 0&quot; &gt;&gt; /etc/fstab</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="volume-create-gv1-failed-data1-gfs-is-already-part-of-a-volume"><a href="#volume-create-gv1-failed-data1-gfs-is-already-part-of-a-volume" class="headerlink" title="volume create: gv1: failed: /data1/gfs is already part of a volume"></a>volume create: gv1: failed: /data1/gfs is already part of a volume</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">for i in `attr -lq .`; do setfattr -x trusted.$i .; done</span><br></pre></td></tr></table></figure>
+
+<h3 id="volume命令"><a href="#volume命令" class="headerlink" title="volume命令"></a>volume命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">gluster volume set gv1 performance.client-io-threads on</span><br><span class="line">创建volume</span><br><span class="line">gluster volume create gv0 replica 2 10.0.0.194:/data1/gv0 10.0.0.195:/data1/gv0</span><br><span class="line">gluster volume start gv0</span><br><span class="line">给volume gv0添加brick</span><br><span class="line">gluster volume add-brick gv0 replica 3 10.0.0.199:/data1/gv0</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+  </div>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span>
+  </nav>
+
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">xujingbin</p>
+  <div class="site-description" itemprop="description">个人运维笔记</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xujingbin</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

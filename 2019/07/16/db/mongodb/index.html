@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="运维笔记" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="安装配置http:&#x2F;&#x2F;www.cnblogs.com&#x2F;kgdxpr&#x2F;p&#x2F;3519352.html“show dbs” 命令可以显示所有数据的列表。执行 “db” 命令可以显示当前数据库对象或集合。运行”use”命令，可以连接到一个指定的数据库。 use DATABASE_NAME  如果数据库不存在，则创建数据库，否则切换到指定数据库。 性能指标http:&#x2F;&#x2F;www.soso.io&#x2F;article">
+<meta property="og:type" content="article">
+<meta property="og:title" content="db&#x2F;mongodb">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;07&#x2F;16&#x2F;db&#x2F;mongodb&#x2F;index.html">
+<meta property="og:site_name" content="运维笔记">
+<meta property="og:description" content="安装配置http:&#x2F;&#x2F;www.cnblogs.com&#x2F;kgdxpr&#x2F;p&#x2F;3519352.html“show dbs” 命令可以显示所有数据的列表。执行 “db” 命令可以显示当前数据库对象或集合。运行”use”命令，可以连接到一个指定的数据库。 use DATABASE_NAME  如果数据库不存在，则创建数据库，否则切换到指定数据库。 性能指标http:&#x2F;&#x2F;www.soso.io&#x2F;article">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-07-16T02:31:09.301Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2019/07/16/db/mongodb/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>db/mongodb | 运维笔记</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">运维笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">23</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">10</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">55</span></a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/db/mongodb/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          db/mongodb
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="安装配置http-www-cnblogs-com-kgdxpr-p-3519352-html"><a href="#安装配置http-www-cnblogs-com-kgdxpr-p-3519352-html" class="headerlink" title="安装配置http://www.cnblogs.com/kgdxpr/p/3519352.html"></a>安装配置<a href="http://www.cnblogs.com/kgdxpr/p/3519352.html" target="_blank" rel="noopener">http://www.cnblogs.com/kgdxpr/p/3519352.html</a></h1><p>“show dbs” 命令可以显示所有数据的列表。<br>执行 “db” 命令可以显示当前数据库对象或集合。<br>运行”use”命令，可以连接到一个指定的数据库。</p>
+<p>use DATABASE_NAME  如果数据库不存在，则创建数据库，否则切换到指定数据库。</p>
+<p>性能指标<a href="http://www.soso.io/article/73032.html" target="_blank" rel="noopener">http://www.soso.io/article/73032.html</a></p>
+<p>6.需要重点关注的 mongodb 性能指标<br>关注主要性能指标：<br>1）Faults：显示 mongodb 每秒页面故障的数量，这个是 mongodb 映射到虚拟地址空间，而不是物理内存。这个值如果飙高的话，可能意味着机器没有足够的内存来存储数据和索引。<br>2）Flushes：每秒做了多少次 fsync，显示多少次数据被刷新进了磁盘。<br>3）locked：写锁。<br>4）idx miss：索引未命中比例。<br>5）qr | qw：读写锁的请求队列长度。<br>6）conn： 当前已经建立的连接数。 </p>
+<p>7.严重的空间碎片问题<br>mongodb 如果数据修改很频繁，会出现比较严重的空间碎片问题，表现在磁盘文件扩张与实际数据量不相符，内存不够用，索引命中率低，查询效率降低。<br>碎片整理，目前我们采用的版本没有太有效的方法。<br>可以用 db.repaireDatabase() 来整理数据库，这个过程非常的慢。<br>如果是 master/slave 模式，则相当于执行一次主从切换，然后从新建立从库。<br>如果是 replSet 架构，可以停掉数据库，然后删除数据目录，从新从复制组中全同步数据，这个时候要考虑 oplog 的尺寸。<br>一个大体的步骤：<br>1）先调用rs.freeze(1200)，将每个不想让它成为 primary 的机器让它在 1200 秒内无法成为 primary(这步也可以不做)；<br>2）将 primary stepDown，不出意外新的 primary 会起来；<br>3）将原 primary kill 掉；<br>4）删掉所有 data 数据(调用 repair 很慢，真不如干掉重新来)；<br>5）再重启动原 primary 的进程；<br>6）以此循环完成整个复制组的全部重建。</p>
+<p><a href="http://www.runoob.com/mongodb/nosql.html" target="_blank" rel="noopener">http://www.runoob.com/mongodb/nosql.html</a></p>
+<p>设置下密码比较好吧 在mongodb主上创建角色管理员（需要在no auth下创建，配置文件auth=false 重启mongodb） - use admin - 创建管理员账号<br>db.createUser({user:”admin”,pwd:”XXXX”,roles:[{“role”:”userAdminAnyDatabase”,”db”:”admin”}]})</p>
+<ul>
+<li>db.getUser(‘admin’); - 授予超级管理员权限：db.grantRolesToUser( “admin” , [ { role: “root”, db: “admin” }]) - 添加监控账号<br>db.createUser({user:”zabbixuser”,pwd:”zabbixusermy4399”,roles:[{role:”clusterMonitor”,db:”admin”}]}); <blockquote>
+<p>创建某个数据库普通用户（在 auth下创建,配置文件auth=true 重启mongodb） </p>
+</blockquote>
+</li>
+<li>use admin <ul>
+<li>db.auth(“admin”,”XXXX”); </li>
+<li>use dbname</li>
+</ul>
+</li>
+<li>db.createUser({user:”XXXUser”,pwd:”XXX”,roles:[{role:”dbOwner”,db:”dbname”}]}); <ul>
+<li>db.auth(“xyzcsUser”,”Cd_#edx4gg”); - db.users.find()</li>
+</ul>
+</li>
+</ul>
+<h3 id="登录"><a href="#登录" class="headerlink" title="登录"></a>登录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">bin/mongo 10.0.0.218:27017/admin -u personas1 -p personas1  认证登录</span><br><span class="line">bin/mongo --host 127.0.0.1 --port 27017 -u &apos;admin&apos; -p &apos;gprp218!!&apos; --authenticationDatabase &quot;admin&quot; 认证登录</span><br><span class="line">bin/mongod --shutdown --dbpath /share/mongodb/27017/data/  停止</span><br><span class="line">bin/mongod -f /etc/mongo/mongodb.conf 启动</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/07/16/db/glusterFS/" rel="prev" title="db/glusterFS">
+      <i class="fa fa-chevron-left"></i> db/glusterFS
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/07/16/db/cachecloud/" rel="next" title="db/cachecloud">
+      db/cachecloud <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装配置http-www-cnblogs-com-kgdxpr-p-3519352-html"><span class="nav-number">1.</span> <span class="nav-text">安装配置http://www.cnblogs.com/kgdxpr/p/3519352.html</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#登录"><span class="nav-number">1.0.1.</span> <span class="nav-text">登录</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">xujingbin</p>
+  <div class="site-description" itemprop="description">个人运维笔记</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xujingbin</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

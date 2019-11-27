@@ -55,7 +55,7 @@
 <meta property="og:site_name" content="运维笔记">
 <meta property="og:description" content="hexo环境安装及参考文档">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-11-27T08:00:12.018Z">
+<meta property="og:updated_time" content="2019-11-27T08:51:37.545Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://yoursite.com/2019/11/27/hexo%E6%90%AD%E5%BB%BA/">
@@ -142,17 +142,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">21</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">23</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">7</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">10</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">12</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">55</span></a>
 
   </li>
   </ul>
@@ -205,7 +205,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2019-11-27 15:51:08 / 修改时间：16:00:12" itemprop="dateCreated datePublished" datetime="2019-11-27T15:51:08+08:00">2019-11-27</time>
+              <time title="创建时间：2019-11-27 15:51:08 / 修改时间：16:51:37" itemprop="dateCreated datePublished" datetime="2019-11-27T15:51:08+08:00">2019-11-27</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -249,6 +249,11 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: categories</span><br><span class="line">date: 2019-11-27 15:41:24</span><br><span class="line">type: &quot;categories&quot;</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
 
 <h2 id="部署命令"><a href="#部署命令" class="headerlink" title="部署命令"></a>部署命令</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 本地调试</span><br><span class="line">hexo clean &amp;&amp; hexo g</span><br><span class="line"># 清除缓存、生成静态文件、部署到远程</span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
+
+<h2 id="其他插件"><a href="#其他插件" class="headerlink" title="其他插件"></a>其他插件</h2><p>首页文章缩略显示<a href="https://www.jianshu.com/p/78c218f9d1e7" target="_blank" rel="noopener">https://www.jianshu.com/p/78c218f9d1e7</a><br>插件<a href="https://www.jianshu.com/p/3884e5cb63e5" target="_blank" rel="noopener">https://www.jianshu.com/p/3884e5cb63e5</a><br>seo优化<a href="https://www.jianshu.com/p/d174a6dc1b94" target="_blank" rel="noopener">https://www.jianshu.com/p/d174a6dc1b94</a></p>
+<h3 id="nexT主题添加站点访问次数"><a href="#nexT主题添加站点访问次数" class="headerlink" title="nexT主题添加站点访问次数"></a>nexT主题添加站点访问次数</h3><h4 id="theme-next-config-yml"><a href="#theme-next-config-yml" class="headerlink" title="theme/next/_config.yml"></a>theme/next/_config.yml</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">busuanzi_count:</span><br><span class="line">  enable: false</span><br><span class="line">false 改为enable</span><br></pre></td></tr></table></figure>
+<h4 id="需要把-dn-lbstatics-qbox-me-域名更换为-busuanzi-ibruce-info"><a href="#需要把-dn-lbstatics-qbox-me-域名更换为-busuanzi-ibruce-info" class="headerlink" title="需要把 dn-lbstatics.qbox.me 域名更换为 busuanzi.ibruce.info"></a>需要把 dn-lbstatics.qbox.me 域名更换为 busuanzi.ibruce.info</h4><p>themes/next/layout/_third-party/analytics/busuanzi-counter.swig</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script async src=&quot;https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -271,8 +276,8 @@
       <i class="fa fa-chevron-left"></i> 阿里云slb健康检查
     </a></div>
       <div class="post-nav-item">
-    <a href="/2019/11/27/k8s/k8s-commands/" rel="next" title="k8s/k8s-commands">
-      k8s/k8s-commands <i class="fa fa-chevron-right"></i>
+    <a href="/2019/11/27/jenkins/k8s%E4%B9%8Bjenkins%E6%90%AD%E5%BB%BA/" rel="next" title="jenkins部署到k8s">
+      jenkins部署到k8s <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -311,7 +316,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#hexo"><span class="nav-number">1.</span> <span class="nav-text">hexo</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主要软件安装"><span class="nav-number">1.0.1.</span> <span class="nav-text">主要软件安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装git-nodejs略过，安装hexo"><span class="nav-number">1.0.1.1.</span> <span class="nav-text">安装git, nodejs略过，安装hexo</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建博客（初始化站点）"><span class="nav-number">1.0.2.</span> <span class="nav-text">创建博客（初始化站点）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装主题"><span class="nav-number">1.0.3.</span> <span class="nav-text">安装主题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#写文章"><span class="nav-number">1.0.4.</span> <span class="nav-text">写文章</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试"><span class="nav-number">1.0.5.</span> <span class="nav-text">测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发布"><span class="nav-number">1.0.6.</span> <span class="nav-text">发布</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装hexo-deployer-git自动部署发布工具"><span class="nav-number">1.0.6.1.</span> <span class="nav-text">安装hexo-deployer-git自动部署发布工具</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置信息"><span class="nav-number">2.</span> <span class="nav-text">配置信息</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#增加分类"><span class="nav-number">2.1.</span> <span class="nav-text">增加分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#部署命令"><span class="nav-number">2.2.</span> <span class="nav-text">部署命令</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#hexo"><span class="nav-number">1.</span> <span class="nav-text">hexo</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主要软件安装"><span class="nav-number">1.0.1.</span> <span class="nav-text">主要软件安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装git-nodejs略过，安装hexo"><span class="nav-number">1.0.1.1.</span> <span class="nav-text">安装git, nodejs略过，安装hexo</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建博客（初始化站点）"><span class="nav-number">1.0.2.</span> <span class="nav-text">创建博客（初始化站点）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装主题"><span class="nav-number">1.0.3.</span> <span class="nav-text">安装主题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#写文章"><span class="nav-number">1.0.4.</span> <span class="nav-text">写文章</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试"><span class="nav-number">1.0.5.</span> <span class="nav-text">测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发布"><span class="nav-number">1.0.6.</span> <span class="nav-text">发布</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装hexo-deployer-git自动部署发布工具"><span class="nav-number">1.0.6.1.</span> <span class="nav-text">安装hexo-deployer-git自动部署发布工具</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置信息"><span class="nav-number">2.</span> <span class="nav-text">配置信息</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#增加分类"><span class="nav-number">2.1.</span> <span class="nav-text">增加分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#部署命令"><span class="nav-number">2.2.</span> <span class="nav-text">部署命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他插件"><span class="nav-number">2.3.</span> <span class="nav-text">其他插件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#nexT主题添加站点访问次数"><span class="nav-number">2.3.1.</span> <span class="nav-text">nexT主题添加站点访问次数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#theme-next-config-yml"><span class="nav-number">2.3.1.1.</span> <span class="nav-text">theme/next/_config.yml</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#需要把-dn-lbstatics-qbox-me-域名更换为-busuanzi-ibruce-info"><span class="nav-number">2.3.1.2.</span> <span class="nav-text">需要把 dn-lbstatics.qbox.me 域名更换为 busuanzi.ibruce.info</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -325,20 +330,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">55</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
