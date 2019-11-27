@@ -693,97 +693,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/db/es/install/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/16/db/es/install/" class="post-title-link" itemprop="url">db/es/install</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-08-15 10:17:15" itemprop="dateModified" datetime="2019-08-15T10:17:15+08:00">2019-08-15</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="efk日志收集系统安装"><a href="#efk日志收集系统安装" class="headerlink" title="efk日志收集系统安装"></a>efk日志收集系统安装</h1><p>elasticsearch和kibana是单实例进程部署在一个节点上，fluentd是易daemonset对象部署在k8s集群上,需要开放es和kibana两个端口，默认是5601和9200</p>
-<h2 id="es-install"><a href="#es-install" class="headerlink" title="es install"></a>es install</h2><ol>
-<li><p>下载二进制包</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.2.0-linux-x86_64.tar.gz</span><br><span class="line">tar zxf elasticsearch-7.2.0-linux-x86_64.tar.gz  -C /usr/local/</span><br><span class="line">cd /usr/local/elasticsearch-7.2.0/</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>优化内核参数</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">    1. /etc/security/limits.conf /etc/security/limits.d/90-nproc.conf设置完后需要重新登录该用户</span><br><span class="line">* soft nofile 65536</span><br><span class="line">* hard nofile 65536</span><br><span class="line">    2. /etc/sysctl.conf</span><br><span class="line">vm.max_map_count = 655360</span><br><span class="line">sysctl -p</span><br></pre></td></tr></table></figure></li>
-<li><p>磁盘挂载、用户创建<br>创建数据盘并挂载到/data,<br>创建运行用户 <code>useradd es;chown -R es:es /data /usr/local/elasticsearch-7.2.0;su - es</code></p>
-</li>
-<li><p>修改配置文件,其它数据库可能需要调优，但总得来说，Elasticsearch 不需要。 如果你遇到了性能问题，解决方法通常是更好的数据布局或者更多的节点。 在 Elasticsearch 中很少有“神奇的配置项”， 如果存在，我们也已经帮你优化了！<a href="https://www.elastic.co/guide/cn/elasticsearch/guide/current/important-configuration-changes.html" target="_blank" rel="noopener">https://www.elastic.co/guide/cn/elasticsearch/guide/current/important-configuration-changes.html</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1. config/elasticsearch.yml 修改数据目录</span><br><span class="line">path.data: /data/es</span><br><span class="line">path.logs: /data/logs/es</span><br><span class="line">cluster.initial_master_nodes:</span><br><span class="line">2. config/jvm.options jvm参数设置为机器内存一半的值</span><br><span class="line">-Xms8g</span><br><span class="line">-Xmx8g</span><br></pre></td></tr></table></figure></li>
-<li><p>运行程序<br>bin/elasticsearch -d</p>
-</li>
-</ol>
-<h2 id="kibana-install"><a href="#kibana-install" class="headerlink" title="kibana install"></a>kibana install</h2><ol>
-<li>下载二进制包</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://artifacts.elastic.co/downloads/kibana/kibana-7.2.0-linux-x86_64.tar.gz</span><br><span class="line">tar zxf kibana-7.2.0-linux-x86_64.tar.gz -C /usr/local/</span><br><span class="line">cd /usr/local/kibana-7.2.0-linux-x86_64/</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>配置启动用户及配置文件修改</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">chown -R es:es /usr/local/kibana-7.2.0-linux-x86_64/</span><br><span class="line">su - es</span><br><span class="line">config/kibana.yml</span><br><span class="line">server.host: &quot;192.168.67.114&quot;</span><br><span class="line">elasticsearch.hosts: [&quot;http://192.168.67.114:9200&quot;]</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>运行程序<br><code>nohup bin/kibana &amp;</code></li>
-</ol>
-<h3 id="fluentd-install根据业务定制"><a href="#fluentd-install根据业务定制" class="headerlink" title="fluentd install根据业务定制"></a>fluentd install根据业务定制</h3>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/db/es/commands/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -863,6 +772,97 @@ kibana 配置文件https://www.elastic.co/guide/en/kibana/6.6/settings.html
 
 es 优化https://blog.51cto.com/13527416/2132270?from=timeline
 </code></pre>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/db/es/install/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/16/db/es/install/" class="post-title-link" itemprop="url">db/es/install</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-08-15 10:17:15" itemprop="dateModified" datetime="2019-08-15T10:17:15+08:00">2019-08-15</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="efk日志收集系统安装"><a href="#efk日志收集系统安装" class="headerlink" title="efk日志收集系统安装"></a>efk日志收集系统安装</h1><p>elasticsearch和kibana是单实例进程部署在一个节点上，fluentd是易daemonset对象部署在k8s集群上,需要开放es和kibana两个端口，默认是5601和9200</p>
+<h2 id="es-install"><a href="#es-install" class="headerlink" title="es install"></a>es install</h2><ol>
+<li><p>下载二进制包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.2.0-linux-x86_64.tar.gz</span><br><span class="line">tar zxf elasticsearch-7.2.0-linux-x86_64.tar.gz  -C /usr/local/</span><br><span class="line">cd /usr/local/elasticsearch-7.2.0/</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>优化内核参数</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">    1. /etc/security/limits.conf /etc/security/limits.d/90-nproc.conf设置完后需要重新登录该用户</span><br><span class="line">* soft nofile 65536</span><br><span class="line">* hard nofile 65536</span><br><span class="line">    2. /etc/sysctl.conf</span><br><span class="line">vm.max_map_count = 655360</span><br><span class="line">sysctl -p</span><br></pre></td></tr></table></figure></li>
+<li><p>磁盘挂载、用户创建<br>创建数据盘并挂载到/data,<br>创建运行用户 <code>useradd es;chown -R es:es /data /usr/local/elasticsearch-7.2.0;su - es</code></p>
+</li>
+<li><p>修改配置文件,其它数据库可能需要调优，但总得来说，Elasticsearch 不需要。 如果你遇到了性能问题，解决方法通常是更好的数据布局或者更多的节点。 在 Elasticsearch 中很少有“神奇的配置项”， 如果存在，我们也已经帮你优化了！<a href="https://www.elastic.co/guide/cn/elasticsearch/guide/current/important-configuration-changes.html" target="_blank" rel="noopener">https://www.elastic.co/guide/cn/elasticsearch/guide/current/important-configuration-changes.html</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1. config/elasticsearch.yml 修改数据目录</span><br><span class="line">path.data: /data/es</span><br><span class="line">path.logs: /data/logs/es</span><br><span class="line">cluster.initial_master_nodes:</span><br><span class="line">2. config/jvm.options jvm参数设置为机器内存一半的值</span><br><span class="line">-Xms8g</span><br><span class="line">-Xmx8g</span><br></pre></td></tr></table></figure></li>
+<li><p>运行程序<br>bin/elasticsearch -d</p>
+</li>
+</ol>
+<h2 id="kibana-install"><a href="#kibana-install" class="headerlink" title="kibana install"></a>kibana install</h2><ol>
+<li>下载二进制包</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://artifacts.elastic.co/downloads/kibana/kibana-7.2.0-linux-x86_64.tar.gz</span><br><span class="line">tar zxf kibana-7.2.0-linux-x86_64.tar.gz -C /usr/local/</span><br><span class="line">cd /usr/local/kibana-7.2.0-linux-x86_64/</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>配置启动用户及配置文件修改</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">chown -R es:es /usr/local/kibana-7.2.0-linux-x86_64/</span><br><span class="line">su - es</span><br><span class="line">config/kibana.yml</span><br><span class="line">server.host: &quot;192.168.67.114&quot;</span><br><span class="line">elasticsearch.hosts: [&quot;http://192.168.67.114:9200&quot;]</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>运行程序<br><code>nohup bin/kibana &amp;</code></li>
+</ol>
+<h3 id="fluentd-install根据业务定制"><a href="#fluentd-install根据业务定制" class="headerlink" title="fluentd install根据业务定制"></a>fluentd install根据业务定制</h3>
       
     </div>
 
