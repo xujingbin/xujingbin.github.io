@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-Hans">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -53,7 +53,7 @@
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;page&#x2F;2&#x2F;index.html">
 <meta property="og:site_name" content="运维笔记">
 <meta property="og:description" content="个人运维笔记">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:locale" content="zh-CN">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://yoursite.com/page/2/">
@@ -121,7 +121,7 @@
   </div>
 
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
+    <div class="toggle" aria-label="切换导航栏">
       <span class="toggle-line toggle-line-first"></span>
       <span class="toggle-line toggle-line-middle"></span>
       <span class="toggle-line toggle-line-last"></span>
@@ -135,22 +135,22 @@
   <ul id="menu" class="menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-标签"></i>Tags<span class="badge">17</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">17</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories<span class="badge">5</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">5</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-归档"></i>Archives<span class="badge">11</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">11</span></a>
 
   </li>
   </ul>
@@ -178,8 +178,8 @@
         
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/27/ansible/modules/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/27/ansible/useradd/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -193,7 +193,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2019/11/27/ansible/modules/" class="post-title-link" itemprop="url">二、ansible各个模块</a>
+            <a href="/2019/11/27/ansible/useradd/" class="post-title-link" itemprop="url">ansible添加用户</a>
         </h1>
 
         <div class="post-meta">
@@ -201,15 +201,15 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
-              <time title="Created: 2019-11-27 11:28:13" itemprop="dateCreated datePublished" datetime="2019-11-27T11:28:13+08:00">2019-11-27</time>
+              <time title="创建时间：2019-11-27 11:28:13" itemprop="dateCreated datePublished" datetime="2019-11-27T11:28:13+08:00">2019-11-27</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              <span class="post-meta-item-text">In</span>
+              <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/ansible/" itemprop="url" rel="index">
                     <span itemprop="name">ansible</span>
@@ -228,24 +228,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="ping-验证ssh是否正常-正常则返回pong"><a href="#ping-验证ssh是否正常-正常则返回pong" class="headerlink" title="ping 验证ssh是否正常,正常则返回pong"></a>ping 验证ssh是否正常,正常则返回pong</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">➜  ansible ansible web -m ping</span><br><span class="line">192.168.62.154 | SUCCESS =&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: false,</span><br><span class="line">    &quot;ping&quot;: &quot;pong&quot;</span><br><span class="line">&#125;</span><br><span class="line">192.168.62.202 | SUCCESS =&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: false,</span><br><span class="line">    &quot;ping&quot;: &quot;pong&quot;</span><br><span class="line">&#125;</span><br><span class="line">192.168.62.140 | SUCCESS =&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: false,</span><br><span class="line">    &quot;ping&quot;: &quot;pong&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="command-与-shell在远程节点执行命令"><a href="#command-与-shell在远程节点执行命令" class="headerlink" title="command 与 shell在远程节点执行命令"></a>command 与 shell在远程节点执行命令</h3><p> shell模块可以使用管道，而command则不可以, 常用shell</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">➜  ansible ansible web1 -m shell -a &apos;uptime&apos;</span><br><span class="line">192.168.62.140 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line"> 21:00:12 up 2 days,  9:42,  1 user,  load average: 0.00, 0.00, 0.00</span><br><span class="line">192.168.62.202 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line"> 21:00:12 up 2 days,  9:40,  1 user,  load average: 0.61, 0.27, 0.21</span><br><span class="line"> ➜  ansible ansible web1 -m shell -b -f 3 -a &apos;whoami&apos;</span><br><span class="line">192.168.62.202 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">root</span><br><span class="line">192.168.62.140 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">root</span><br><span class="line">-b 表示通过become为root账户，需有sudo权限</span><br><span class="line">-f 3表示并发数为3</span><br></pre></td></tr></table></figure>
-<h3 id="script-把脚本复制到远程节点后，在远程节点本地运行脚本"><a href="#script-把脚本复制到远程节点后，在远程节点本地运行脚本" class="headerlink" title="script 把脚本复制到远程节点后，在远程节点本地运行脚本"></a>script 把脚本复制到远程节点后，在远程节点本地运行脚本</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">➜  ansible ansible web1 -m script -a &apos;scripts/whoami.sh&apos;</span><br><span class="line">192.168.62.140 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: true,</span><br><span class="line">    &quot;rc&quot;: 0,</span><br><span class="line">    &quot;stderr&quot;: &quot;Shared connection to 192.168.62.140 closed.\r\n&quot;,</span><br><span class="line">    &quot;stderr_lines&quot;: [</span><br><span class="line">        &quot;Shared connection to 192.168.62.140 closed.&quot;</span><br><span class="line">    ],</span><br><span class="line">    &quot;stdout&quot;: &quot;xujingbin\r\n&quot;,</span><br><span class="line">    &quot;stdout_lines&quot;: [</span><br><span class="line">        &quot;xujingbin&quot;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line">192.168.62.202 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: true,</span><br><span class="line">    &quot;rc&quot;: 0,</span><br><span class="line">    &quot;stderr&quot;: &quot;Shared connection to 192.168.62.202 closed.\r\n&quot;,</span><br><span class="line">    &quot;stderr_lines&quot;: [</span><br><span class="line">        &quot;Shared connection to 192.168.62.202 closed.&quot;</span><br><span class="line">    ],</span><br><span class="line">    &quot;stdout&quot;: &quot;xujingbin\r\n&quot;,</span><br><span class="line">    &quot;stdout_lines&quot;: [</span><br><span class="line">        &quot;xujingbin&quot;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="copy-复制文件或目录到远程节点。默认会覆盖目标文件"><a href="#copy-复制文件或目录到远程节点。默认会覆盖目标文件" class="headerlink" title="copy 复制文件或目录到远程节点。默认会覆盖目标文件"></a>copy 复制文件或目录到远程节点。默认会覆盖目标文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">➜  ansible ansible 192.168.62.140 -m copy -a &apos;src=scripts/whoami.sh dest=/tmp/&apos;</span><br><span class="line">192.168.62.140 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: true,</span><br><span class="line">    &quot;checksum&quot;: &quot;f5fcb41f69d716f7cfe09062efee2daabd6ba5a6&quot;,</span><br><span class="line">    &quot;dest&quot;: &quot;/tmp/whoami.sh&quot;,</span><br><span class="line">    &quot;gid&quot;: 1002,</span><br><span class="line">    &quot;group&quot;: &quot;xujingbin&quot;,</span><br><span class="line">    &quot;md5sum&quot;: &quot;f1ba1d7c54e96b18261649459ceac64a&quot;,</span><br><span class="line">    &quot;mode&quot;: &quot;0664&quot;,</span><br><span class="line">    &quot;owner&quot;: &quot;xujingbin&quot;,</span><br><span class="line">    &quot;secontext&quot;: &quot;unconfined_u:object_r:user_home_t:s0&quot;,</span><br><span class="line">    &quot;size&quot;: 20,</span><br><span class="line">    &quot;src&quot;: &quot;/home/xujingbin/.ansible/tmp/ansible-tmp-1550236788.13-41588500894359/source&quot;,</span><br><span class="line">    &quot;state&quot;: &quot;file&quot;,</span><br><span class="line">    &quot;uid&quot;: 1001</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>src：要复制到远程主机的文件在本地的地址，可以是绝对路径，也可以是相对路径。如果路径是一个目录，它将递归复制。在这种情况下，如果路径使用”/“来结尾，则只复制目录里的内容，如果没有使用”/“来结尾，则包含目录在内的整个内容全部复制，类似于rsync。</p>
-<h3 id="fetch-远程节点获取文件-只能是文件-到本地目录。"><a href="#fetch-远程节点获取文件-只能是文件-到本地目录。" class="headerlink" title="fetch 远程节点获取文件(只能是文件)到本地目录。"></a>fetch 远程节点获取文件(只能是文件)到本地目录。</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">➜  ansible ansible 192.168.62.140 -m fetch -a &apos;src=/tmp/whoami.sh dest=/downloads/&apos;</span><br><span class="line">192.168.62.140 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: true,</span><br><span class="line">    &quot;checksum&quot;: &quot;f5fcb41f69d716f7cfe09062efee2daabd6ba5a6&quot;,</span><br><span class="line">    &quot;dest&quot;: &quot;/downloads/192.168.62.140/tmp/whoami.sh&quot;,</span><br><span class="line">    &quot;md5sum&quot;: &quot;f1ba1d7c54e96b18261649459ceac64a&quot;,</span><br><span class="line">    &quot;remote_checksum&quot;: &quot;f5fcb41f69d716f7cfe09062efee2daabd6ba5a6&quot;,</span><br><span class="line">    &quot;remote_md5sum&quot;: null</span><br><span class="line">&#125;</span><br><span class="line">➜  ansible ls /downloads/192.168.62.140/tmp/whoami.sh</span><br><span class="line">/downloads/192.168.62.140/tmp/whoami.sh</span><br></pre></td></tr></table></figure>
-<h3 id="file-设置远程节点的文件的文件属性"><a href="#file-设置远程节点的文件的文件属性" class="headerlink" title="file 设置远程节点的文件的文件属性"></a>file 设置远程节点的文件的文件属性</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">➜  ansible ansible 192.168.62.140 -m file -a &apos;path=/tmp/aa/bb state=directory mode=0755</span><br><span class="line"> owner=xujingbin&apos;</span><br><span class="line">192.168.62.140 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: true,</span><br><span class="line">    &quot;gid&quot;: 1002,</span><br><span class="line">    &quot;group&quot;: &quot;xujingbin&quot;,</span><br><span class="line">    &quot;mode&quot;: &quot;0755&quot;,</span><br><span class="line">    &quot;owner&quot;: &quot;xujingbin&quot;,</span><br><span class="line">    &quot;path&quot;: &quot;/tmp/aa/bb&quot;,</span><br><span class="line">    &quot;secontext&quot;: &quot;unconfined_u:object_r:user_tmp_t:s0&quot;,</span><br><span class="line">    &quot;size&quot;: 6,</span><br><span class="line">    &quot;state&quot;: &quot;directory&quot;,</span><br><span class="line">    &quot;uid&quot;: 1001</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="hostname-设置远程节点主机名"><a href="#hostname-设置远程节点主机名" class="headerlink" title="hostname 设置远程节点主机名"></a>hostname 设置远程节点主机名</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">➜  ansible ansible 192.168.62.140 -b -m hostname -a &apos;name=node140&apos;</span><br><span class="line">192.168.62.140 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;ansible_facts&quot;: &#123;</span><br><span class="line">        &quot;ansible_domain&quot;: &quot;&quot;,</span><br><span class="line">        &quot;ansible_fqdn&quot;: &quot;node140&quot;,</span><br><span class="line">        &quot;ansible_hostname&quot;: &quot;node140&quot;,</span><br><span class="line">        &quot;ansible_nodename&quot;: &quot;node140&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;changed&quot;: true,</span><br><span class="line">    &quot;name&quot;: &quot;node140&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="cron-管理计划任务"><a href="#cron-管理计划任务" class="headerlink" title="cron 管理计划任务"></a>cron 管理计划任务</h3><h3 id="yum-使用yum包管理器来管理软件包"><a href="#yum-使用yum包管理器来管理软件包" class="headerlink" title="yum 使用yum包管理器来管理软件包"></a>yum 使用yum包管理器来管理软件包</h3><ol>
-<li>安装lrzsz<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">➜  ansible ansible 192.168.62.140 -b -m yum -a &apos;name=lrzsz state=present&apos;</span><br><span class="line">192.168.62.140 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;ansible_facts&quot;: &#123;</span><br><span class="line">        &quot;pkg_mgr&quot;: &quot;yum&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;changed&quot;: true,</span><br><span class="line">    &quot;msg&quot;: &quot;&quot;,</span><br><span class="line">    &quot;rc&quot;: 0,</span><br><span class="line">    &quot;results&quot;: [</span><br><span class="line">        &quot;Resolving Dependencies\n--&gt; Running transaction check\n---&gt; Package lrzsz.x86_64 0:0.12.20-36.el7 will be installed\n--&gt; Finished Dependency Resolution\n\nDependencies Resolved\n\n================================================================================\n Package         Arch             Version                  Repository      Size\n================================================================================\nInstalling:\n lrzsz           x86_64           0.12.20-36.el7           base            78 k\n\nTransaction Summary\n================================================================================\nInstall  1 Package\n\nTotal download size: 78 k\nInstalled size: 181 k\nDownloading packages:\nRunning transaction check\nRunning transaction test\nTransaction test succeeded\nRunning transaction\n  Installing : lrzsz-0.12.20-36.el7.x86_64                                  1/1 \n  Verifying  : lrzsz-0.12.20-36.el7.x86_64                                  1/1 \n\nInstalled:\n  lrzsz.x86_64 0:0.12.20-36.el7                                                 \n\nComplete!\n&quot;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li>卸载tree<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">➜  ansible ansible 192.168.62.140 -b -m yum -a &apos;name=tree state=removed&apos;</span><br><span class="line">192.168.62.140 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;ansible_facts&quot;: &#123;</span><br><span class="line">        &quot;pkg_mgr&quot;: &quot;yum&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;changed&quot;: true,</span><br><span class="line">    &quot;msg&quot;: &quot;&quot;,</span><br><span class="line">    &quot;rc&quot;: 0,</span><br><span class="line">    &quot;results&quot;: [</span><br><span class="line">        &quot;正在解决依赖关系\n--&gt; 正在检查事务\n---&gt; 软件包 tree.x86_64.0.1.6.0-10.el7 将被 删除\n--&gt; 解决依赖关系完成\n\n依赖关系解决\n\n================================================================================\n Package        架构             版本                     源               大小\n================================================================================\n正在删除:\n tree           x86_64           1.6.0-10.el7             @base            87 k\n\n事务概要\n================================================================================\n移除  1 软件包\n\n安装大小：87 k\nDownloading packages:\nRunning transaction check\nRunning transaction test\nTransaction test succeeded\nRunning transaction\n  正在删除    : tree-1.6.0-10.el7.x86_64                                    1/1 \n  验证中      : tree-1.6.0-10.el7.x86_64                                    1/1 \n\n删除:\n  tree.x86_64 0:1.6.0-10.el7                                                    \n\n完毕！\n&quot;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+          <ol>
+<li>运维需要管理许多开发人员的pub文件，统一存储在/etc/ansible/user.keypubs/.id_rsa.pub下，</li>
+<li>/etc/ansible/useradd.yml文件，添加zhangsan用户，只需修改vars下的用户、组名和执行的机器组hosts<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">- hosts: centos6</span><br><span class="line">  remote_user: dinggel</span><br><span class="line">  gather_facts: false</span><br><span class="line">  become: yes</span><br><span class="line">  vars:</span><br><span class="line">    - &#123;name: zhangsan, group: zhangsan&#125;</span><br><span class="line">  tasks:</span><br><span class="line">    - name: user add</span><br><span class="line">      user: name=&#123;&#123; name &#125;&#125;</span><br><span class="line">    - name: mkdir /home/&#123;&#123; name &#125;&#125;/.ssh</span><br><span class="line">      file: path=/home/&#123;&#123; name &#125;&#125;/.ssh state=directory owner=&#123;&#123; name &#125;&#125; mode=0700</span><br><span class="line">    - name: user add</span><br><span class="line">      action: file path=/home/&#123;&#123; name &#125;&#125;/.ssh/authorized_keys state=touch  owner=&#123;&#123; name &#125;&#125; mode=0600</span><br><span class="line"></span><br><span class="line">    - name: ssh-copy</span><br><span class="line">      authorized_key:</span><br><span class="line">        user: &quot;&#123;&#123; name &#125;&#125;&quot;</span><br><span class="line">        key: &quot;&#123;&#123; lookup(&apos;file&apos;, &apos;/etc/ansible/user.keypubs/&#123;&#123; name &#125;&#125;.id_rsa.pub&apos;) &#125;&#125;&quot;</span><br><span class="line">        path: /home/&#123;&#123; name &#125;&#125;/.ssh/authorized_keys</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<h3 id="user-远程添加用户"><a href="#user-远程添加用户" class="headerlink" title="user 远程添加用户"></a>user 远程添加用户</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">添加账户yongyuan</span><br><span class="line">➜  ansible ansible 192.168.62.140 -b -m user -a &apos;name=yongyuan&apos;</span><br><span class="line">192.168.62.140 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: true,</span><br><span class="line">    &quot;comment&quot;: &quot;&quot;,</span><br><span class="line">    &quot;create_home&quot;: true,</span><br><span class="line">    &quot;group&quot;: 1005,</span><br><span class="line">    &quot;home&quot;: &quot;/home/yongyuan&quot;,</span><br><span class="line">    &quot;name&quot;: &quot;yongyuan&quot;,</span><br><span class="line">    &quot;shell&quot;: &quot;/bin/bash&quot;,</span><br><span class="line">    &quot;state&quot;: &quot;present&quot;,</span><br><span class="line">    &quot;system&quot;: false,</span><br><span class="line">    &quot;uid&quot;: 1004</span><br><span class="line">&#125;</span><br><span class="line">groups: 添加辅助组</span><br><span class="line">group: 指定用户的主组</span><br><span class="line"></span><br><span class="line">删除账户yongyuan,一并删除目录</span><br><span class="line">➜  ansible ansible 192.168.62.140 -b -m user -a &apos;name=yongyuan state=absent remove=yes&apos;</span><br><span class="line">192.168.62.140 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: true,</span><br><span class="line">    &quot;force&quot;: false,</span><br><span class="line">    &quot;name&quot;: &quot;yongyuan&quot;,</span><br><span class="line">    &quot;remove&quot;: true,</span><br><span class="line">    &quot;state&quot;: &quot;absent&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="get-url-从-HTTP-HTTPS-or-FTP-下载文件"><a href="#get-url-从-HTTP-HTTPS-or-FTP-下载文件" class="headerlink" title="get_url 从 HTTP, HTTPS, or FTP 下载文件"></a>get_url 从 HTTP, HTTPS, or FTP 下载文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">➜  ansible ansible 192.168.62.140 -b -m get_url -a &apos;dest=/home/xujingbin/ url=&quot;http://nginx.org/en/CHANGES&quot;&apos;</span><br><span class="line">192.168.62.140 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: true,</span><br><span class="line">    &quot;checksum_dest&quot;: null,</span><br><span class="line">    &quot;checksum_src&quot;: &quot;b07551b44f7ce834d6f979861ef92157198ecf65&quot;,</span><br><span class="line">    &quot;dest&quot;: &quot;/home/xujingbin/&quot;,</span><br><span class="line">    &quot;elapsed&quot;: 2,</span><br><span class="line">    &quot;gid&quot;: 1002,</span><br><span class="line">    &quot;group&quot;: &quot;xujingbin&quot;,</span><br><span class="line">    &quot;md5sum&quot;: &quot;a8fd7c4f8948815289093da824d12d8f&quot;,</span><br><span class="line">    &quot;mode&quot;: &quot;0700&quot;,</span><br><span class="line">    &quot;msg&quot;: &quot;OK (294414 bytes)&quot;,</span><br><span class="line">    &quot;owner&quot;: &quot;xujingbin&quot;,</span><br><span class="line">    &quot;secontext&quot;: &quot;unconfined_u:object_r:user_home_dir_t:s0&quot;,</span><br><span class="line">    &quot;size&quot;: 145,</span><br><span class="line">    &quot;src&quot;: &quot;/home/xujingbin/.ansible/tmp/ansible-tmp-1550241110.23-90701238301511/tmpRkTJmH&quot;,</span><br><span class="line">    &quot;state&quot;: &quot;directory&quot;,</span><br><span class="line">    &quot;status_code&quot;: 200,</span><br><span class="line">    &quot;uid&quot;: 1001,</span><br><span class="line">    &quot;url&quot;: &quot;http://nginx.org/en/CHANGES&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -265,7 +252,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
   </nav>
 
 
@@ -287,10 +274,10 @@
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
-          Table of Contents
+          文章目录
         </li>
         <li class="sidebar-nav-overview">
-          Overview
+          站点概览
         </li>
       </ul>
 
@@ -310,16 +297,20 @@
           <a href="/archives/">
         
           <span class="site-state-item-count">11</span>
-          <span class="site-state-item-name">posts</span>
+          <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
         <span class="site-state-item-count">5</span>
-        <span class="site-state-item-name">categories</span>
+        <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
         <span class="site-state-item-count">17</span>
-        <span class="site-state-item-name">tags</span>
+        <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
@@ -354,10 +345,10 @@
   </span>
   <span class="author" itemprop="copyrightHolder">xujingbin</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.0.0
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
   </div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.5.0
   </div>
 
         
