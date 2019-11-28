@@ -55,7 +55,7 @@
 <meta property="og:site_name" content="运维笔记">
 <meta property="og:description" content="cachecloudhttps:&#x2F;&#x2F;github.com&#x2F;sohutv&#x2F;cachecloud 编译：mvn clean compile install -Ponline https:&#x2F;&#x2F;cachecloud.github.io&#x2F;2017&#x2F;02&#x2F;06&#x2F;1.3.%E6%9C%BA%E5%99%A8%E7%9B%91%E6%8E%A7%E5%8A%9F%E8%83%BD&#x2F; 删除的app_desc表数据">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-11-28T07:34:02.784Z">
+<meta property="og:updated_time" content="2019-11-28T07:37:07.217Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://yoursite.com/2019/11/28/db/cachecloud/">
@@ -152,7 +152,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">77</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">76</span></a>
 
   </li>
   </ul>
@@ -204,7 +204,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2019-11-28 15:34:02" itemprop="dateCreated datePublished" datetime="2019-11-28T15:34:02+08:00">2019-11-28</time>
+              <time title="创建时间：2019-11-28 15:37:07" itemprop="dateCreated datePublished" datetime="2019-11-28T15:37:07+08:00">2019-11-28</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -236,7 +236,7 @@
 <p>mysql&gt; delete from app_desc where app_id=11\G</p>
 <p>Query OK, 1 row affected (0.00 sec)</p>
 <p>cachecloud 删除数据库app_desc表相关数据</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO `app_desc` VALUES(37,&apos;主站相似度计算 AAA 250:6380-6383&apos;,1,2,&apos;存临时数据的，计算的时候中间会用到,另几个实例添加失败10.0.0.253:6379:7168\n10.0.0.253:6380:71</span><br><span class="line">68\n10.0.0.253:6381:7168\n10.0.0.253:6382:7168&apos;,&apos;2017-09-30 14:53:41&apos;,&apos;2017-09-30 14:53:41&apos;,6,&apos;AAA&apos;,1,0,0,0,0,0,0,90,NULL,0,&apos;548bf53f4427e0a</span><br><span class="line">f3e3dab6f1d79acef&apos;,3,&apos;&apos;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO `app_desc` VALUES(37,&apos;主站相似度计算 AAA 250:6380-6383&apos;,1,2,&apos;存临时数据的，计算的时候中间会用到,另几个实例添加失败172.16.1.253:6379:7168\n172.16.1.253:6380:71</span><br><span class="line">68\n172.16.1.253:6381:7168\n172.16.1.253:6382:7168&apos;,&apos;2017-09-30 14:53:41&apos;,&apos;2017-09-30 14:53:41&apos;,6,&apos;AAA&apos;,1,0,0,0,0,0,0,90,NULL,0,&apos;548bf53f4427e0a</span><br><span class="line">f3e3dab6f1d79acef&apos;,3,&apos;&apos;)</span><br></pre></td></tr></table></figure>
 <h2 id="删除下线实例"><a href="#删除下线实例" class="headerlink" title="删除下线实例"></a>删除下线实例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">delete from instance_statistics where inst_id in (select id from instance_info where status=2);</span><br><span class="line">delete from instance_info where status=2;</span><br></pre></td></tr></table></figure>
 
 <h3 id="删除下线应用"><a href="#删除下线应用" class="headerlink" title="删除下线应用"></a>删除下线应用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">delete from app_desc where status=3;</span><br></pre></td></tr></table></figure>
@@ -262,12 +262,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2019/11/28/db/mongodb/" rel="prev" title="mongodb">
-      <i class="fa fa-chevron-left"></i> mongodb
+    <a href="/2019/11/28/db/mysql/issues/" rel="prev" title="mysql issues">
+      <i class="fa fa-chevron-left"></i> mysql issues
     </a></div>
       <div class="post-nav-item">
-    <a href="/2019/11/28/db/mysql/issues/" rel="next" title="mysql issues">
-      mysql issues <i class="fa fa-chevron-right"></i>
+    <a href="/2019/11/28/db/es/commands/" rel="next" title="db/es/commands">
+      db/es/commands <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -320,7 +320,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">77</span>
+          <span class="site-state-item-count">76</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

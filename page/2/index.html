@@ -150,7 +150,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">77</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">76</span></a>
 
   </li>
   </ul>
@@ -175,6 +175,374 @@
             
 
   <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/jenkins/nexus/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/28/jenkins/nexus/" class="post-title-link" itemprop="url">jenkins/nexus</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-28 15:32:26" itemprop="dateCreated datePublished" datetime="2019-11-28T15:32:26+08:00">2019-11-28</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>报错处理<br><a href="https://www.cnblogs.com/fengpingfan/p/5197608.html" target="_blank" rel="noopener">https://www.cnblogs.com/fengpingfan/p/5197608.html</a></p>
+<h3 id="3-15版本"><a href="#3-15版本" class="headerlink" title="3.15版本"></a>3.15版本</h3><p>pom.xml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;distributionManagement&gt;</span><br><span class="line">    &lt;repository&gt;</span><br><span class="line">        &lt;id&gt;gprp&lt;/id&gt;</span><br><span class="line">        &lt;url&gt;http://nexus.xujingbindoc.com:8081/repository/gprp/&lt;/url&gt;</span><br><span class="line">    &lt;/repository&gt;</span><br><span class="line">    &lt;snapshotRepository&gt;</span><br><span class="line">        &lt;id&gt;gprp-snapshot&lt;/id&gt;</span><br><span class="line">        &lt;url&gt;http://nexus.xujingbindoc.com:8081/repository/gprp-snapshot/&lt;/url&gt;</span><br><span class="line">    &lt;/snapshotRepository&gt;</span><br><span class="line">&lt;/distributionManagement&gt;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/jenkins/jenkins-issues/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/28/jenkins/jenkins-issues/" class="post-title-link" itemprop="url">jenkins/jenkins-issues</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-28 15:32:03" itemprop="dateCreated datePublished" datetime="2019-11-28T15:32:03+08:00">2019-11-28</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="Groovy-RejectedAccessException"><a href="#Groovy-RejectedAccessException" class="headerlink" title="Groovy RejectedAccessException"></a>Groovy RejectedAccessException</h3><p><a href="https://blog.johnwu.cc/article/jenkins-groovy-rejected-access-exception.html" target="_blank" rel="noopener">https://blog.johnwu.cc/article/jenkins-groovy-rejected-access-exception.html</a></p>
+<ul>
+<li>找到系统设置-in-process Script Approval-Approve 每发生一次就授权执行一次</li>
+</ul>
+<h3 id="ERROR-Failed-to-execute-goal-org-apache-maven-plugins-maven-release-plugin-2-5-3-prepare-default-cli-on-project-adgame-statistic-query-Unable-to-commit-files"><a href="#ERROR-Failed-to-execute-goal-org-apache-maven-plugins-maven-release-plugin-2-5-3-prepare-default-cli-on-project-adgame-statistic-query-Unable-to-commit-files" class="headerlink" title="[ERROR] Failed to execute goal org.apache.maven.plugins:maven-release-plugin:2.5.3:prepare (default-cli) on project adgame_statistic_query: Unable to commit files"></a>[ERROR] Failed to execute goal org.apache.maven.plugins:maven-release-plugin:2.5.3:prepare (default-cli) on project adgame_statistic_query: Unable to commit files</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[ERROR] Provider message:</span><br><span class="line">[ERROR] The git-push command failed.</span><br><span class="line">[ERROR] Command output:</span><br><span class="line">[ERROR] ssh: Could not resolve hostname gitlab.xujingbin.com:adgame: Name or service not known</span><br><span class="line">[ERROR] fatal: The remote end hung up unexpectedly</span><br></pre></td></tr></table></figure>
+<ul>
+<li>地址写错了 xujingbin.com: 改成xujingbin.com/</li>
+</ul>
+<h3 id="ERROR-Failed-to-execute-goal-org-apache-maven-plugins-maven-release-plugin-2-5-3-prepare-default-cli-on-project-gprp-cloud-api-Unable-to-tag-SCM"><a href="#ERROR-Failed-to-execute-goal-org-apache-maven-plugins-maven-release-plugin-2-5-3-prepare-default-cli-on-project-gprp-cloud-api-Unable-to-tag-SCM" class="headerlink" title="[ERROR] Failed to execute goal org.apache.maven.plugins:maven-release-plugin:2.5.3:prepare (default-cli) on project gprp_cloud_api: Unable to tag SCM"></a>[ERROR] Failed to execute goal org.apache.maven.plugins:maven-release-plugin:2.5.3:prepare (default-cli) on project gprp_cloud_api: Unable to tag SCM</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[ERROR] Provider message:</span><br><span class="line">[ERROR] The git-push command failed.</span><br><span class="line">[ERROR] Command output:</span><br><span class="line">[ERROR] ssh_exchange_identification: Connection closed by remote host</span><br><span class="line">[ERROR] fatal: The remote end hung up unexpectedly</span><br><span class="line">[ERROR] -&gt; [Help 1]</span><br><span class="line">[ERROR] </span><br><span class="line">[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.</span><br><span class="line">[ERROR] Re-run Maven using the -X switch to enable full debug logging.</span><br><span class="line">[ERROR] </span><br><span class="line">[ERROR] For more information about the errors and possible solutions, please read the following articles:</span><br><span class="line">[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException</span><br></pre></td></tr></table></figure>
+<ul>
+<li>可能因为提交的文件太大导致或者本身出现的网络问题  或者是更改/etc/ssh/sshd_config,MaxSessions 30</li>
+</ul>
+<h3 id="ERROR-Failed-to-execute-goal-org-apache-maven-plugins-maven-release-plugin-2-5-3-prepare-default-cli-on-project-gprp-cg-app-Unable-to-commit-files"><a href="#ERROR-Failed-to-execute-goal-org-apache-maven-plugins-maven-release-plugin-2-5-3-prepare-default-cli-on-project-gprp-cg-app-Unable-to-commit-files" class="headerlink" title="[ERROR] Failed to execute goal org.apache.maven.plugins:maven-release-plugin:2.5.3:prepare (default-cli) on project gprp_cg_app: Unable to commit files"></a>[ERROR] Failed to execute goal org.apache.maven.plugins:maven-release-plugin:2.5.3:prepare (default-cli) on project gprp_cg_app: Unable to commit files</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[ERROR] Provider message:</span><br><span class="line">[ERROR] The git-push command failed.</span><br><span class="line">[ERROR] Command output:</span><br><span class="line">[ERROR] GitLab: The project you were looking for could not be found.</span><br><span class="line">[ERROR] fatal: Could not read from remote repository.</span><br><span class="line">[ERROR] </span><br><span class="line">[ERROR] Please make sure you have the correct access rights</span><br><span class="line">[ERROR] and the repository exists.</span><br></pre></td></tr></table></figure>
+<p>nexus仓库没有配置会导致此报错</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/db/redis/redis-trib.rb/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/28/db/redis/redis-trib.rb/" class="post-title-link" itemprop="url">redis-trib</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-28 11:12:03" itemprop="dateCreated datePublished" datetime="2019-11-28T11:12:03+08:00">2019-11-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/redis/" itemprop="url" rel="index">
+                    <span itemprop="name">redis</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="install"><a href="#install" class="headerlink" title="install"></a>install</h3><p>下载ruby</p>
+<p><a href="https://cache.ruby-lang.org/pub/ruby/2.3/" target="_blank" rel="noopener">https://cache.ruby-lang.org/pub/ruby/2.3/</a></p>
+<p>tar zxf ruby-2.3.1.tar.gz</p>
+<p>./configure –prefix=/usr/local/ruby</p>
+<p>make </p>
+<p>make install</p>
+<p>sudo cp bin/ruby /usr/local/bin/</p>
+<p>sudo cp bin/gem /usr/local/bin</p>
+<p>gem update –system</p>
+<p>gem install  redis</p>
+<p>cd redis源码包</p>
+<p>cp src/redis-trib.rb /usr/local/bin</p>
+<h3 id="commands"><a href="#commands" class="headerlink" title="commands"></a>commands</h3><p>redis-trib.rb info ip:port</p>
+<p>redis-trib.rb rebalance ip:port</p>
+<h3 id="problem"><a href="#problem" class="headerlink" title="problem"></a>problem</h3><p>[ERR] Calling MIGRATE: ERR Syntax error, try CLIENT (LIST | KILL | GETNAME | SETNAME | PAUSE | REPLY)</p>
+<h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">redis-trib.rb check ip:port</span><br><span class="line">redis-trib.rb fix ip:port</span><br><span class="line">### 迁移槽 如果reblance不管用时可先指定性迁移一个几点过去 再进行balance</span><br><span class="line">redis-trib.rb reshard --from 579977beae4239d57c1b1ba32cf0946aeb08fcc1 --to d73664823d4c7df016b0734bb8f41a35dc430918 --slots 2730 10.0.0.217:6385</span><br><span class="line">redis-trib.rb rebalance 10.0.0.217:6385</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/db/redis/%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/28/db/redis/%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87/" class="post-title-link" itemprop="url">redis性能指标及优化</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-28 11:11:47" itemprop="dateCreated datePublished" datetime="2019-11-28T11:11:47+08:00">2019-11-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/redis/" itemprop="url" rel="index">
+                    <span itemprop="name">redis</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="性能指标"><a href="#性能指标" class="headerlink" title="性能指标"></a>性能指标</h3><p><a href="http://www.cnblogs.com/mushroom/p/4738170.html" target="_blank" rel="noopener">http://www.cnblogs.com/mushroom/p/4738170.html</a></p>
+<ul>
+<li>内存过期策略<a href="https://www.cnblogs.com/xuliangxing/p/7151812.html" target="_blank" rel="noopener">https://www.cnblogs.com/xuliangxing/p/7151812.html</a> </li>
+<li>跟踪延迟性能 <code>Redis-cli --latency -h 127.0.0.1 -p 6379</code></li>
+<li>used_memory_rss：从操作系统上显示已经分配的内存总量。</li>
+<li>mem_fragmentation_ratio： 内存碎片率。</li>
+<li>used_memory_lua： Lua脚本引擎所使用的内存大小。</li>
+<li>mem_allocator： 在编译时指定的Redis使用的内存分配器，可以是libc、jemalloc、tcmalloc。</li>
+</ul>
+<h3 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">sudo echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled</span><br><span class="line"></span><br><span class="line">no-appendfsync-on-rewrite 重写期间不做fsync操作</span><br><span class="line"></span><br><span class="line">echo &quot;vm.swappiness=0&quot; &gt;&gt; /etc/sysctl.conf &amp;&amp; sysctl -p</span><br><span class="line">echo &quot;vm.overcommit_memory = 1&quot; &gt;&gt; /etc/sysctl.conf &amp;&amp; sysctl -p</span><br><span class="line">可选值：0、1、2。</span><br><span class="line">0， 表示内核将检查是否有足够的可用内存供应用进程使用；如果有足够的可用内存，内存申请允许；否则，内存申请失败，并把错误返回给应用进程。</span><br><span class="line">1， 表示内核允许分配所有的物理内存，而不管当前的内存状态如何。</span><br><span class="line">2， 表示内核允许分配超过所有物理内存和交换空间总和的内存</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/db/redis/redis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/28/db/redis/redis/" class="post-title-link" itemprop="url">redis主从同步测试</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-28 11:11:35" itemprop="dateCreated datePublished" datetime="2019-11-28T11:11:35+08:00">2019-11-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/redis/" itemprop="url" rel="index">
+                    <span itemprop="name">redis</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>###redis主从同步 超时(1分钟)后，重新同步</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">227-&gt;234 在234上执行&quot;systemctl restart network&quot;，同步不会断开，当网络断开时长超过1分钟后，日志报错“Timeout receiving bulk data from MASTER... If the problem persists try to set the &apos;repl-timeout&apos; parameter in redis.conf to a larger value.”，当网络正常后，“ Connecting to MASTER 10.10.60.227:6380。 MASTER &lt;-&gt; SLAVE sync started。……。…………Full resync from master: 80b4b20bae05”，</span><br><span class="line">结论：不适合在网络不保障的情况下进行</span><br></pre></td></tr></table></figure>
+<p>###redis-migrate-tool迁移工具单点测试：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">10.10.60.227,10.10.60.234，工具在227上，234开启rdb，227分几个情况：</span><br><span class="line">1、227只开启rdb：234 -&gt; 227 ，拔了227网线1.5小时，成功</span><br><span class="line">2、227开启rdb和aof：234－&gt;227,拔了227网线2分钟，成功</span><br><span class="line">3、227开启rdb和aof，227-&gt;234，拔了234网线2分钟，成功</span><br></pre></td></tr></table></figure>
+
+<p>redis命令<a href="https://redis.readthedocs.io/en/2.4/" target="_blank" rel="noopener">https://redis.readthedocs.io/en/2.4/</a></p>
+<h3 id="redis5"><a href="#redis5" class="headerlink" title="redis5"></a>redis5</h3><p>添加节点cluster meet ip port<br>给新节点分配slot：redis-cli –cluster reshard  10.0.0.217:6416</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
         
   
   
@@ -684,388 +1052,6 @@ echo &quot;deadline&quot; &gt; /sys/block/sda/queue/scheduler</code></pre></li>
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/hadoop/kylin/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/28/hadoop/kylin/" class="post-title-link" itemprop="url">kylin</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-28 11:07:10" itemprop="dateCreated datePublished" datetime="2019-11-28T11:07:10+08:00">2019-11-28</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/kylin/" itemprop="url" rel="index">
-                    <span itemprop="name">kylin</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="kylin"><a href="#kylin" class="headerlink" title="kylin"></a>kylin</h3><p>Apache Kylin™是一个开源的分布式分析引擎，提供Hadoop/Spark之上的SQL查询接口及多维分析（OLAP）能力以支持超大规模数据，最初由eBay Inc. 开发并贡献至开源社区。它能在亚秒内查询巨大的Hive表</p>
-<h4 id="搭建问题解决"><a href="#搭建问题解决" class="headerlink" title="搭建问题解决"></a>搭建问题解决</h4><p>(Java.lang.NoClassDefFoundError: org/apache/Hadoop/hive/cli/CliSessionState<br>java.lang.NoClassDefFoundError: org/apache/hadoop/hive/ql/session/SessionState)  <a href="http://blog.csdn.net/dirful/article/details/74012473" target="_blank" rel="noopener">http://blog.csdn.net/dirful/article/details/74012473</a><br> 解决：将hive lib文件夹下的lib拷贝到kylin lib文件夹下。<br>修改hbase-env.sh<br>export HBASE_CLASSPATH=/home/hadoop/hbase/conf:${HBASE_CLASSPATH}</p>
-<p>默认用户名密码ADMIN:KYLIN<br>加用户密码： <a href="http://www.cnblogs.com/en-heng/p/5170876.html" target="_blank" rel="noopener">http://www.cnblogs.com/en-heng/p/5170876.html</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/hadoop/kudu/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/28/hadoop/kudu/" class="post-title-link" itemprop="url">hadoop/kudu</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-28 11:06:39" itemprop="dateCreated datePublished" datetime="2019-11-28T11:06:39+08:00">2019-11-28</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <hr>
-<p>title: kudu<br>author: xujingbin<br>tags:</p>
-<ul>
-<li>kudu<br>categories:</li>
-<li>kudu<br>keywords: kudu</li>
-</ul>
-<hr>
-<h4 id="install"><a href="#install" class="headerlink" title="install"></a>install</h4><p><a href="https://kudu.apache.org/docs/installation.html" target="_blank" rel="noopener">https://kudu.apache.org/docs/installation.html</a><br><a href="https://www.cnblogs.com/Leo_wl/p/7374133.html" target="_blank" rel="noopener">https://www.cnblogs.com/Leo_wl/p/7374133.html</a><br>单master搭建配置<a href="https://blog.csdn.net/xcg132566/article/details/86521815" target="_blank" rel="noopener">https://blog.csdn.net/xcg132566/article/details/86521815</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/hadoop/impala/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/28/hadoop/impala/" class="post-title-link" itemprop="url">impala</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-28 11:06:20" itemprop="dateCreated datePublished" datetime="2019-11-28T11:06:20+08:00">2019-11-28</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/impala/" itemprop="url" rel="index">
-                    <span itemprop="name">impala</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>mpp架构的查询引擎，用来查hive数据的</p>
-<p>test.txt</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">    &lt;!-- impala --&gt;</span><br><span class="line"></span><br><span class="line">    &lt;property&gt;</span><br><span class="line"></span><br><span class="line">            &lt;name&gt;dfs.datanode.hdfs-blocks-metadata.enabled&lt;/name&gt;</span><br><span class="line"></span><br><span class="line">            &lt;value&gt;true&lt;/value&gt;</span><br><span class="line"></span><br><span class="line">    &lt;/property&gt;</span><br><span class="line"></span><br><span class="line">    &lt;property&gt;</span><br><span class="line"></span><br><span class="line">            &lt;name&gt;dfs.block.local-path-access.user&lt;/name&gt;</span><br><span class="line"></span><br><span class="line">            &lt;value&gt;impala&lt;/value&gt;</span><br><span class="line"></span><br><span class="line">    &lt;/property&gt;</span><br><span class="line"></span><br><span class="line">    &lt;property&gt;</span><br><span class="line"></span><br><span class="line">            &lt;name&gt;dfs.client.file-block-storage-locations.timeout.millis&lt;/name&gt;</span><br><span class="line"></span><br><span class="line">            &lt;value&gt;60000&lt;/value&gt;</span><br><span class="line"></span><br><span class="line">    &lt;/property&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &lt;!-- impala --&gt;</span><br><span class="line"></span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;property&gt;</span><br><span class="line"></span><br><span class="line">    &lt;name&gt;dfs.client.read.shortcircuit&lt;/name&gt;</span><br><span class="line"></span><br><span class="line">    &lt;value&gt;true&lt;/value&gt;</span><br><span class="line"></span><br><span class="line">&lt;/property&gt;</span><br><span class="line"></span><br><span class="line">&lt;property&gt;</span><br><span class="line"></span><br><span class="line">    &lt;name&gt;dfs.domain.socket.path&lt;/name&gt;</span><br><span class="line"></span><br><span class="line">    &lt;value&gt;/var/run/hdfs-sockets/dn&lt;/value&gt;</span><br><span class="line"></span><br><span class="line">&lt;/property&gt;</span><br><span class="line"></span><br><span class="line">&lt;property&gt;</span><br><span class="line"></span><br><span class="line">    &lt;name&gt;dfs.client.file-block-storage-locations.timeout.millis&lt;/name&gt;</span><br><span class="line"></span><br><span class="line">    &lt;value&gt;10000&lt;/value&gt;</span><br><span class="line"></span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">ansible hadoop -f 15 -m shell -s -a &quot;cp /home/hadoop/hadoop-2.6.4/etc/hadoop/hdfs-site.xml /usr/local/impala/conf/;sed -i &apos;/&lt;\/configuration&gt;/d&apos; /usr/local/impala/conf/hdfs-site.xml; cat /home/xujingbin/test.txt &gt;&gt; /usr/local/impala/conf/hdfs-site.xml&quot;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">ansible hadoop -m copy -a &apos;src=test.txt dest=~/&apos;</span><br><span class="line"></span><br><span class="line">ansible hadoop -m shell -s -a &quot;sed -i &apos;/&lt;\/configuration&gt;/d&apos; /usr/local/impala/conf/hdfs-site.xml; cat /home/xujingbin/test.txt &gt;&gt; /usr/local/impala/conf/hdfs-site.xml&quot;</span><br><span class="line"></span><br><span class="line">重启impalad</span><br><span class="line"></span><br><span class="line">ansible impala -m shell -f 15 -b -a &quot;pkill impalad;sleep 2;su - impala -c &apos;/usr/local/impala/bin/start-impalad.sh -state_store_host=qz50 -catalog_service_host=qz50 &amp;&apos;&quot;</span><br><span class="line"></span><br><span class="line">ansible hadoop -m shell -s -a &quot;tac /home/hadoop/hadoop-2.6.4/etc/hadoop/hdfs-site.xml |sed &apos;1,14d&apos; |tac &gt; /home/xujingbin/hdfs-site.xml;echo &apos;&lt;/configuration&gt;&apos; &gt;&gt; /home/xujingbin/hdfs-site.xml&quot;</span><br><span class="line"></span><br><span class="line">ansible hadoop -m shell -s -a &quot;cp /home/xujingbin/hdfs-site.xml /home/hadoop/hadoop-2.6.4/etc/hadoop/hdfs-site.xml;chown hadoop.hadoop /home/hadoop/hadoop-2.6.4/etc/hadoop/hdfs-site.xml&quot;</span><br></pre></td></tr></table></figure>
-
-<h3 id="修改完hdfs-site-xml，后重启datanode"><a href="#修改完hdfs-site-xml，后重启datanode" class="headerlink" title="修改完hdfs-site.xml，后重启datanode"></a>修改完hdfs-site.xml，后重启datanode</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo mkdir /var/run/hdfs-sockets;sudo chown -R hadoop.hadoop /var/run/hdfs-sockets</span><br></pre></td></tr></table></figure>
-
-<h4 id="启动后端进程服务"><a href="#启动后端进程服务" class="headerlink" title="启动后端进程服务"></a>启动后端进程服务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">bin/start-statestored.sh &amp;</span><br><span class="line"></span><br><span class="line">bin/start-catalogd.sh &amp;</span><br></pre></td></tr></table></figure>
-
-<h4 id="启动客户端程序"><a href="#启动客户端程序" class="headerlink" title="启动客户端程序"></a>启动客户端程序</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/usr/local/impala/bin/start-impalad.sh -state_store_host=qz199 -catalog_service_host=qz199 -kudu_master_hosts=qz194:7051 &amp;</span><br></pre></td></tr></table></figure>
-
-<h4 id="客户端连接程序"><a href="#客户端连接程序" class="headerlink" title="客户端连接程序"></a>客户端连接程序</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">bin/impala-shell.sh</span><br></pre></td></tr></table></figure>
-
-
-
-<p>Impala原理及其调优 <a href="https://www.jianshu.com/p/92630be68394" target="_blank" rel="noopener">https://www.jianshu.com/p/92630be68394</a></p>
-<p>监控rest api</p>
-<h2 id="statestored-catalog"><a href="#statestored-catalog" class="headerlink" title="statestored  catalog"></a>statestored  catalog</h2><p>less /tmp/catalogd.INFO</p>
-<p>less /tmp/statestored.INFO</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/hadoop/hue/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/28/hadoop/hue/" class="post-title-link" itemprop="url">hue</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-28 11:06:04" itemprop="dateCreated datePublished" datetime="2019-11-28T11:06:04+08:00">2019-11-28</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/hue/" itemprop="url" rel="index">
-                    <span itemprop="name">hue</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="hue"><a href="#hue" class="headerlink" title="hue"></a>hue</h3><pre><code>由于大数据框架很多，为了解决某个问题，一般来说会用到多个框架，但是每个框架又都有自己的web UI监控界面，对应着不同的端口号。比如HDFS(50070)、YARN(8088)、MapReduce(19888)等。这个时候有一个统一的web UI界面去管理各个大数据常用框架是非常方便的。这就使得对大数据的开发、监控和运维更加的方便。</code></pre><h4 id="安装依赖-是否要这么多-需要验证）"><a href="#安装依赖-是否要这么多-需要验证）" class="headerlink" title="安装依赖(是否要这么多 需要验证）"></a>安装依赖(是否要这么多 需要验证）</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install -y gcc libxml2-devel libxslt-devel cyrus-sasl-devel mysql-devel python-devel python-setuptools python-simplejson sqlite-devel ant gmp-devel</span><br><span class="line">yum install -y cyrus-sasl-plain cyrus-sasl-devel cyrus-sasl-gssapi</span><br></pre></td></tr></table></figure>
-
-
-<h4 id="修改maven-pom-xml文件，然后编译安装"><a href="#修改maven-pom-xml文件，然后编译安装" class="headerlink" title="修改maven/pom.xml文件，然后编译安装"></a>修改maven/pom.xml文件，然后编译安装</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. 将Hadoop和Spark修改为相应的版本： java版本也可能需要修改</span><br><span class="line">&lt;hadoop-mr1.version&gt;2.6.4&lt;/hadoop-mr1.version&gt;</span><br><span class="line">&lt;hadoop.version&gt;2.6.4&lt;/hadoop.version&gt;</span><br></pre></td></tr></table></figure>
-<p>make apps</p>
-<h4 id="修改配置文件desktop-conf-pseudo-distributed-ini，并初始化数据库"><a href="#修改配置文件desktop-conf-pseudo-distributed-ini，并初始化数据库" class="headerlink" title="修改配置文件desktop/conf/pseudo-distributed.ini，并初始化数据库"></a>修改配置文件desktop/conf/pseudo-distributed.ini，并初始化数据库</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">build/env/bin/hue syncdb</span><br><span class="line">build/env/bin/hue migrate</span><br><span class="line">同步系统用户和hue用户</span><br><span class="line">build/env/bin/hue useradmin_sync_with_unix</span><br></pre></td></tr></table></figure>
-
-<h4 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/home/yizhiyong/hue/build/env/bin/hue runserver 42.62.125.50:8000</span><br><span class="line">50上用supervisorctl</span><br></pre></td></tr></table></figure>
-
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/hadoop/hive/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/28/hadoop/hive/" class="post-title-link" itemprop="url">hive</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-28 11:05:41" itemprop="dateCreated datePublished" datetime="2019-11-28T11:05:41+08:00">2019-11-28</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/hive/" itemprop="url" rel="index">
-                    <span itemprop="name">hive</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="hive"><a href="#hive" class="headerlink" title="hive"></a>hive</h3><pre><code>hive是基于Hadoop的一个数据仓库工具，可以将结构化的数据文件映射为一张数据库表，并提供简单的sql查询功能，可以将sql语句转换为MapReduce任务进行运行。 其优点是学习成本低，可以通过类SQL语句快速实现简单的MapReduce统计，不必开发专门的MapReduce应用，十分适合数据仓库的统计分析。</code></pre><p>直接下载bin包，编辑conf/hive-site.xml<br>    <name>javax.jdo.option.ConnectionURL</name><br>    <value>jdbc:mysql://localhost:3306/hive?createDatabaseIfNotExist=true&amp;useSSL=false</value></p>
-<p>配置完配置文件后先初始化（会自行创建数据库）<br>bin/schematool -initSchema -dbType mysql<br>搭建报错：<a href="http://www.jianshu.com/p/d9cb284f842d" target="_blank" rel="noopener">http://www.jianshu.com/p/d9cb284f842d</a></p>
-<p>启动metastore</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/hive --service metastore  &gt;metastore.log 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1114,7 +1100,7 @@ echo &quot;deadline&quot; &gt; /sys/block/sda/queue/scheduler</code></pre></li>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">77</span>
+          <span class="site-state-item-count">76</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

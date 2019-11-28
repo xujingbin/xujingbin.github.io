@@ -55,7 +55,7 @@
 <meta property="og:site_name" content="运维笔记">
 <meta property="og:description" content="mpp架构的查询引擎，用来查hive数据的 test.txt 1234567891011121314151617181920212223242526272829303132    &amp;lt;!-- impala --&amp;gt;    &amp;lt;property&amp;gt;            &amp;lt;name&amp;gt;dfs.datanode.hdfs-blocks-metadata.enabled&amp;lt;">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-11-28T03:06:20.905Z">
+<meta property="og:updated_time" content="2019-11-28T07:39:23.172Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://yoursite.com/2019/11/28/hadoop/impala/">
@@ -152,7 +152,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">77</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">76</span></a>
 
   </li>
   </ul>
@@ -204,7 +204,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2019-11-28 11:06:20" itemprop="dateCreated datePublished" datetime="2019-11-28T11:06:20+08:00">2019-11-28</time>
+              <time title="创建时间：2019-11-28 15:39:23" itemprop="dateCreated datePublished" datetime="2019-11-28T15:39:23+08:00">2019-11-28</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -241,13 +241,13 @@
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">ansible hadoop -f 15 -m shell -s -a &quot;cp /home/hadoop/hadoop-2.6.4/etc/hadoop/hdfs-site.xml /usr/local/impala/conf/;sed -i &apos;/&lt;\/configuration&gt;/d&apos; /usr/local/impala/conf/hdfs-site.xml; cat /home/xujingbin/test.txt &gt;&gt; /usr/local/impala/conf/hdfs-site.xml&quot;</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">ansible hadoop -m copy -a &apos;src=test.txt dest=~/&apos;</span><br><span class="line"></span><br><span class="line">ansible hadoop -m shell -s -a &quot;sed -i &apos;/&lt;\/configuration&gt;/d&apos; /usr/local/impala/conf/hdfs-site.xml; cat /home/xujingbin/test.txt &gt;&gt; /usr/local/impala/conf/hdfs-site.xml&quot;</span><br><span class="line"></span><br><span class="line">重启impalad</span><br><span class="line"></span><br><span class="line">ansible impala -m shell -f 15 -b -a &quot;pkill impalad;sleep 2;su - impala -c &apos;/usr/local/impala/bin/start-impalad.sh -state_store_host=qz50 -catalog_service_host=qz50 &amp;&apos;&quot;</span><br><span class="line"></span><br><span class="line">ansible hadoop -m shell -s -a &quot;tac /home/hadoop/hadoop-2.6.4/etc/hadoop/hdfs-site.xml |sed &apos;1,14d&apos; |tac &gt; /home/xujingbin/hdfs-site.xml;echo &apos;&lt;/configuration&gt;&apos; &gt;&gt; /home/xujingbin/hdfs-site.xml&quot;</span><br><span class="line"></span><br><span class="line">ansible hadoop -m shell -s -a &quot;cp /home/xujingbin/hdfs-site.xml /home/hadoop/hadoop-2.6.4/etc/hadoop/hdfs-site.xml;chown hadoop.hadoop /home/hadoop/hadoop-2.6.4/etc/hadoop/hdfs-site.xml&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">ansible hadoop -m copy -a &apos;src=test.txt dest=~/&apos;</span><br><span class="line"></span><br><span class="line">ansible hadoop -m shell -s -a &quot;sed -i &apos;/&lt;\/configuration&gt;/d&apos; /usr/local/impala/conf/hdfs-site.xml; cat /home/xujingbin/test.txt &gt;&gt; /usr/local/impala/conf/hdfs-site.xml&quot;</span><br><span class="line"></span><br><span class="line">重启impalad</span><br><span class="line"></span><br><span class="line">ansible impala -m shell -f 15 -b -a &quot;pkill impalad;sleep 2;su - impala -c &apos;/usr/local/impala/bin/start-impalad.sh -state_store_host=nih50 -catalog_service_host=nih50 &amp;&apos;&quot;</span><br><span class="line"></span><br><span class="line">ansible hadoop -m shell -s -a &quot;tac /home/hadoop/hadoop-2.6.4/etc/hadoop/hdfs-site.xml |sed &apos;1,14d&apos; |tac &gt; /home/xujingbin/hdfs-site.xml;echo &apos;&lt;/configuration&gt;&apos; &gt;&gt; /home/xujingbin/hdfs-site.xml&quot;</span><br><span class="line"></span><br><span class="line">ansible hadoop -m shell -s -a &quot;cp /home/xujingbin/hdfs-site.xml /home/hadoop/hadoop-2.6.4/etc/hadoop/hdfs-site.xml;chown hadoop.hadoop /home/hadoop/hadoop-2.6.4/etc/hadoop/hdfs-site.xml&quot;</span><br></pre></td></tr></table></figure>
 
 <h3 id="修改完hdfs-site-xml，后重启datanode"><a href="#修改完hdfs-site-xml，后重启datanode" class="headerlink" title="修改完hdfs-site.xml，后重启datanode"></a>修改完hdfs-site.xml，后重启datanode</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo mkdir /var/run/hdfs-sockets;sudo chown -R hadoop.hadoop /var/run/hdfs-sockets</span><br></pre></td></tr></table></figure>
 
 <h4 id="启动后端进程服务"><a href="#启动后端进程服务" class="headerlink" title="启动后端进程服务"></a>启动后端进程服务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">bin/start-statestored.sh &amp;</span><br><span class="line"></span><br><span class="line">bin/start-catalogd.sh &amp;</span><br></pre></td></tr></table></figure>
 
-<h4 id="启动客户端程序"><a href="#启动客户端程序" class="headerlink" title="启动客户端程序"></a>启动客户端程序</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/usr/local/impala/bin/start-impalad.sh -state_store_host=qz199 -catalog_service_host=qz199 -kudu_master_hosts=qz194:7051 &amp;</span><br></pre></td></tr></table></figure>
+<h4 id="启动客户端程序"><a href="#启动客户端程序" class="headerlink" title="启动客户端程序"></a>启动客户端程序</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/usr/local/impala/bin/start-impalad.sh -state_store_host=nih199 -catalog_service_host=nih199 -kudu_master_hosts=nih194:7051 &amp;</span><br></pre></td></tr></table></figure>
 
 <h4 id="客户端连接程序"><a href="#客户端连接程序" class="headerlink" title="客户端连接程序"></a>客户端连接程序</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">bin/impala-shell.sh</span><br></pre></td></tr></table></figure>
 
@@ -279,8 +279,8 @@
       <i class="fa fa-chevron-left"></i> hue
     </a></div>
       <div class="post-nav-item">
-    <a href="/2019/11/28/hadoop/kudu/" rel="next" title="hadoop/kudu">
-      hadoop/kudu <i class="fa fa-chevron-right"></i>
+    <a href="/2019/11/28/hadoop/hadoop-hbase-issues/" rel="next" title="hadoop/hadoop-hbase-issues">
+      hadoop/hadoop-hbase-issues <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -333,7 +333,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">77</span>
+          <span class="site-state-item-count">76</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
