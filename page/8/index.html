@@ -179,6 +179,83 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/monitor/grafana/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/16/monitor/grafana/" class="post-title-link" itemprop="url">monitor/grafana</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-27 17:25:21" itemprop="dateModified" datetime="2019-11-27T17:25:21+08:00">2019-11-27</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>datasource prometheus</p>
+<p>根据变量复制面板Row：row options -&gt; repeat for</p>
+<p>根据变量复制面板panel：repeat pannel</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">io_util&#123;job=&quot;[[job]]&quot;, group=&quot;[[group]]&quot;,instance=~&quot;^[[hosts]]&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>升级新版本</p>
+<p>yum update /home/xujingbin/grafana-5.1.3-1.x86_64.rpm</p>
+<p>/etc/init.d/grafana-server restart</p>
+<p><a href="http://docs.grafana.org/reference/templating/" target="_blank" rel="noopener">http://docs.grafana.org/reference/templating/</a></p>
+<p>告警模板<br><a href="https://grafana.com/grafana/dashboards?dataSource=camptocamp-prometheus-alertmanager-datasource" target="_blank" rel="noopener">https://grafana.com/grafana/dashboards?dataSource=camptocamp-prometheus-alertmanager-datasource</a></p>
+<h1 id="grafana权限"><a href="#grafana权限" class="headerlink" title="grafana权限"></a>grafana权限</h1><p><a href="https://blog.csdn.net/liukuan73/article/details/78704395" target="_blank" rel="noopener">https://blog.csdn.net/liukuan73/article/details/78704395</a></p>
+<p>经过上面的操作，就将组织和用户进行了划分，然后在每个组织内新建数据源、DashBoard，这样，不同的用户属于不同的组织，不同的组织拥有独立的数据源以及DashBoard，就实现了多租户功能。</p>
+<p>由于数据源、 DashBoard是和组织关联的，因此没法做到一个组织内不同的用户，看到不同的DashBoard，不过Grafana新建组织，已经可以满足大部分需求了，比如有多个数据中心时，只要建立不同的数据中心组织，配上相应的数据源，就可以使用一套Grafana来展现了。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/monitor/prometheus/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -251,80 +328,6 @@
 </ol>
 <h2 id="百分位"><a href="#百分位" class="headerlink" title="百分位"></a>百分位</h2><p>Prometheus中称为quantile，其实叫percentile更准确。百分位数是指小于某个特定数值的采样点达到一定的百分比。例如，假设0.9-quantile的值为120，意思就是所有的采样值中，小于120的采样值的数量占总体采样值的90%。相应的，假设0.5-quantile的值为x，那么意思就是指小于x的采样值占总体的50%，所以0.5-quantile也指中值（median）。</p>
 <h2 id="阿里云prometheus修改配置规则"><a href="#阿里云prometheus修改配置规则" class="headerlink" title="阿里云prometheus修改配置规则"></a>阿里云prometheus修改配置规则</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">kubectl -n monitoring get prometheusrule</span><br><span class="line">更改prometheus到alermanager的地址在，阿里云控制台的容器服务-应用-发布-更新</span><br><span class="line">1340行:</span><br><span class="line">additionalAlertManagerConfigs:</span><br><span class="line">- static_configs:</span><br><span class="line"> - targets: [&quot;10.28.74.182:9093&quot;]</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/monitor/consul/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/16/monitor/consul/" class="post-title-link" itemprop="url">monitor/consul</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="consul"><a href="#consul" class="headerlink" title="consul"></a>consul</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">./consul agent -server -bootstrap-expect=1 -data-dir=/tmp/consul -node=agent-noe -bind=10.0.0.218 -enable-script-checks=true -config-dir=/etc/consul.d</span><br><span class="line"></span><br><span class="line"> ./consul agent -data-dir=/tmp/consul -node=agent-two-bind=10.0.0.195 -enable-script-checks=true -config-dir=/etc/consul.d   -retry-join=&quot;10.0.0.218&quot;</span><br><span class="line"></span><br><span class="line">kill -HUP $&#123;consulPid&#125; #重新载入配置文件。 consul reload #重新载入配置文件</span><br><span class="line"></span><br><span class="line">使用Ctrl+C或kill -INT来gracefully停止agent./consul kv put key value</span><br><span class="line"></span><br><span class="line">./consul kv get key</span><br><span class="line"></span><br><span class="line">./consul kv delete</span><br><span class="line"></span><br><span class="line">./consul kv get -recurse</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">curl http://localhost:8500/v1/kv/?keys</span><br><span class="line"></span><br><span class="line">curl http://localhost:8500/v1/kv/foo</span><br><span class="line"></span><br><span class="line"> curl http://localhost:8500/v1/kv/foo?raw</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">put</span><br><span class="line"></span><br><span class="line">curl --request PUT --data &apos;contents&apos; http://localhost:8500/v1/kv/my-key</span><br><span class="line"></span><br><span class="line">curl --request PUT --data @contents http://localhost:8500/v1/kv/my-key</span><br><span class="line"></span><br><span class="line">curl --request DELETE http://localhost:8500/v1/kv/my-key</span><br><span class="line"></span><br><span class="line"> consul force-leave</span><br><span class="line"></span><br><span class="line">查看本机</span><br><span class="line"></span><br><span class="line">curl localhost:8500/v1/agent/services</span><br><span class="line"></span><br><span class="line">查看全局</span><br><span class="line"></span><br><span class="line">curl localhost:8500/v1/catalog/service/consul</span><br><span class="line"></span><br><span class="line">curl localhost:8500/v1/catalog/services</span><br><span class="line"></span><br><span class="line">./consul catalog services</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">curl \</span><br><span class="line"></span><br><span class="line">    --request PUT \</span><br><span class="line"></span><br><span class="line">    --data @payload.json \</span><br><span class="line"></span><br><span class="line">    https://consul.rocks/v1/catalog/register</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">curl -X PUT -d @./nginx.json localhost:8500/v1/agent/service/register</span><br><span class="line"></span><br><span class="line">curl -X PUT -d @/usr/local/proms-agent/script/conf/sys.json localhost:8500/v1/agent/service/register</span><br><span class="line"></span><br><span class="line">curl --request PUT  localhost:8500/v1/agent/service/deregister/nginx</span><br><span class="line"></span><br><span class="line"> curl -X PUT -d @./aa.json localhost:8500/v1/catalog/deregister</span><br></pre></td></tr></table></figure>
-
-<p><a href="https://www.robustperception.io/finding-consul-services-to-monitor-with-prometheus/" target="_blank" rel="noopener">https://www.robustperception.io/finding-consul-services-to-monitor-with-prometheus/</a></p>
-<p><a href="http://www.cnblogs.com/vovlie/p/Nginx_monitoring.html" target="_blank" rel="noopener">http://www.cnblogs.com/vovlie/p/Nginx_monitoring.html</a></p>
-<p>{</p>
-<p>  “ui”: true,</p>
-<p>  “data_dir”: “/tmp/consul”,</p>
-<p>  “client_addr”: “0.0.0.0”,</p>
-<p>  “advertise_addr”: “10.0.0.218”,</p>
-<p>  “server”: true,</p>
-<p>  “retry_interval”: “30s”,</p>
-<p>  “retry_max”: 10,</p>
-<p>  “log_level”: “INFO”,</p>
-<p>  “datacenter”: “sen_hua_kan_dan_qiao”,</p>
-<p>  “rejoin_after_leave”: true,</p>
-<p>  “leave_on_terminate”: true</p>
-<p>}</p>
-
       
     </div>
 
