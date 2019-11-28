@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="运维笔记" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="Groovy RejectedAccessExceptionhttps:&#x2F;&#x2F;blog.johnwu.cc&#x2F;article&#x2F;jenkins-groovy-rejected-access-exception.html  找到系统设置-in-process Script Approval-Approve 每发生一次就授权执行一次  [ERROR] Failed to execute goal org.a">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jenkins&#x2F;jenkins-issues">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;28&#x2F;jenkins&#x2F;jenkins-issues&#x2F;index.html">
+<meta property="og:site_name" content="运维笔记">
+<meta property="og:description" content="Groovy RejectedAccessExceptionhttps:&#x2F;&#x2F;blog.johnwu.cc&#x2F;article&#x2F;jenkins-groovy-rejected-access-exception.html  找到系统设置-in-process Script Approval-Approve 每发生一次就授权执行一次  [ERROR] Failed to execute goal org.a">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-11-28T07:32:03.411Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2019/11/28/jenkins/jenkins-issues/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>jenkins/jenkins-issues | 运维笔记</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">运维笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">56</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">47</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">77</span></a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/jenkins/jenkins-issues/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          jenkins/jenkins-issues
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-28 15:32:03" itemprop="dateCreated datePublished" datetime="2019-11-28T15:32:03+08:00">2019-11-28</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="Groovy-RejectedAccessException"><a href="#Groovy-RejectedAccessException" class="headerlink" title="Groovy RejectedAccessException"></a>Groovy RejectedAccessException</h3><p><a href="https://blog.johnwu.cc/article/jenkins-groovy-rejected-access-exception.html" target="_blank" rel="noopener">https://blog.johnwu.cc/article/jenkins-groovy-rejected-access-exception.html</a></p>
+<ul>
+<li>找到系统设置-in-process Script Approval-Approve 每发生一次就授权执行一次</li>
+</ul>
+<h3 id="ERROR-Failed-to-execute-goal-org-apache-maven-plugins-maven-release-plugin-2-5-3-prepare-default-cli-on-project-adgame-statistic-query-Unable-to-commit-files"><a href="#ERROR-Failed-to-execute-goal-org-apache-maven-plugins-maven-release-plugin-2-5-3-prepare-default-cli-on-project-adgame-statistic-query-Unable-to-commit-files" class="headerlink" title="[ERROR] Failed to execute goal org.apache.maven.plugins:maven-release-plugin:2.5.3:prepare (default-cli) on project adgame_statistic_query: Unable to commit files"></a>[ERROR] Failed to execute goal org.apache.maven.plugins:maven-release-plugin:2.5.3:prepare (default-cli) on project adgame_statistic_query: Unable to commit files</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[ERROR] Provider message:</span><br><span class="line">[ERROR] The git-push command failed.</span><br><span class="line">[ERROR] Command output:</span><br><span class="line">[ERROR] ssh: Could not resolve hostname gitlab.xujingbin.com:adgame: Name or service not known</span><br><span class="line">[ERROR] fatal: The remote end hung up unexpectedly</span><br></pre></td></tr></table></figure>
+<ul>
+<li>地址写错了 xujingbin.com: 改成xujingbin.com/</li>
+</ul>
+<h3 id="ERROR-Failed-to-execute-goal-org-apache-maven-plugins-maven-release-plugin-2-5-3-prepare-default-cli-on-project-gprp-cloud-api-Unable-to-tag-SCM"><a href="#ERROR-Failed-to-execute-goal-org-apache-maven-plugins-maven-release-plugin-2-5-3-prepare-default-cli-on-project-gprp-cloud-api-Unable-to-tag-SCM" class="headerlink" title="[ERROR] Failed to execute goal org.apache.maven.plugins:maven-release-plugin:2.5.3:prepare (default-cli) on project gprp_cloud_api: Unable to tag SCM"></a>[ERROR] Failed to execute goal org.apache.maven.plugins:maven-release-plugin:2.5.3:prepare (default-cli) on project gprp_cloud_api: Unable to tag SCM</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[ERROR] Provider message:</span><br><span class="line">[ERROR] The git-push command failed.</span><br><span class="line">[ERROR] Command output:</span><br><span class="line">[ERROR] ssh_exchange_identification: Connection closed by remote host</span><br><span class="line">[ERROR] fatal: The remote end hung up unexpectedly</span><br><span class="line">[ERROR] -&gt; [Help 1]</span><br><span class="line">[ERROR] </span><br><span class="line">[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.</span><br><span class="line">[ERROR] Re-run Maven using the -X switch to enable full debug logging.</span><br><span class="line">[ERROR] </span><br><span class="line">[ERROR] For more information about the errors and possible solutions, please read the following articles:</span><br><span class="line">[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException</span><br></pre></td></tr></table></figure>
+<ul>
+<li>可能因为提交的文件太大导致或者本身出现的网络问题  或者是更改/etc/ssh/sshd_config,MaxSessions 30</li>
+</ul>
+<h3 id="ERROR-Failed-to-execute-goal-org-apache-maven-plugins-maven-release-plugin-2-5-3-prepare-default-cli-on-project-gprp-cg-app-Unable-to-commit-files"><a href="#ERROR-Failed-to-execute-goal-org-apache-maven-plugins-maven-release-plugin-2-5-3-prepare-default-cli-on-project-gprp-cg-app-Unable-to-commit-files" class="headerlink" title="[ERROR] Failed to execute goal org.apache.maven.plugins:maven-release-plugin:2.5.3:prepare (default-cli) on project gprp_cg_app: Unable to commit files"></a>[ERROR] Failed to execute goal org.apache.maven.plugins:maven-release-plugin:2.5.3:prepare (default-cli) on project gprp_cg_app: Unable to commit files</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[ERROR] Provider message:</span><br><span class="line">[ERROR] The git-push command failed.</span><br><span class="line">[ERROR] Command output:</span><br><span class="line">[ERROR] GitLab: The project you were looking for could not be found.</span><br><span class="line">[ERROR] fatal: Could not read from remote repository.</span><br><span class="line">[ERROR] </span><br><span class="line">[ERROR] Please make sure you have the correct access rights</span><br><span class="line">[ERROR] and the repository exists.</span><br></pre></td></tr></table></figure>
+<p>nexus仓库没有配置会导致此报错</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/11/28/db/redis/redis-trib.rb/" rel="prev" title="redis-trib">
+      <i class="fa fa-chevron-left"></i> redis-trib
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/11/28/jenkins/nexus/" rel="next" title="jenkins/nexus">
+      jenkins/nexus <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Groovy-RejectedAccessException"><span class="nav-number">1.</span> <span class="nav-text">Groovy RejectedAccessException</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ERROR-Failed-to-execute-goal-org-apache-maven-plugins-maven-release-plugin-2-5-3-prepare-default-cli-on-project-adgame-statistic-query-Unable-to-commit-files"><span class="nav-number">2.</span> <span class="nav-text">[ERROR] Failed to execute goal org.apache.maven.plugins:maven-release-plugin:2.5.3:prepare (default-cli) on project adgame_statistic_query: Unable to commit files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ERROR-Failed-to-execute-goal-org-apache-maven-plugins-maven-release-plugin-2-5-3-prepare-default-cli-on-project-gprp-cloud-api-Unable-to-tag-SCM"><span class="nav-number">3.</span> <span class="nav-text">[ERROR] Failed to execute goal org.apache.maven.plugins:maven-release-plugin:2.5.3:prepare (default-cli) on project gprp_cloud_api: Unable to tag SCM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ERROR-Failed-to-execute-goal-org-apache-maven-plugins-maven-release-plugin-2-5-3-prepare-default-cli-on-project-gprp-cg-app-Unable-to-commit-files"><span class="nav-number">4.</span> <span class="nav-text">[ERROR] Failed to execute goal org.apache.maven.plugins:maven-release-plugin:2.5.3:prepare (default-cli) on project gprp_cg_app: Unable to commit files</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">xujingbin</p>
+  <div class="site-description" itemprop="description">个人运维笔记</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">77</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">47</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xujingbin</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

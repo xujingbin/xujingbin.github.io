@@ -140,7 +140,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">57</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">56</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -150,7 +150,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">80</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">77</span></a>
 
   </li>
   </ul>
@@ -175,6 +175,409 @@
             
 
   <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/hadoop/hbase/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/28/hadoop/hbase/" class="post-title-link" itemprop="url">hbase</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-28 11:05:26" itemprop="dateCreated datePublished" datetime="2019-11-28T11:05:26+08:00">2019-11-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/hbase/" itemprop="url" rel="index">
+                    <span itemprop="name">hbase</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="hbase"><a href="#hbase" class="headerlink" title="hbase"></a>hbase</h3><p><img src="../images/hbase-construction.png" alt="hbase-construction"><br><img src="../images/hbase-region.png" alt="hbase-region"></p>
+<p>下载bin包<br>解压，修改<br>hbase<br>cat conf/regionservers<br>nn1<br>nn2<br>nn3<br>cat conf/backup-masters<br>nn2</p>
+<h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- 启动整个集群：$HBASE_HOME/bin/start-hbase.sh </span><br><span class="line">- 关停整个集群：$HBASE_HOME/bin/stop-hbase.sh </span><br><span class="line">- $HBASE_HOME/bin/hbase-daemons.sh 启动或停止，所有的regionserver或zookeeper或backup-master</span><br><span class="line"></span><br><span class="line">- $HBASE_HOME/bin/hbase-daemon.sh 启动或停止，单个master或regionserver或zookeeper</span><br><span class="line">- hbase-daemon.sh stop regionserver （先停止balance）</span><br></pre></td></tr></table></figure>
+<h3 id="删库"><a href="#删库" class="headerlink" title="删库"></a>删库</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;scan &apos;hbase:meta&apos;,&#123;FILTER=&gt;\&quot;PrefixFilter(&apos;KYLIN_&apos;)\&quot;&#125;&quot; | /usr/local/hbase/bin/hbase shell &gt; tables.txt</span><br><span class="line">cat tables.txt |awk -F &apos;,&apos; &apos;&#123;print $1,$4&#125;&apos; |awk &apos;!a[$1]++&apos; &gt; aa.txt   ## 去除第一列重复的行</span><br><span class="line">cat aa.txt |awk -F &apos; timestamp=&apos; &apos;&#123;if($2 &lt;= 1546272000000) print $1&#125;&apos; </span><br><span class="line">以下两条命令有问题</span><br><span class="line">cat aa.txt | awk -F &apos; timestamp=&apos; &apos;&#123;if($2 &lt;= 1546272000000) print $1&#125;&apos; | xargs -i echo &quot;disable &apos;&#123;&#125;&apos;&quot;</span><br><span class="line">cat aa.txt | awk -F &apos; timestamp=&apos; &apos;&#123;if($2 &lt;= 1546272000000) print $1&#125;&apos; | xargs -i echo &quot;drop &apos;&#123;&#125;&apos;&quot;</span><br></pre></td></tr></table></figure>
+<p>备份表<br>bin/hbase org.apache.hadoop.hbase.mapreduce.Export kylin230_metadata /tmp/bak/kylin230_metadata<br>ove ‘regionId’,’serverName’</p>
+<p>例：</p>
+<p>move ‘54fca23d09a595bd3496cd0c9d6cae85‘,‘vmcnod05,60020,1390211132297‘</p>
+<p>日常命令管理： <a href="http://www.cnblogs.com/zlingh/p/4152931.html" target="_blank" rel="noopener">http://www.cnblogs.com/zlingh/p/4152931.html</a><br>优化：<a href="http://www.2cto.com/database/201609/544295.html" target="_blank" rel="noopener">http://www.2cto.com/database/201609/544295.html</a>  <a href="http://blackproof.iteye.com/blog/2075660" target="_blank" rel="noopener">http://blackproof.iteye.com/blog/2075660</a><br>原理： <a href="http://lxw1234.com/archives/2016/09/719.htm" target="_blank" rel="noopener">http://lxw1234.com/archives/2016/09/719.htm</a><br>split <a href="http://www.codeweblog.com/hbase-split%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F/" target="_blank" rel="noopener">http://www.codeweblog.com/hbase-split%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F/</a><br>架构原理 <a href="http://ygydaiaq-gmail-com.iteye.com/blog/1733367" target="_blank" rel="noopener">http://ygydaiaq-gmail-com.iteye.com/blog/1733367</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/hadoop/hadoop/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/28/hadoop/hadoop/" class="post-title-link" itemprop="url">hadoop</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-28 11:04:58" itemprop="dateCreated datePublished" datetime="2019-11-28T11:04:58+08:00">2019-11-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/hadoop/" itemprop="url" rel="index">
+                    <span itemprop="name">hadoop</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>[toc]</p>
+<h3 id="hadoop"><a href="#hadoop" class="headerlink" title="hadoop"></a>hadoop</h3><p>三大核心组件之HDFS和YARN  <a href="https://blog.csdn.net/zonzereal/article/details/78095110" target="_blank" rel="noopener">https://blog.csdn.net/zonzereal/article/details/78095110</a><br>伪分布式集群 <a href="http://blog.csdn.net/stark_summer/article/details/43484545" target="_blank" rel="noopener">http://blog.csdn.net/stark_summer/article/details/43484545</a></p>
+<h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">*平衡数据命令：</span><br><span class="line">/home/hadoop/hadoop-2.6.4/sbin/start-balancer.sh -h</span><br><span class="line"></span><br><span class="line">*重启节点nodemanager</span><br><span class="line">sbin/yarn-daemon.sh stop nodemanager</span><br><span class="line">sbin/yarn-daemon.sh start nodemanager</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">*删除所有问题blocks</span><br><span class="line"></span><br><span class="line">bin/hadoop fsck -delete</span><br><span class="line"></span><br><span class="line">*删除指定blocks</span><br><span class="line"></span><br><span class="line">bin/hadoop fsck -delete /path/</span><br></pre></td></tr></table></figure>
+
+<h4 id="启动程序"><a href="#启动程序" class="headerlink" title="启动程序"></a>启动程序</h4><p>在所有配置更改完后  进行启动</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">sbin/hadoop-daemons.sh start journalnode</span><br><span class="line">bin/hdfs namenode -format</span><br><span class="line">sbin/hadoop-daemon.sh start namenode</span><br><span class="line">###同步 NameNode1 元数据到 NameNode2 上 ，在nn2上执行该命令</span><br><span class="line">bin/hdfs namenode -bootstrapStandby</span><br><span class="line">sbin/hadoop-daemon.sh start namenode</span><br><span class="line"></span><br><span class="line">sbin/hadoop-daemons.sh start datanode</span><br><span class="line">bin/hdfs zkfc -formatZK</span><br><span class="line">sbin/hadoop-daemon.sh start zkfc</span><br><span class="line">sbin/start-yarn.sh</span><br></pre></td></tr></table></figure>
+
+<h4 id="下线datanode"><a href="#下线datanode" class="headerlink" title="下线datanode"></a>下线datanode</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">在namenode上下线节点，数据会自动进行迁移:</span><br><span class="line">在etc/hadoop/excludes上添加qz201</span><br><span class="line">bin/hdfs dfsadmin -refreshNodes</span><br><span class="line">查看状态：</span><br><span class="line">bin/hdfs dfsadmin -report</span><br><span class="line">在页面上看数据迁移完后可以在对应节点上执行关闭进程操作：</span><br><span class="line">sbin/hadoop-daemon.sh stop datanode</span><br><span class="line">sbin/yarn-daemon.sh stop nodemanager</span><br></pre></td></tr></table></figure>
+
+<h3 id="添加节点"><a href="#添加节点" class="headerlink" title="添加节点"></a>添加节点</h3><p>/usr/lib64/libstdc++.so.6</p>
+<h4 id="修改队列资源隔离占比"><a href="#修改队列资源隔离占比" class="headerlink" title="修改队列资源隔离占比"></a>修改队列资源隔离占比</h4><p><a href="https://www.cnblogs.com/bugsbunny/p/6773016.html" target="_blank" rel="noopener">https://www.cnblogs.com/bugsbunny/p/6773016.html</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">修改50上的hadoop-2.6.4/etc/hadoop/capacity-scheduler.xml</span><br><span class="line">刷新队列</span><br><span class="line">bin/yarn rmadmin -refreshQueues</span><br></pre></td></tr></table></figure>
+
+<h3 id="disk数据平衡分布"><a href="#disk数据平衡分布" class="headerlink" title="disk数据平衡分布"></a>disk数据平衡分布</h3><p><a href="https://blog.csdn.net/liaynling/article/details/89093907" target="_blank" rel="noopener">https://blog.csdn.net/liaynling/article/details/89093907</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/db/tidb/tidb/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/28/db/tidb/tidb/" class="post-title-link" itemprop="url">tidb</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-28 11:00:10" itemprop="dateCreated datePublished" datetime="2019-11-28T11:00:10+08:00">2019-11-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tidb/" itemprop="url" rel="index">
+                    <span itemprop="name">tidb</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="faq"><a href="#faq" class="headerlink" title="faq"></a>faq</h3><p>9.1.6 ERROR 9006 (HY000) : GC life time is shorter than transaction duration<br>GC Life Time 间隔时间过短，长事务本应读到的数据可能被清理了，可使用如下命令增加 GC Life Time：</p>
+<p>update mysql.tidb set variable_value=’30m’ where variable_name=’tikv_gc_life_time’;<br>其中 30m 代表仅清理 30 分钟前的数据，这可能会额外占用一定的存储空间。</p>
+<p>gc 介绍 <a href="https://pingcap.com/docs-cn/op-guide/gc/#tidb-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6-gc" target="_blank" rel="noopener">https://pingcap.com/docs-cn/op-guide/gc/#tidb-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6-gc</a></p>
+<h3 id="停止写数据到-TIDB-后-Current-Storage-Usage不是停止增长-而是下降"><a href="#停止写数据到-TIDB-后-Current-Storage-Usage不是停止增长-而是下降" class="headerlink" title="停止写数据到 TIDB 后,Current Storage Usage不是停止增长,而是下降"></a>停止写数据到 TIDB 后,Current Storage Usage不是停止增长,而是下降</h3><p>TiDB 作为强一致的分布式数据库，存在一定的写放大，存储底层会不断进行 Compaction;<br>DELETE，TRUNCATE 和 DROP 都不会立即释放空间。对于 TRUNCATE 和 DROP 操作，在达到 TiDB 的 GC (garbage collection) 时间后（默认 10 分钟），TiDB 的 GC 机制会删除数据并释放空间。对于 DELETE 操作 TiDB 的 GC 机制会删除数据，但不会释放空间，而是当后续数据写入 RocksDB 且进行 compact 时对空间重新利用</p>
+<h3 id="命令工具"><a href="#命令工具" class="headerlink" title="命令工具"></a>命令工具</h3><p>请反馈 TiDB 版本信息，如果可以升级到 2.0 rc 系列或者通过 tikv-ctl 手工 compact 试一下，另 tikv 节点数据超过 80% 就需要考虑扩容事宜</p>
+<h3 id="升级配置"><a href="#升级配置" class="headerlink" title="升级配置"></a>升级配置</h3><p>$ ansible-playbook rolling_update.yml –tags=tikv</p>
+<p><a href="https://blog.csdn.net/vkingnew/article/details/81944287" target="_blank" rel="noopener">https://blog.csdn.net/vkingnew/article/details/81944287</a></p>
+<p><a href="https://www.pingcap.com/docs-cn/op-guide/ansible-deployment-rolling-update/#%E5%8D%87%E7%BA%A7%E7%BB%84%E4%BB%B6%E7%89%88%E6%9C%AC" target="_blank" rel="noopener">https://www.pingcap.com/docs-cn/op-guide/ansible-deployment-rolling-update/#%E5%8D%87%E7%BA%A7%E7%BB%84%E4%BB%B6%E7%89%88%E6%9C%AC</a></p>
+<h3 id="fio-randread-iops-of-tikv-data-dir-disk-is-too-low-25687-lt-40000"><a href="#fio-randread-iops-of-tikv-data-dir-disk-is-too-low-25687-lt-40000" class="headerlink" title="fio: randread iops of tikv_data_dir disk is too low: 25687 &lt; 40000"></a>fio: randread iops of tikv_data_dir disk is too low: 25687 &lt; 40000</h3><p>问题可能出在阵列卡 或者磁盘上<br>经验是出在阵列卡2次， 更换阵列卡，或者直接更换服务器</p>
+<h3 id="参数调优"><a href="#参数调优" class="headerlink" title="参数调优"></a>参数调优</h3><p><a href="https://pingcap.com/docs-cn/op-guide/tune-tikv/#tikv-%E6%80%A7%E8%83%BD%E5%8F%82%E6%95%B0%E8%B0%83%E4%BC%98" target="_blank" rel="noopener">https://pingcap.com/docs-cn/op-guide/tune-tikv/#tikv-%E6%80%A7%E8%83%BD%E5%8F%82%E6%95%B0%E8%B0%83%E4%BC%98</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/db/redis/redis%E8%BF%81%E7%A7%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/28/db/redis/redis%E8%BF%81%E7%A7%BB/" class="post-title-link" itemprop="url">redis</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-28 10:59:21" itemprop="dateCreated datePublished" datetime="2019-11-28T10:59:21+08:00">2019-11-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/redis/" itemprop="url" rel="index">
+                    <span itemprop="name">redis</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/redis/%E8%BF%81%E7%A7%BB/" itemprop="url" rel="index">
+                    <span itemprop="name">迁移</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>redis 同步：<br>方案1）主从同步-专线接入（网络有保障）<br>方案2）主从同步-公网接入</p>
+<p>碰到的问题：<br>  a)   同步延迟有多大？是否接受？<br>  b）这么多实例，如果发生重传对当前机房的带宽要求，是否接受？<br>  c）同步以一主多从实现，或者主从从方式进行（后者需要对现有的从库分布重新规划）</p>
+<p>方法3）利用AOF直接做恢复</p>
+<p>====================================</p>
+<p>网易开源迁移工具：<br><a href="https://github.com/helifu/redis-migration" target="_blank" rel="noopener">https://github.com/helifu/redis-migration</a></p>
+<p>另外一个迁移工具：<br><a href="https://github.com/vipshop/redis-migrate-tool" target="_blank" rel="noopener">https://github.com/vipshop/redis-migrate-tool</a></p>
+<p>这个工具支持实例之间的迁移。<br>1 - 实时迁移（基于redis复制）<br>2 - 迁移过程中，源集群不影响对外提供服务<br>3 - 迁移状态显示。</p>
+<h2 id="42-62-66-220上亲测"><a href="#42-62-66-220上亲测" class="headerlink" title="42.62.66.220上亲测"></a>42.62.66.220上亲测</h2><p>1.rmt-20180305150245.conf配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[source]</span><br><span class="line">type: single</span><br><span class="line">servers:</span><br><span class="line"> - 10.0.0.218:6381</span><br><span class="line"></span><br><span class="line">[target]</span><br><span class="line">type: redis cluster</span><br><span class="line">servers:</span><br><span class="line"> - 10.0.0.218:6382</span><br><span class="line"> - 10.0.0.218:6383</span><br><span class="line"></span><br><span class="line">[common]</span><br><span class="line">listen: 0.0.0.0:8888</span><br><span class="line">dir: /opt/cachecloud/redis-migrate-tool/data/</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>命令<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/opt/cachecloud/redis-migrate-tool/src/redis-migrate-tool -c /opt/cachecloud/redis-migrate-tool/data/rmt-20180305150245.conf -o /opt/cachecloud/redis-migrate-tool/data/rmt-20180305150245.log -d</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>一个利用Redis自身命令的离线迁移：<br>dump + restore<br>参照：<a href="http://stackoverflow.com/questions/16127682/how-to-use-redis-dump-and-restore-offline" target="_blank" rel="noopener">http://stackoverflow.com/questions/16127682/how-to-use-redis-dump-and-restore-offline</a></p>
+<p> redis合并实例工具 <a href="https://github.com/delano/redis-dump" target="_blank" rel="noopener">https://github.com/delano/redis-dump</a><br>ruby安装：<a href="https://rubygems.org/pages/download" target="_blank" rel="noopener">https://rubygems.org/pages/download</a><br>需要开启keys命令，才能导出  10个key左右的情况，测试结果是：相同key在导入时候会覆盖掉原有的key<br>#导出，密码前面要加一个冒号<br>redis-dump -u :<a href="mailto:password@xxx.xxx.xxx.xxx" target="_blank" rel="noopener">password@xxx.xxx.xxx.xxx</a>:6379 &gt; redis.json<br>#导入<br>cat redis.json | redis-load -u :password@localhost<br>生产环境禁用keys命令，合并可用redis-migrate-tool工具</p>
+<h3 id="redis5-移动slot"><a href="#redis5-移动slot" class="headerlink" title="redis5 移动slot"></a>redis5 移动slot</h3><p>redis-cli –cluster reshard 10.0.0.42:6408</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/db/solr/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/28/db/solr/" class="post-title-link" itemprop="url">solr</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-28 10:56:54" itemprop="dateCreated datePublished" datetime="2019-11-28T10:56:54+08:00">2019-11-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/solr/" itemprop="url" rel="index">
+                    <span itemprop="name">solr</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="http-lucene-apache-org-solr-guide-7-4-defining-fields-html-example-field-definition"><a href="#http-lucene-apache-org-solr-guide-7-4-defining-fields-html-example-field-definition" class="headerlink" title="http://lucene.apache.org/solr/guide/7_4/defining-fields.html#example-field-definition"></a><a href="http://lucene.apache.org/solr/guide/7_4/defining-fields.html#example-field-definition" target="_blank" rel="noopener">http://lucene.apache.org/solr/guide/7_4/defining-fields.html#example-field-definition</a></h1><p>索引？存储？<br>通过indexed=true可以使得一个field可以被搜索，如果你有一个字段title设置的是indexed=true，那么q=title:csdn就是在搜索标题中含有csdn的document。如果你设置indexed=false，就算你有符合的数据也无法搜索出来。<br>stored=true意味着你可以在结果中看到这个field，通过fl参数可以控制是否在结果中显示，如果你设置stored=false，就算你有符合的数据看不到该field。</p>
+<h3 id="导入mysql数据"><a href="#导入mysql数据" class="headerlink" title="导入mysql数据"></a>导入mysql数据</h3><p><a href="https://blog.csdn.net/weixin_39082031/article/details/79074078" target="_blank" rel="noopener">https://blog.csdn.net/weixin_39082031/article/details/79074078</a></p>
+<h3 id="solr-cloud"><a href="#solr-cloud" class="headerlink" title="solr cloud"></a>solr cloud</h3><h4 id="导入配置文件到zk"><a href="#导入配置文件到zk" class="headerlink" title="导入配置文件到zk"></a>导入配置文件到zk</h4><p>bin/solr zk upconfig -d collection6/conf -n collection6</p>
+<h3 id="API"><a href="#API" class="headerlink" title="API"></a>API</h3><p><a href="http://lucene.apache.org/solr/guide/7_4/collections-api.html#splitshard" target="_blank" rel="noopener">http://lucene.apache.org/solr/guide/7_4/collections-api.html#splitshard</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">split shard</span><br><span class="line"></span><br><span class="line">curl localhost:8983/solr/admin/collections?&apos;action=SPLITSHARD&amp;collection=collection6&amp;shard=shard1&apos;</span><br><span class="line"></span><br><span class="line">删除shard</span><br><span class="line"></span><br><span class="line">curl localhost:8983/solr/admin/collections?&apos;action=DELETESHARD&amp;collection=collection6&amp;shard=shard1&apos;</span><br></pre></td></tr></table></figure>
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
         
   
   
@@ -315,88 +718,6 @@
       
           <h1 id="k8s部署consul集群"><a href="#k8s部署consul集群" class="headerlink" title="k8s部署consul集群"></a>k8s部署consul集群</h1><p><a href="https://www.cnblogs.com/tylerzhou/p/11161634.html" target="_blank" rel="noopener">https://www.cnblogs.com/tylerzhou/p/11161634.html</a></p>
 <h1 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h1><p><a href="https://www.jianshu.com/p/7d20dc58c9fc" target="_blank" rel="noopener">https://www.jianshu.com/p/7d20dc58c9fc</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/db/cachecloud/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/28/db/cachecloud/" class="post-title-link" itemprop="url">cahcecloud</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-28 10:55:53" itemprop="dateCreated datePublished" datetime="2019-11-28T10:55:53+08:00">2019-11-28</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/redis/" itemprop="url" rel="index">
-                    <span itemprop="name">redis</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="cachecloud"><a href="#cachecloud" class="headerlink" title="cachecloud"></a>cachecloud</h2><p><a href="https://github.com/sohutv/cachecloud" target="_blank" rel="noopener">https://github.com/sohutv/cachecloud</a></p>
-<p>编译：mvn clean compile install -Ponline</p>
-<p><a href="https://cachecloud.github.io/2017/02/06/1.3.%E6%9C%BA%E5%99%A8%E7%9B%91%E6%8E%A7%E5%8A%9F%E8%83%BD/" target="_blank" rel="noopener">https://cachecloud.github.io/2017/02/06/1.3.%E6%9C%BA%E5%99%A8%E7%9B%91%E6%8E%A7%E5%8A%9F%E8%83%BD/</a></p>
-<p>删除的app_desc表数据</p>
-<p>mysql&gt; delete from app_desc where app_id=11\G</p>
-<p>Query OK, 1 row affected (0.00 sec)</p>
-<p>cachecloud 删除数据库app_desc表相关数据</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO `app_desc` VALUES(37,&apos;主站相似度计算 赖晓航 250:6380-6383&apos;,1,2,&apos;存临时数据的，计算的时候中间会用到,另几个实例添加失败10.0.0.253:6379:7168\n10.0.0.253:6380:71</span><br><span class="line">68\n10.0.0.253:6381:7168\n10.0.0.253:6382:7168&apos;,&apos;2017-09-30 14:53:41&apos;,&apos;2017-09-30 14:53:41&apos;,6,&apos;赖晓航&apos;,1,0,0,0,0,0,0,90,NULL,0,&apos;548bf53f4427e0a</span><br><span class="line">f3e3dab6f1d79acef&apos;,3,&apos;&apos;)</span><br></pre></td></tr></table></figure>
-<h2 id="删除下线实例"><a href="#删除下线实例" class="headerlink" title="删除下线实例"></a>删除下线实例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">delete from instance_statistics where inst_id in (select id from instance_info where status=2);</span><br><span class="line">delete from instance_info where status=2;</span><br></pre></td></tr></table></figure>
-
-<h3 id="删除下线应用"><a href="#删除下线应用" class="headerlink" title="删除下线应用"></a>删除下线应用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">delete from app_desc where status=3;</span><br></pre></td></tr></table></figure>
-
-<h3 id="删除驳回的应用"><a href="#删除驳回的应用" class="headerlink" title="删除驳回的应用"></a>删除驳回的应用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">delete from app_desc where status=4;</span><br></pre></td></tr></table></figure>
-<h3 id="添加机器"><a href="#添加机器" class="headerlink" title="添加机器"></a>添加机器</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mac本地cd /project/cachecloud</span><br><span class="line">rsync -avz cachecloud-init.sh 目标机器</span><br><span class="line">rsync -avz redis.tar.gz 目标机器</span><br><span class="line">修改cachecloud-init.sh对应的redis版本，执行sh cachecloud-init.sh cachecloud</span><br><span class="line">修改目标机器的/etc/ssh/sshd_config的密码登录权限开放，重启sshd</span><br><span class="line">在cachecloud web管理器上添加机器</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -643,307 +964,6 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/logging/kafka/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/28/logging/kafka/" class="post-title-link" itemprop="url">kafka</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-28 10:49:36" itemprop="dateCreated datePublished" datetime="2019-11-28T10:49:36+08:00">2019-11-28</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/kafka/" itemprop="url" rel="index">
-                    <span itemprop="name">kafka</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="kafka"><a href="#kafka" class="headerlink" title="kafka"></a>kafka</h3><p>kafka性能瓶颈是网络带宽，node节点io<br>现在还好，还没到瓶颈，暑假就会有问题</p>
-<ul>
-<li>增加节点<blockquote>
-<p>拷贝已有节点kafka目录到新添加节点上，修改server.properites的block.id，增加/data1盘目录及jdk版本,supervisord工具管理服务</p>
-</blockquote>
-</li>
-</ul>
-<h3 id="kafka-manager"><a href="#kafka-manager" class="headerlink" title="kafka manager"></a>kafka manager</h3><p><a href="http://www.jianshu.com/p/c24ed08dfa63" target="_blank" rel="noopener">http://www.jianshu.com/p/c24ed08dfa63</a></p>
-<p><a href="https://github.com/yahoo/kafka-manager" target="_blank" rel="noopener">https://github.com/yahoo/kafka-manager</a></p>
-<p>需要设定JMX_PORT，具体操作：<br>重启前，在服务器运行export JMX_PORT=9999<br>然后运行：JMX_PORT=9999 bin/kafka-server-start.sh config/server.properties启动kafka.</p>
-<p>不要勾选JMX with SSL</p>
-<p>如果没有安装补丁，不要勾选Display Broker and Topic Size</p>
-<h4 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h4><p>重新分区到所有节点，选择topic，然后1. “Generate Partition Assignments” -&gt; “Reassion Partitions”</p>
-<p>最后进行推荐选举</p>
-<p>，大的topic需要一个个来，因为流量太大，观察Partition Information下的Under Replicated是否都为false，才可操作下一个topic(每次也只能进行一个topic操作)</p>
-<h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">bin/kafka-console-consumer.sh --bootstrap-server 10.0.0.194:9092,10.0.0.195:9092,10.0.0.199:9092 --topic test --consumer-property group.id=test2 --from-beginning</span><br></pre></td></tr></table></figure>
-
-<h3 id="kafka扩容迁移节点"><a href="#kafka扩容迁移节点" class="headerlink" title="kafka扩容迁移节点"></a>kafka扩容迁移节点</h3><p><a href="https://www.jianshu.com/p/626b147821cd" target="_blank" rel="noopener">https://www.jianshu.com/p/626b147821cd</a></p>
-<h3 id="kafka小版本升级"><a href="#kafka小版本升级" class="headerlink" title="kafka小版本升级"></a>kafka小版本升级</h3><p>在当前broker上直接关掉当前版本，启动新版本，198升级用了半个小时</p>
-<p>logs/server.log</p>
-<p>[2018-10-22 14:55:54,805] INFO [Group Metadata Manager on Broker 196]: Removed 0 expired offsets in 0 milliseconds. (kafka.coordinator.group.GroupMetadataManager)  出现此信息才可升级下一台</p>
-<h3 id="kafka-manager问题"><a href="#kafka-manager问题" class="headerlink" title="kafka manager问题"></a>kafka manager问题</h3><p>显示broker少了198，但问题可能是197节点网络不通导致</p>
-<h3 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h3><p><a href="https://www.jianshu.com/p/c9bb658dc788" target="_blank" rel="noopener">https://www.jianshu.com/p/c9bb658dc788</a><br><a href="https://www.cnblogs.com/yinzhengjie/p/9884552.html" target="_blank" rel="noopener">https://www.cnblogs.com/yinzhengjie/p/9884552.html</a></p>
-<h3 id="kafka-消费者详解"><a href="#kafka-消费者详解" class="headerlink" title="kafka 消费者详解"></a>kafka 消费者详解</h3><p><a href="https://www.jianshu.com/p/6cb86599dd60" target="_blank" rel="noopener">https://www.jianshu.com/p/6cb86599dd60</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/logging/flume/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/28/logging/flume/" class="post-title-link" itemprop="url">flume</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-28 10:48:36" itemprop="dateCreated datePublished" datetime="2019-11-28T10:48:36+08:00">2019-11-28</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/flume/" itemprop="url" rel="index">
-                    <span itemprop="name">flume</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="flume"><a href="#flume" class="headerlink" title="flume"></a>flume</h3><p>flume 示例一收集tomcat日志 <a href="https://my.oschina.net/88sys/blog/71529" target="_blank" rel="noopener">https://my.oschina.net/88sys/blog/71529</a><br>flume 示例收集nginx日志 <a href="http://www.tuicool.com/articles/uIfI3if" target="_blank" rel="noopener">http://www.tuicool.com/articles/uIfI3if</a><br>http监控参数及配置 <a href="http://www.cnblogs.com/breg/p/5649363.html" target="_blank" rel="noopener">http://www.cnblogs.com/breg/p/5649363.html</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/logging/flink/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/28/logging/flink/" class="post-title-link" itemprop="url">flink</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-28 10:48:14" itemprop="dateCreated datePublished" datetime="2019-11-28T10:48:14+08:00">2019-11-28</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/flink/" itemprop="url" rel="index">
-                    <span itemprop="name">flink</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="slave启动task报错"><a href="#slave启动task报错" class="headerlink" title="slave启动task报错"></a>slave启动task报错</h3><p>Exception in thread “main” java.lang.UnsupportedClassVersionError: org/apache/flink/runtime/taskexecutor/TaskManagerRunner : Unsupported major.minor version 52.0<br>报错和jdk版本对应关系<br>J2SE 8 = 52,<br>J2SE 7 = 51,<br>J2SE 6.0 = 50,<br>J2SE 5.0 = 49,<br>JDK 1.4 = 48,<br>JDK 1.3 = 47,<br>JDK 1.2 = 46,<br>解决办法，在.bash_profile添加JAVA_HOME</p>
-<h3 id="集群搭建"><a href="#集群搭建" class="headerlink" title="集群搭建"></a>集群搭建</h3><p><a href="https://ci.apache.org/projects/flink/flink-docs-release-1.6/ops/deployment/cluster_setup.html#configuring-flink" target="_blank" rel="noopener">https://ci.apache.org/projects/flink/flink-docs-release-1.6/ops/deployment/cluster_setup.html#configuring-flink</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/jenkins/rundeck/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/28/jenkins/rundeck/" class="post-title-link" itemprop="url">rundeck配置</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-28 10:47:36" itemprop="dateCreated datePublished" datetime="2019-11-28T10:47:36+08:00">2019-11-28</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/rundeck/" itemprop="url" rel="index">
-                    <span itemprop="name">rundeck</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="option"><a href="#option" class="headerlink" title="option"></a>option</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">取该job的变量“ipaddr”值：http://$&#123;option.ipaddr.value&#125;:8081/api/servermanager/games/groups</span><br><span class="line">取用户名变量：file:/data/rundeck/$&#123;job.user.name&#125;.json</span><br></pre></td></tr></table></figure>
-<p>官网： <a href="https://docs.rundeck.com/3.0.11/manual/defining-job-options.html?utm_source=rundeckapp&amp;utm_medium=3.0.11-20181221%20Linux%20java%201.8.0_144&amp;utm_campaign=helplink&amp;utm_content=editOpts%2Fedit#option-model-provider" target="_blank" rel="noopener">https://docs.rundeck.com/3.0.11/manual/defining-job-options.html?utm_source=rundeckapp&amp;utm_medium=3.0.11-20181221%20Linux%20java%201.8.0_144&amp;utm_campaign=helplink&amp;utm_content=editOpts%2Fedit#option-model-provider</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -992,7 +1012,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">80</span>
+          <span class="site-state-item-count">77</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1005,7 +1025,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">57</span>
+        <span class="site-state-item-count">56</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

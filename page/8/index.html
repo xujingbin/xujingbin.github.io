@@ -140,7 +140,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">57</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">56</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -150,7 +150,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">80</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">77</span></a>
 
   </li>
   </ul>
@@ -219,6 +219,97 @@
       
           <h3 id="buffer-space-has-too-many-data"><a href="#buffer-space-has-too-many-data" class="headerlink" title="buffer space has too many data"></a>buffer space has too many data</h3><p>一个项目日志量太大导致，可关闭该项目</p>
 
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/db/es/install/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/16/db/es/install/" class="post-title-link" itemprop="url">db/es/install</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-08-15 10:17:15" itemprop="dateModified" datetime="2019-08-15T10:17:15+08:00">2019-08-15</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="efk日志收集系统安装"><a href="#efk日志收集系统安装" class="headerlink" title="efk日志收集系统安装"></a>efk日志收集系统安装</h1><p>elasticsearch和kibana是单实例进程部署在一个节点上，fluentd是易daemonset对象部署在k8s集群上,需要开放es和kibana两个端口，默认是5601和9200</p>
+<h2 id="es-install"><a href="#es-install" class="headerlink" title="es install"></a>es install</h2><ol>
+<li><p>下载二进制包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.2.0-linux-x86_64.tar.gz</span><br><span class="line">tar zxf elasticsearch-7.2.0-linux-x86_64.tar.gz  -C /usr/local/</span><br><span class="line">cd /usr/local/elasticsearch-7.2.0/</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>优化内核参数</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">    1. /etc/security/limits.conf /etc/security/limits.d/90-nproc.conf设置完后需要重新登录该用户</span><br><span class="line">* soft nofile 65536</span><br><span class="line">* hard nofile 65536</span><br><span class="line">    2. /etc/sysctl.conf</span><br><span class="line">vm.max_map_count = 655360</span><br><span class="line">sysctl -p</span><br></pre></td></tr></table></figure></li>
+<li><p>磁盘挂载、用户创建<br>创建数据盘并挂载到/data,<br>创建运行用户 <code>useradd es;chown -R es:es /data /usr/local/elasticsearch-7.2.0;su - es</code></p>
+</li>
+<li><p>修改配置文件,其它数据库可能需要调优，但总得来说，Elasticsearch 不需要。 如果你遇到了性能问题，解决方法通常是更好的数据布局或者更多的节点。 在 Elasticsearch 中很少有“神奇的配置项”， 如果存在，我们也已经帮你优化了！<a href="https://www.elastic.co/guide/cn/elasticsearch/guide/current/important-configuration-changes.html" target="_blank" rel="noopener">https://www.elastic.co/guide/cn/elasticsearch/guide/current/important-configuration-changes.html</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1. config/elasticsearch.yml 修改数据目录</span><br><span class="line">path.data: /data/es</span><br><span class="line">path.logs: /data/logs/es</span><br><span class="line">cluster.initial_master_nodes:</span><br><span class="line">2. config/jvm.options jvm参数设置为机器内存一半的值</span><br><span class="line">-Xms8g</span><br><span class="line">-Xmx8g</span><br></pre></td></tr></table></figure></li>
+<li><p>运行程序<br>bin/elasticsearch -d</p>
+</li>
+</ol>
+<h2 id="kibana-install"><a href="#kibana-install" class="headerlink" title="kibana install"></a>kibana install</h2><ol>
+<li>下载二进制包</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://artifacts.elastic.co/downloads/kibana/kibana-7.2.0-linux-x86_64.tar.gz</span><br><span class="line">tar zxf kibana-7.2.0-linux-x86_64.tar.gz -C /usr/local/</span><br><span class="line">cd /usr/local/kibana-7.2.0-linux-x86_64/</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>配置启动用户及配置文件修改</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">chown -R es:es /usr/local/kibana-7.2.0-linux-x86_64/</span><br><span class="line">su - es</span><br><span class="line">config/kibana.yml</span><br><span class="line">server.host: &quot;192.168.67.114&quot;</span><br><span class="line">elasticsearch.hosts: [&quot;http://192.168.67.114:9200&quot;]</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>运行程序<br><code>nohup bin/kibana &amp;</code></li>
+</ol>
+<h3 id="fluentd-install根据业务定制"><a href="#fluentd-install根据业务定制" class="headerlink" title="fluentd install根据业务定制"></a>fluentd install根据业务定制</h3>
       
     </div>
 
@@ -316,97 +407,6 @@ kibana 配置文件https://www.elastic.co/guide/en/kibana/6.6/settings.html
 
 es 优化https://blog.51cto.com/13527416/2132270?from=timeline
 </code></pre>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/db/es/install/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/16/db/es/install/" class="post-title-link" itemprop="url">db/es/install</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-08-15 10:17:15" itemprop="dateModified" datetime="2019-08-15T10:17:15+08:00">2019-08-15</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="efk日志收集系统安装"><a href="#efk日志收集系统安装" class="headerlink" title="efk日志收集系统安装"></a>efk日志收集系统安装</h1><p>elasticsearch和kibana是单实例进程部署在一个节点上，fluentd是易daemonset对象部署在k8s集群上,需要开放es和kibana两个端口，默认是5601和9200</p>
-<h2 id="es-install"><a href="#es-install" class="headerlink" title="es install"></a>es install</h2><ol>
-<li><p>下载二进制包</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.2.0-linux-x86_64.tar.gz</span><br><span class="line">tar zxf elasticsearch-7.2.0-linux-x86_64.tar.gz  -C /usr/local/</span><br><span class="line">cd /usr/local/elasticsearch-7.2.0/</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>优化内核参数</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">    1. /etc/security/limits.conf /etc/security/limits.d/90-nproc.conf设置完后需要重新登录该用户</span><br><span class="line">* soft nofile 65536</span><br><span class="line">* hard nofile 65536</span><br><span class="line">    2. /etc/sysctl.conf</span><br><span class="line">vm.max_map_count = 655360</span><br><span class="line">sysctl -p</span><br></pre></td></tr></table></figure></li>
-<li><p>磁盘挂载、用户创建<br>创建数据盘并挂载到/data,<br>创建运行用户 <code>useradd es;chown -R es:es /data /usr/local/elasticsearch-7.2.0;su - es</code></p>
-</li>
-<li><p>修改配置文件,其它数据库可能需要调优，但总得来说，Elasticsearch 不需要。 如果你遇到了性能问题，解决方法通常是更好的数据布局或者更多的节点。 在 Elasticsearch 中很少有“神奇的配置项”， 如果存在，我们也已经帮你优化了！<a href="https://www.elastic.co/guide/cn/elasticsearch/guide/current/important-configuration-changes.html" target="_blank" rel="noopener">https://www.elastic.co/guide/cn/elasticsearch/guide/current/important-configuration-changes.html</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1. config/elasticsearch.yml 修改数据目录</span><br><span class="line">path.data: /data/es</span><br><span class="line">path.logs: /data/logs/es</span><br><span class="line">cluster.initial_master_nodes:</span><br><span class="line">2. config/jvm.options jvm参数设置为机器内存一半的值</span><br><span class="line">-Xms8g</span><br><span class="line">-Xmx8g</span><br></pre></td></tr></table></figure></li>
-<li><p>运行程序<br>bin/elasticsearch -d</p>
-</li>
-</ol>
-<h2 id="kibana-install"><a href="#kibana-install" class="headerlink" title="kibana install"></a>kibana install</h2><ol>
-<li>下载二进制包</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://artifacts.elastic.co/downloads/kibana/kibana-7.2.0-linux-x86_64.tar.gz</span><br><span class="line">tar zxf kibana-7.2.0-linux-x86_64.tar.gz -C /usr/local/</span><br><span class="line">cd /usr/local/kibana-7.2.0-linux-x86_64/</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>配置启动用户及配置文件修改</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">chown -R es:es /usr/local/kibana-7.2.0-linux-x86_64/</span><br><span class="line">su - es</span><br><span class="line">config/kibana.yml</span><br><span class="line">server.host: &quot;192.168.67.114&quot;</span><br><span class="line">elasticsearch.hosts: [&quot;http://192.168.67.114:9200&quot;]</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>运行程序<br><code>nohup bin/kibana &amp;</code></li>
-</ol>
-<h3 id="fluentd-install根据业务定制"><a href="#fluentd-install根据业务定制" class="headerlink" title="fluentd install根据业务定制"></a>fluentd install根据业务定制</h3>
       
     </div>
 
@@ -561,180 +561,6 @@ es 优化https://blog.51cto.com/13527416/2132270?from=timeline
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/jenkins/jenkins-issues/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/16/jenkins/jenkins-issues/" class="post-title-link" itemprop="url">jenkins/jenkins-issues</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="Groovy-RejectedAccessException"><a href="#Groovy-RejectedAccessException" class="headerlink" title="Groovy RejectedAccessException"></a>Groovy RejectedAccessException</h3><p><a href="https://blog.johnwu.cc/article/jenkins-groovy-rejected-access-exception.html" target="_blank" rel="noopener">https://blog.johnwu.cc/article/jenkins-groovy-rejected-access-exception.html</a></p>
-<ul>
-<li>找到系统设置-in-process Script Approval-Approve 每发生一次就授权执行一次</li>
-</ul>
-<h3 id="ERROR-Failed-to-execute-goal-org-apache-maven-plugins-maven-release-plugin-2-5-3-prepare-default-cli-on-project-adgame-statistic-query-Unable-to-commit-files"><a href="#ERROR-Failed-to-execute-goal-org-apache-maven-plugins-maven-release-plugin-2-5-3-prepare-default-cli-on-project-adgame-statistic-query-Unable-to-commit-files" class="headerlink" title="[ERROR] Failed to execute goal org.apache.maven.plugins:maven-release-plugin:2.5.3:prepare (default-cli) on project adgame_statistic_query: Unable to commit files"></a>[ERROR] Failed to execute goal org.apache.maven.plugins:maven-release-plugin:2.5.3:prepare (default-cli) on project adgame_statistic_query: Unable to commit files</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[ERROR] Provider message:</span><br><span class="line">[ERROR] The git-push command failed.</span><br><span class="line">[ERROR] Command output:</span><br><span class="line">[ERROR] ssh: Could not resolve hostname gitlab.4399.com:adgame: Name or service not known</span><br><span class="line">[ERROR] fatal: The remote end hung up unexpectedly</span><br></pre></td></tr></table></figure>
-<ul>
-<li>地址写错了 4399.com: 改成4399.com/</li>
-</ul>
-<h3 id="ERROR-Failed-to-execute-goal-org-apache-maven-plugins-maven-release-plugin-2-5-3-prepare-default-cli-on-project-gprp-cloud-api-Unable-to-tag-SCM"><a href="#ERROR-Failed-to-execute-goal-org-apache-maven-plugins-maven-release-plugin-2-5-3-prepare-default-cli-on-project-gprp-cloud-api-Unable-to-tag-SCM" class="headerlink" title="[ERROR] Failed to execute goal org.apache.maven.plugins:maven-release-plugin:2.5.3:prepare (default-cli) on project gprp_cloud_api: Unable to tag SCM"></a>[ERROR] Failed to execute goal org.apache.maven.plugins:maven-release-plugin:2.5.3:prepare (default-cli) on project gprp_cloud_api: Unable to tag SCM</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[ERROR] Provider message:</span><br><span class="line">[ERROR] The git-push command failed.</span><br><span class="line">[ERROR] Command output:</span><br><span class="line">[ERROR] ssh_exchange_identification: Connection closed by remote host</span><br><span class="line">[ERROR] fatal: The remote end hung up unexpectedly</span><br><span class="line">[ERROR] -&gt; [Help 1]</span><br><span class="line">[ERROR] </span><br><span class="line">[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.</span><br><span class="line">[ERROR] Re-run Maven using the -X switch to enable full debug logging.</span><br><span class="line">[ERROR] </span><br><span class="line">[ERROR] For more information about the errors and possible solutions, please read the following articles:</span><br><span class="line">[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException</span><br></pre></td></tr></table></figure>
-<ul>
-<li>可能因为提交的文件太大导致或者本身出现的网络问题  或者是更改/etc/ssh/sshd_config,MaxSessions 30</li>
-</ul>
-<h3 id="ERROR-Failed-to-execute-goal-org-apache-maven-plugins-maven-release-plugin-2-5-3-prepare-default-cli-on-project-gprp-cg-app-Unable-to-commit-files"><a href="#ERROR-Failed-to-execute-goal-org-apache-maven-plugins-maven-release-plugin-2-5-3-prepare-default-cli-on-project-gprp-cg-app-Unable-to-commit-files" class="headerlink" title="[ERROR] Failed to execute goal org.apache.maven.plugins:maven-release-plugin:2.5.3:prepare (default-cli) on project gprp_cg_app: Unable to commit files"></a>[ERROR] Failed to execute goal org.apache.maven.plugins:maven-release-plugin:2.5.3:prepare (default-cli) on project gprp_cg_app: Unable to commit files</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[ERROR] Provider message:</span><br><span class="line">[ERROR] The git-push command failed.</span><br><span class="line">[ERROR] Command output:</span><br><span class="line">[ERROR] GitLab: The project you were looking for could not be found.</span><br><span class="line">[ERROR] fatal: Could not read from remote repository.</span><br><span class="line">[ERROR] </span><br><span class="line">[ERROR] Please make sure you have the correct access rights</span><br><span class="line">[ERROR] and the repository exists.</span><br></pre></td></tr></table></figure>
-<p>nexus仓库没有配置会导致此报错</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/jenkins/jenkins/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/16/jenkins/jenkins/" class="post-title-link" itemprop="url">jenkins/jenkins</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-28 09:49:47" itemprop="dateModified" datetime="2019-11-28T09:49:47+08:00">2019-11-28</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>[toc]</p>
-<h3 id="搭建"><a href="#搭建" class="headerlink" title="搭建"></a>搭建</h3><p><a href="https://wiki.jenkins-ci.org/display/JENKINS/Starting+and+Accessing+Jenkins" target="_blank" rel="noopener">https://wiki.jenkins-ci.org/display/JENKINS/Starting+and+Accessing+Jenkins</a><br>jenkins:    <a href="http://www.cnblogs.com/yjmyzz/p/jenkins-tutorial-part-1.html" target="_blank" rel="noopener">http://www.cnblogs.com/yjmyzz/p/jenkins-tutorial-part-1.html</a></p>
-<h3 id="部署脚本"><a href="#部署脚本" class="headerlink" title="部署脚本"></a>部署脚本</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">projectDir=&quot;/workspace/gprp/adgame_filter&quot;</span><br><span class="line"></span><br><span class="line">onlineFile=&quot;$&#123;projectDir&#125;/webapps/adgame_filter.war&quot;</span><br><span class="line"></span><br><span class="line">suf_dir=`date &quot;+%s&quot;`</span><br><span class="line"></span><br><span class="line">bakFile=&quot;$&#123;projectDir&#125;/bak/$&#123;filename&#125;-$&#123;suf_dir&#125;&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">echo &quot;发布93&quot;</span><br><span class="line"></span><br><span class="line">node_name_list=&quot;gprp93&quot;</span><br><span class="line"></span><br><span class="line">sudo  salt -L $node_name_list cmd.run  &quot;if [[ ! -d $&#123;projectDir&#125;/bak ]];then mkdir  $&#123;projectDir&#125;/bak ; fi&quot;</span><br><span class="line"></span><br><span class="line">sudo  salt -L $node_name_list cmd.run  &quot;cp $&#123;onlineFile&#125; $&#123;bakFile&#125;&quot;</span><br><span class="line"></span><br><span class="line">sudo  salt -L $node_name_list cp.get_file  salt://$JOB_NAME/target/$filename  $&#123;onlineFile&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h4 id="检测服务是否启动完毕"><a href="#检测服务是否启动完毕" class="headerlink" title="检测服务是否启动完毕"></a>检测服务是否启动完毕</h4><p>curl -s 42.62.52.94:9086/adgame_filter/anticheat/ping</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"> * 方法1 </span><br><span class="line"></span><br><span class="line">function check_url() &#123;</span><br><span class="line"></span><br><span class="line">     signal=0</span><br><span class="line"></span><br><span class="line">     while [[ &quot;$signal&quot; -ne 1 ]];do</span><br><span class="line"></span><br><span class="line">       curl -s --connect-time 4 -I $1 |grep HTTP |grep 200 &gt; /dev/null &amp;&amp; signal=1 || echo &quot;wait for service starting&quot;</span><br><span class="line"></span><br><span class="line">     done</span><br><span class="line"></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">* 方法2</span><br><span class="line"></span><br><span class="line">while ((`curl -s 42.62.106.45:1852/feed/ping.do` != &quot;pong&quot;));do</span><br><span class="line"></span><br><span class="line">   sleep 1</span><br><span class="line"></span><br><span class="line">   echo &quot;服务还没起来，等待中...&quot;;</span><br><span class="line"></span><br><span class="line">done</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">curl -u admin:xXx-xXx  &apos;http://42.62.52.248:4399/admin?stats/&apos; -d  &quot;action=enable&amp;b=#6&amp;s=adgame94&quot;</span><br><span class="line"></span><br><span class="line">curl -u admin:xXx-xXx  &apos;http://42.62.52.248:4398/admin?stats/&apos; -d  &quot;action=enable&amp;b=#6&amp;s=adgame94&quot;</span><br></pre></td></tr></table></figure>
-
-<h3 id="slave"><a href="#slave" class="headerlink" title="slave"></a>slave</h3><p><a href="https://www.cnblogs.com/derekchen/p/5892286.html" target="_blank" rel="noopener">https://www.cnblogs.com/derekchen/p/5892286.html</a><br>不需要在slave节点机器上跑jenkins服务，</p>
-<ol>
-<li>在主jenkins管理界面：系统管理-管理节点-新建节点<br>通过launch agent via java web start方式</li>
-<li>下载slave.jar包到在slave机器上，运行<br><code>java -jar slave.jar -jnlpUrl http://jenkins.4399doc.com/computer/docker244/slave-agent.jnlp -secret asfsdf</code></li>
-<li>准备好jdk mvn git环境，环境变量，host 保证能连gitlab，拷贝主的jenkins账户密钥、mvn的setting到slave上</li>
-<li>如果是pipeline在jenkinsfile上指定slave，如node(‘gprp216’){}</li>
-<li>需要把jenkins_gprp_rw密钥的key放到slave机上才能git提交</li>
-<li>salt master需要修改/etc/salt/master<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">file_roots:</span><br><span class="line"></span><br><span class="line">   base:</span><br><span class="line"></span><br><span class="line">     - /workspace/workspace/</span><br><span class="line"></span><br><span class="line">interface: 192.168.62.216</span><br><span class="line"></span><br><span class="line">keep_jobs: 3</span><br><span class="line"></span><br><span class="line">key_logfile: /var/log/salt/key</span><br><span class="line"></span><br><span class="line">log_file: /var/log/salt/master</span><br><span class="line"></span><br><span class="line">state_events: True</span><br><span class="line"></span><br><span class="line">timeout: 600</span><br><span class="line"></span><br><span class="line">worker_threads: 10</span><br><span class="line">``</span><br><span class="line"></span><br><span class="line">### pipeline</span><br><span class="line">选择checkout: General SCM</span><br><span class="line"></span><br><span class="line">### rsync</span><br><span class="line"></span><br><span class="line">/etc/rsync_jenkins_gprp_solr.pass是jenkins上的密码，dest机器上也需要一个密码文件，开放873端口</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<p>/usr/bin/rsync  –delete   -avz  –exclude=.*     –password-file=/etc/rsync_jenkins_gprp_solr.pass   .  <a href="mailto:gprp@42.62.66.220" target="_blank" rel="noopener">gprp@42.62.66.220</a>::gprp_solr/  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">### pipeline语法</span><br><span class="line">https://www.jianshu.com/p/c8300d77cd71</span><br></pre></td></tr></table></figure>
-<pre><code>for ( String a : [&apos;aaa&apos;,&apos;vvv&apos;]){
-    echo &quot;${a}&quot;
-}
-b=[&apos;aaa&apos;,&apos;vvv&apos;]
-a=b.remove(b[-1])
-echo &quot;${b}&quot;</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 持续发布提交到仓库</span><br></pre></td></tr></table></figure>
-<p>git checkout master</p>
-<p>#git branch -D master</p>
-<p>#git checkout -b master origin/master</p>
-<p>git reset –hard origin/master</p>
-<p>#git pull</p>
-<p>git config user.name “jenkinsAgent174”</p>
-<p>git config  user.email “<a href="mailto:jenkinsAgent174@4399inc.com" target="_blank" rel="noopener">jenkinsAgent174@4399inc.com</a>“</p>
-<p>```</p>
-<h3 id="联通gitlab账号"><a href="#联通gitlab账号" class="headerlink" title="联通gitlab账号"></a>联通gitlab账号</h3><p><a href="http://vincent927.github.io/Jenkins%E4%BD%BF%E7%94%A8Gitlab%E8%B4%A6%E5%8F%B7%E5%81%9A%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86.html" target="_blank" rel="noopener">http://vincent927.github.io/Jenkins%E4%BD%BF%E7%94%A8Gitlab%E8%B4%A6%E5%8F%B7%E5%81%9A%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86.html</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/jenkins/maven-nexus/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -811,65 +637,6 @@ echo &quot;${b}&quot;</code></pre><figure class="highlight plain"><table><tr><td
 <p>当有id为B,A,C的顺序的mirror在mirrors节点中，maven会根据字母排序来指定第一个，所以不管怎么排列，一定会找到A这个mirror来进行查找，当A无法连接，出现意外的情况下，才会去B查询。</p>
 </blockquote>
 
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/jenkins/nexus/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/16/jenkins/nexus/" class="post-title-link" itemprop="url">jenkins/nexus</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>报错处理<br><a href="https://www.cnblogs.com/fengpingfan/p/5197608.html" target="_blank" rel="noopener">https://www.cnblogs.com/fengpingfan/p/5197608.html</a></p>
-<h3 id="3-15版本"><a href="#3-15版本" class="headerlink" title="3.15版本"></a>3.15版本</h3><p>pom.xml</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;distributionManagement&gt;</span><br><span class="line">    &lt;repository&gt;</span><br><span class="line">        &lt;id&gt;gprp&lt;/id&gt;</span><br><span class="line">        &lt;url&gt;http://nexus.4399doc.com:8081/repository/gprp/&lt;/url&gt;</span><br><span class="line">    &lt;/repository&gt;</span><br><span class="line">    &lt;snapshotRepository&gt;</span><br><span class="line">        &lt;id&gt;gprp-snapshot&lt;/id&gt;</span><br><span class="line">        &lt;url&gt;http://nexus.4399doc.com:8081/repository/gprp-snapshot/&lt;/url&gt;</span><br><span class="line">    &lt;/snapshotRepository&gt;</span><br><span class="line">&lt;/distributionManagement&gt;</span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -990,7 +757,7 @@ echo &quot;${b}&quot;</code></pre><figure class="highlight plain"><table><tr><td
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">80</span>
+          <span class="site-state-item-count">77</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1003,7 +770,7 @@ echo &quot;${b}&quot;</code></pre><figure class="highlight plain"><table><tr><td
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">57</span>
+        <span class="site-state-item-count">56</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

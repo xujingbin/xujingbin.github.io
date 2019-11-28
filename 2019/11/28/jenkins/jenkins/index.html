@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="运维笔记" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="[toc] 搭建https:&#x2F;&#x2F;wiki.jenkins-ci.org&#x2F;display&#x2F;JENKINS&#x2F;Starting+and+Accessing+Jenkinsjenkins:    http:&#x2F;&#x2F;www.cnblogs.com&#x2F;yjmyzz&#x2F;p&#x2F;jenkins-tutorial-part-1.html 部署脚本123456789101112131415161718192021projectD">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jenkins&#x2F;jenkins">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;28&#x2F;jenkins&#x2F;jenkins&#x2F;index.html">
+<meta property="og:site_name" content="运维笔记">
+<meta property="og:description" content="[toc] 搭建https:&#x2F;&#x2F;wiki.jenkins-ci.org&#x2F;display&#x2F;JENKINS&#x2F;Starting+and+Accessing+Jenkinsjenkins:    http:&#x2F;&#x2F;www.cnblogs.com&#x2F;yjmyzz&#x2F;p&#x2F;jenkins-tutorial-part-1.html 部署脚本123456789101112131415161718192021projectD">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-11-28T07:32:39.918Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2019/11/28/jenkins/jenkins/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>jenkins/jenkins | 运维笔记</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">运维笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">56</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">47</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">77</span></a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/jenkins/jenkins/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          jenkins/jenkins
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-28 15:32:39" itemprop="dateCreated datePublished" datetime="2019-11-28T15:32:39+08:00">2019-11-28</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>[toc]</p>
+<h3 id="搭建"><a href="#搭建" class="headerlink" title="搭建"></a>搭建</h3><p><a href="https://wiki.jenkins-ci.org/display/JENKINS/Starting+and+Accessing+Jenkins" target="_blank" rel="noopener">https://wiki.jenkins-ci.org/display/JENKINS/Starting+and+Accessing+Jenkins</a><br>jenkins:    <a href="http://www.cnblogs.com/yjmyzz/p/jenkins-tutorial-part-1.html" target="_blank" rel="noopener">http://www.cnblogs.com/yjmyzz/p/jenkins-tutorial-part-1.html</a></p>
+<h3 id="部署脚本"><a href="#部署脚本" class="headerlink" title="部署脚本"></a>部署脚本</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">projectDir=&quot;/workspace/gprp/adgame_filter&quot;</span><br><span class="line"></span><br><span class="line">onlineFile=&quot;$&#123;projectDir&#125;/webapps/adgame_filter.war&quot;</span><br><span class="line"></span><br><span class="line">suf_dir=`date &quot;+%s&quot;`</span><br><span class="line"></span><br><span class="line">bakFile=&quot;$&#123;projectDir&#125;/bak/$&#123;filename&#125;-$&#123;suf_dir&#125;&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">echo &quot;发布93&quot;</span><br><span class="line"></span><br><span class="line">node_name_list=&quot;gprp93&quot;</span><br><span class="line"></span><br><span class="line">sudo  salt -L $node_name_list cmd.run  &quot;if [[ ! -d $&#123;projectDir&#125;/bak ]];then mkdir  $&#123;projectDir&#125;/bak ; fi&quot;</span><br><span class="line"></span><br><span class="line">sudo  salt -L $node_name_list cmd.run  &quot;cp $&#123;onlineFile&#125; $&#123;bakFile&#125;&quot;</span><br><span class="line"></span><br><span class="line">sudo  salt -L $node_name_list cp.get_file  salt://$JOB_NAME/target/$filename  $&#123;onlineFile&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="检测服务是否启动完毕"><a href="#检测服务是否启动完毕" class="headerlink" title="检测服务是否启动完毕"></a>检测服务是否启动完毕</h4><p>curl -s 42.62.52.94:9086/adgame_filter/anticheat/ping</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"> * 方法1 </span><br><span class="line"></span><br><span class="line">function check_url() &#123;</span><br><span class="line"></span><br><span class="line">     signal=0</span><br><span class="line"></span><br><span class="line">     while [[ &quot;$signal&quot; -ne 1 ]];do</span><br><span class="line"></span><br><span class="line">       curl -s --connect-time 4 -I $1 |grep HTTP |grep 200 &gt; /dev/null &amp;&amp; signal=1 || echo &quot;wait for service starting&quot;</span><br><span class="line"></span><br><span class="line">     done</span><br><span class="line"></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">* 方法2</span><br><span class="line"></span><br><span class="line">while ((`curl -s 42.62.106.45:1852/feed/ping.do` != &quot;pong&quot;));do</span><br><span class="line"></span><br><span class="line">   sleep 1</span><br><span class="line"></span><br><span class="line">   echo &quot;服务还没起来，等待中...&quot;;</span><br><span class="line"></span><br><span class="line">done</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">curl -u admin:xXx-xXx  &apos;http://42.62.52.248:xujingbin/admin?stats/&apos; -d  &quot;action=enable&amp;b=#6&amp;s=adgame94&quot;</span><br><span class="line"></span><br><span class="line">curl -u admin:xXx-xXx  &apos;http://42.62.52.248:4398/admin?stats/&apos; -d  &quot;action=enable&amp;b=#6&amp;s=adgame94&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="slave"><a href="#slave" class="headerlink" title="slave"></a>slave</h3><p><a href="https://www.cnblogs.com/derekchen/p/5892286.html" target="_blank" rel="noopener">https://www.cnblogs.com/derekchen/p/5892286.html</a><br>不需要在slave节点机器上跑jenkins服务，</p>
+<ol>
+<li>在主jenkins管理界面：系统管理-管理节点-新建节点<br>通过launch agent via java web start方式</li>
+<li>下载slave.jar包到在slave机器上，运行<br><code>java -jar slave.jar -jnlpUrl http://jenkins.xujingbindoc.com/computer/docker244/slave-agent.jnlp -secret asfsdf</code></li>
+<li>准备好jdk mvn git环境，环境变量，host 保证能连gitlab，拷贝主的jenkins账户密钥、mvn的setting到slave上</li>
+<li>如果是pipeline在jenkinsfile上指定slave，如node(‘gprp216’){}</li>
+<li>需要把jenkins_gprp_rw密钥的key放到slave机上才能git提交</li>
+<li>salt master需要修改/etc/salt/master<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">file_roots:</span><br><span class="line"></span><br><span class="line">   base:</span><br><span class="line"></span><br><span class="line">     - /workspace/workspace/</span><br><span class="line"></span><br><span class="line">interface: 192.168.62.216</span><br><span class="line"></span><br><span class="line">keep_jobs: 3</span><br><span class="line"></span><br><span class="line">key_logfile: /var/log/salt/key</span><br><span class="line"></span><br><span class="line">log_file: /var/log/salt/master</span><br><span class="line"></span><br><span class="line">state_events: True</span><br><span class="line"></span><br><span class="line">timeout: 600</span><br><span class="line"></span><br><span class="line">worker_threads: 10</span><br><span class="line">``</span><br><span class="line"></span><br><span class="line">### pipeline</span><br><span class="line">选择checkout: General SCM</span><br><span class="line"></span><br><span class="line">### rsync</span><br><span class="line"></span><br><span class="line">/etc/rsync_jenkins_gprp_solr.pass是jenkins上的密码，dest机器上也需要一个密码文件，开放873端口</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>/usr/bin/rsync  –delete   -avz  –exclude=.*     –password-file=/etc/rsync_jenkins_gprp_solr.pass   .  <a href="mailto:gprp@42.62.66.220" target="_blank" rel="noopener">gprp@42.62.66.220</a>::gprp_solr/  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">### pipeline语法</span><br><span class="line">https://www.jianshu.com/p/c8300d77cd71</span><br></pre></td></tr></table></figure>
+<pre><code>for ( String a : [&apos;aaa&apos;,&apos;vvv&apos;]){
+    echo &quot;${a}&quot;
+}
+b=[&apos;aaa&apos;,&apos;vvv&apos;]
+a=b.remove(b[-1])
+echo &quot;${b}&quot;</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 持续发布提交到仓库</span><br></pre></td></tr></table></figure>
+<p>git checkout master</p>
+<p>#git branch -D master</p>
+<p>#git checkout -b master origin/master</p>
+<p>git reset –hard origin/master</p>
+<p>#git pull</p>
+<p>git config user.name “jenkinsAgent174”</p>
+<p>git config  user.email “<a href="mailto:jenkinsAgent174@xujingbininc.com" target="_blank" rel="noopener">jenkinsAgent174@xujingbininc.com</a>“</p>
+<pre><code>
+### 联通gitlab账号
+http://vincent927.github.io/Jenkins%E4%BD%BF%E7%94%A8Gitlab%E8%B4%A6%E5%8F%B7%E5%81%9A%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86.html</code></pre>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/11/28/jenkins/nexus/" rel="prev" title="jenkins/nexus">
+      <i class="fa fa-chevron-left"></i> jenkins/nexus
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/11/28/jenkins/git/" rel="next" title="git命令">
+      git命令 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#搭建"><span class="nav-number">1.</span> <span class="nav-text">搭建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#部署脚本"><span class="nav-number">2.</span> <span class="nav-text">部署脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#检测服务是否启动完毕"><span class="nav-number">2.1.</span> <span class="nav-text">检测服务是否启动完毕</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#slave"><span class="nav-number">3.</span> <span class="nav-text">slave</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">xujingbin</p>
+  <div class="site-description" itemprop="description">个人运维笔记</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">77</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">47</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xujingbin</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

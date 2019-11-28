@@ -55,7 +55,7 @@
 <meta property="og:site_name" content="运维笔记">
 <meta property="og:description" content="安装完成后，还需要最后一步设置，在命令行输入：$ git config –global user.name “Your Name”$ git config –global user.email “email@example.com“git reset –hard 3628164 回退到历史版本git add filenamegit commit -m “comment”git diff filen">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-11-28T02:46:51.512Z">
+<meta property="og:updated_time" content="2019-11-28T07:32:53.608Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://yoursite.com/2019/11/28/jenkins/git/">
@@ -142,7 +142,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">57</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">56</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -152,7 +152,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">80</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">77</span></a>
 
   </li>
   </ul>
@@ -204,7 +204,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2019-11-28 10:46:51" itemprop="dateCreated datePublished" datetime="2019-11-28T10:46:51+08:00">2019-11-28</time>
+              <time title="创建时间：2019-11-28 15:32:53" itemprop="dateCreated datePublished" datetime="2019-11-28T15:32:53+08:00">2019-11-28</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -236,7 +236,7 @@
 <p>Existing folder or Git repository</p>
 <p>cd existing_folder<br>git init<br>git remote add origin <a href="http://node01.k8s.com/ian/ian_test.git" target="_blank" rel="noopener">http://node01.k8s.com/ian/ian_test.git</a><br>git add .<br>git commit<br>git push -u origin master<br>Git鼓励大量使用分支：<br>查看分支：git branch<br>创建分支：git branch <name><br>切换分支：git checkout <name><br>创建+切换分支：git checkout -b <name><br>合并某分支到当前分支：git merge <name><br>删除分支：git branch -d <name><br>合并分支时，加上–no-ff参数就可以用普通模式合并，合并后的历史有分支，能看出来曾经做过合并，而fast forward合并就看不出来曾经做过合并。</p>
 <h3 id="svn-迁移到git-主分支"><a href="#svn-迁移到git-主分支" class="headerlink" title="svn 迁移到git  主分支"></a>svn 迁移到git  主分支</h3><p>参考<a href="https://segmentfault.com/a/1190000007039598" target="_blank" rel="noopener">https://segmentfault.com/a/1190000007039598</a><br>checkout 到svn代码获得users.txt <code>svn log ^/ --xml | grep -P &quot;^&lt;author&quot; | sort -u |       perl -pe &#39;s/&lt;author&gt;(.*?)&lt;\/author&gt;/$1 = /&#39; &gt; users.txt</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install git-svn</span><br><span class="line">//似乎users.txt这个选项没什么用</span><br><span class="line">git svn clone  svn://192.168.50.144/OA      --authors-file=users.txt --no-metadata</span><br><span class="line">cd OA</span><br><span class="line">git branch -a     //查看分支</span><br><span class="line">git log   //查看日志</span><br><span class="line">git remote add origin git@gitlab.4399.com:OA/OA.git</span><br><span class="line">git push -u origin --all</span><br><span class="line">git push -u origin --tags</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install git-svn</span><br><span class="line">//似乎users.txt这个选项没什么用</span><br><span class="line">git svn clone  svn://192.168.50.144/OA      --authors-file=users.txt --no-metadata</span><br><span class="line">cd OA</span><br><span class="line">git branch -a     //查看分支</span><br><span class="line">git log   //查看日志</span><br><span class="line">git remote add origin git@gitlab.xujingbin.com:OA/OA.git</span><br><span class="line">git push -u origin --all</span><br><span class="line">git push -u origin --tags</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -255,12 +255,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2019/11/28/%E5%85%B6%E4%BB%96/vsftpd/" rel="prev" title="vsftp">
-      <i class="fa fa-chevron-left"></i> vsftp
+    <a href="/2019/11/28/jenkins/jenkins/" rel="prev" title="jenkins/jenkins">
+      <i class="fa fa-chevron-left"></i> jenkins/jenkins
     </a></div>
       <div class="post-nav-item">
-    <a href="/2019/11/28/jenkins/rundeck/" rel="next" title="rundeck配置">
-      rundeck配置 <i class="fa fa-chevron-right"></i>
+    <a href="/2019/11/28/db/mongodb/" rel="next" title="mongodb">
+      mongodb <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -313,7 +313,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">80</span>
+          <span class="site-state-item-count">77</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -326,7 +326,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">57</span>
+        <span class="site-state-item-count">56</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

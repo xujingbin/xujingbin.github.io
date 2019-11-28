@@ -55,7 +55,7 @@
 <meta property="og:site_name" content="运维笔记">
 <meta property="og:description" content="安装配置http:&#x2F;&#x2F;www.cnblogs.com&#x2F;kgdxpr&#x2F;p&#x2F;3519352.html“show dbs” 命令可以显示所有数据的列表。执行 “db” 命令可以显示当前数据库对象或集合。运行”use”命令，可以连接到一个指定的数据库。 use DATABASE_NAME  如果数据库不存在，则创建数据库，否则切换到指定数据库。 性能指标http:&#x2F;&#x2F;www.soso.io&#x2F;article">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-11-28T03:12:48.337Z">
+<meta property="og:updated_time" content="2019-11-28T07:33:21.239Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://yoursite.com/2019/11/28/db/mongodb/">
@@ -142,7 +142,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">57</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">56</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -152,7 +152,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">80</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">77</span></a>
 
   </li>
   </ul>
@@ -204,7 +204,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2019-11-28 11:12:48" itemprop="dateCreated datePublished" datetime="2019-11-28T11:12:48+08:00">2019-11-28</time>
+              <time title="创建时间：2019-11-28 15:33:21" itemprop="dateCreated datePublished" datetime="2019-11-28T15:33:21+08:00">2019-11-28</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -237,7 +237,7 @@
 <p><a href="http://www.runoob.com/mongodb/nosql.html" target="_blank" rel="noopener">http://www.runoob.com/mongodb/nosql.html</a></p>
 <p>设置下密码比较好吧 在mongodb主上创建角色管理员（需要在no auth下创建，配置文件auth=false 重启mongodb） - use admin - 创建管理员账号<br>db.createUser({user:”admin”,pwd:”XXXX”,roles:[{“role”:”userAdminAnyDatabase”,”db”:”admin”}]})</p>
 <ul>
-<li>db.getUser(‘admin’); - 授予超级管理员权限：db.grantRolesToUser( “admin” , [ { role: “root”, db: “admin” }]) - 添加监控账号<br>db.createUser({user:”zabbixuser”,pwd:”zabbixusermy4399”,roles:[{role:”clusterMonitor”,db:”admin”}]}); <blockquote>
+<li>db.getUser(‘admin’); - 授予超级管理员权限：db.grantRolesToUser( “admin” , [ { role: “root”, db: “admin” }]) - 添加监控账号<br>db.createUser({user:”zabbixuser”,pwd:”zabbixusermyxujingbin”,roles:[{role:”clusterMonitor”,db:”admin”}]}); <blockquote>
 <p>创建某个数据库普通用户（在 auth下创建,配置文件auth=true 重启mongodb） </p>
 </blockquote>
 </li>
@@ -270,10 +270,13 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2019/11/28/db/redis/redis-trib.rb/" rel="prev" title="redis-trib">
-      <i class="fa fa-chevron-left"></i> redis-trib
+    <a href="/2019/11/28/jenkins/git/" rel="prev" title="git命令">
+      <i class="fa fa-chevron-left"></i> git命令
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2019/11/28/db/cachecloud/" rel="next" title="cahcecloud">
+      cahcecloud <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -325,7 +328,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">80</span>
+          <span class="site-state-item-count">77</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -338,7 +341,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">57</span>
+        <span class="site-state-item-count">56</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
