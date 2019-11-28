@@ -140,17 +140,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">23</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">56</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">10</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">46</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">78</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">80</span></a>
 
   </li>
   </ul>
@@ -179,7 +179,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/k8s/kubeadm-k8s%E5%AE%89%E8%A3%85/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/%E5%85%B6%E4%BB%96/vsftpd/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -193,7 +193,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2019/07/16/k8s/kubeadm-k8s%E5%AE%89%E8%A3%85/" class="post-title-link" itemprop="url">k8s/kubeadm-k8s安装</a>
+            <a href="/2019/11/28/%E5%85%B6%E4%BB%96/vsftpd/" class="post-title-link" itemprop="url">vsftp</a>
         </h1>
 
         <div class="post-meta">
@@ -203,161 +203,18 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
+              <time title="创建时间：2019-11-28 10:40:31" itemprop="dateCreated datePublished" datetime="2019-11-28T10:40:31+08:00">2019-11-28</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-27 16:42:20" itemprop="dateModified" datetime="2019-11-27T16:42:20+08:00">2019-11-27</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>dashboard 访问 <a href="https://www.cnblogs.com/linuxk/p/9783510.html" target="_blank" rel="noopener">https://www.cnblogs.com/linuxk/p/9783510.html</a></p>
-<p>教程 <a href="https://www.kubernetes.org.cn/5213.html" target="_blank" rel="noopener">https://www.kubernetes.org.cn/5213.html</a></p>
-<h3 id="升级内核"><a href="#升级内核" class="headerlink" title="升级内核"></a>升级内核</h3><p>rpm -Uvh *.rpm</p>
-<h3 id="查看当前内核"><a href="#查看当前内核" class="headerlink" title="查看当前内核"></a>查看当前内核</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">awk -F\&apos; &apos;$1==&quot;menuentry &quot; &#123;print i++ &quot; : &quot; $2&#125;&apos; /etc/grub2.cfg</span><br><span class="line">grub2-editenv list</span><br><span class="line"></span><br><span class="line">grub2-set-default 0</span><br><span class="line">grub2-set-default &apos;CentOS Linux (3.10.0-327.el7.x86_64) 7 (Core)&apos;</span><br></pre></td></tr></table></figure>
-
-<h3 id="加节点"><a href="#加节点" class="headerlink" title="加节点"></a>加节点</h3><ol>
-<li>添加从master到node的ssh免密码登录</li>
-<li>设置hostname，hostnamectl set-hostname，加下hosts</li>
-<li>拷贝k8s-v1.14.0/目录到node上，并执行init-node.sh</li>
-<li>在master上执行sh joib-node.sh ${nodeip}</li>
-<li>kubectl get pods -n kube-system</li>
-<li>命令<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl label node $&#123;node&#125; env=pro &amp;&amp; kubectl label node $&#123;node&#125; beta.kubernetes.io/fluentd-ds-ready=true &amp;&amp; kubectl label node $&#123;node&#125; cpu=high</span><br></pre></td></tr></table></figure>
-
-
-</li>
-</ol>
-<h3 id="其他文档"><a href="#其他文档" class="headerlink" title="其他文档"></a>其他文档</h3><p><a href="https://github.com/opsnull/follow-me-install-kubernetes-cluster" target="_blank" rel="noopener">https://github.com/opsnull/follow-me-install-kubernetes-cluster</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/db/etcd/etcd/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/16/db/etcd/etcd/" class="post-title-link" itemprop="url">db/etcd/etcd</a>
-        </h1>
-
-        <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="fa fa-folder-o"></i>
               </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/vsftp/" itemprop="url" rel="index">
+                    <span itemprop="name">vsftp</span>
+                  </a>
                 </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-22 16:42:03" itemprop="dateModified" datetime="2019-11-22T16:42:03+08:00">2019-11-22</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>github下载二进制包<br>拷贝二进制etcd,etcdctl文件到/usr/local/bin下<br>分别3个创建配置文件/etc/etcd/etcd.yml<br>v3 v2区别<a href="https://blog.csdn.net/kozazyh/article/details/79586530" target="_blank" rel="noopener">https://blog.csdn.net/kozazyh/article/details/79586530</a><br>备份恢复参考<a href="https://blog.csdn.net/ygqygq2/article/details/82753840" target="_blank" rel="noopener">https://blog.csdn.net/ygqygq2/article/details/82753840</a></p>
-<h2 id="管理界面https-github-com-kopeio-etcd-manager"><a href="#管理界面https-github-com-kopeio-etcd-manager" class="headerlink" title="管理界面https://github.com/kopeio/etcd-manager"></a>管理界面<a href="https://github.com/kopeio/etcd-manager" target="_blank" rel="noopener">https://github.com/kopeio/etcd-manager</a></h2><p>要在在该管理界面显示目录需单独创建目录</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">name: etcd-3</span><br><span class="line">data-dir: /data/etcd</span><br><span class="line">listen-client-urls: http://192.168.62.140:2379,http://127.0.0.1:2379</span><br><span class="line">advertise-client-urls: http://192.168.62.140:2379,http://127.0.0.1:2379</span><br><span class="line">listen-peer-urls: http://192.168.62.140:2380</span><br><span class="line">initial-advertise-peer-urls: http://192.168.62.140:2380</span><br><span class="line">initial-cluster: etcd-1=http://192.168.62.210:2380,etcd-2=http://192.168.62.154:2380,etcd-3=http://192.168.62.140:2380</span><br><span class="line">initial-cluster-token: etcd-cluster-token</span><br><span class="line">initial-cluster-state: new</span><br></pre></td></tr></table></figure>
-<p>分别执行：etcd –config-file=/etc/etcd/etcd.yml &amp;</p>
-<h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">列出成员节点</span><br><span class="line">etcdctl member list</span><br><span class="line">检查集群健康状态</span><br><span class="line">etcdctl cluster-health</span><br><span class="line">./etcdctl \</span><br><span class="line">--ca-file=/etc/etcd/ssl/ca.pem \</span><br><span class="line">--cert-file=/etc/etcd/ssl/server.pem \</span><br><span class="line">--key-file=/etc/etcd/ssl/server-key.pem \</span><br><span class="line">--endpoints=&quot;https://172.16.8.100:2379,\</span><br><span class="line">https://172.16.8.101:2379,\</span><br><span class="line">https://172.16.8.102:2379&quot; cluster-health</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">etcdctl --endpoints=&apos;https://127.0.0.1:2379&apos; --ca-file=ca.crt --cert-file=server.crt --key-file=server.key ls /</span><br><span class="line"></span><br><span class="line">[root@node119 prometheus]# kubectl -n kube-system exec -it etcd-node119 -- sh</span><br><span class="line">/ # cd /etc/kubernetes/pki/etcd/</span><br><span class="line">export ETCDCTL_API=3; etcdctl --endpoints=&apos;https://127.0.0.1:23</span><br><span class="line">79&apos; --cacert=&quot;ca.crt&quot; --cert=&quot;server.crt&quot; --key=&quot;server.key&quot; get / --prefix --keys-only</span><br><span class="line"></span><br><span class="line">或者直接在节点运行,需拷贝etcdctl到节点上</span><br><span class="line">ETCDCTL_API=3 etcdctl --endpoints=&apos;https://127.0.0.1:2379&apos; --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key get / --prefix --keys-only</span><br><span class="line">创建目录：</span><br><span class="line">/usr/local/etcd-v3.2.26-linux-amd64/bin/etcdctl --endpoints=$ENDPOINTS put /test3 &apos;etcdv3_dir_$2H#%gRe3*t&apos;</span><br></pre></td></tr></table></figure>
-
-<h1 id="监控"><a href="#监控" class="headerlink" title="监控"></a>监控</h1><p><a href="https://github.com/etcd-io/etcd/blob/master/Documentation/metrics.md" target="_blank" rel="noopener">https://github.com/etcd-io/etcd/blob/master/Documentation/metrics.md</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/vsftpd/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/16/vsftpd/" class="post-title-link" itemprop="url">vsftpd</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
             </span>
 
           
@@ -375,6 +232,7 @@
 <p>FTP的登录一般有三种方式，分别是：</p>
 <p>匿名用户形式：默认安装的情况下，系统只提供匿名用户访问，只需要输入用户anonymous/ftp，并将自己的Email作为口令即可登录。<br>本地用户形式：以/etc/passwd中的用户名为认证方式。<br>虚拟用户形式：支持将用户名和密码保存在文件或数据库中，将登录用户映射到指定的系统账号（/sbin/nologin）来访问资源，其中这些虚拟用户是FTP的用户。<br>194安装教程安装<a href="https://www.cnblogs.com/acpp/archive/2010/02/08/1665876.html" target="_blank" rel="noopener">https://www.cnblogs.com/acpp/archive/2010/02/08/1665876.html</a></p>
 <h3 id="创建账户、更改账户"><a href="#创建账户、更改账户" class="headerlink" title="创建账户、更改账户"></a>创建账户、更改账户</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">不需要重启</span><br><span class="line">vim account.txt</span><br><span class="line">rm -f /etc/vsftpd/account.db</span><br><span class="line">db_load -T -t hash -f ./account.txt /etc/vsftpd/account.db</span><br></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -393,7 +251,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/gitbook/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/%E5%85%B6%E4%BB%96/markdown%E6%95%99%E7%A8%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -407,7 +265,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2019/07/16/gitbook/" class="post-title-link" itemprop="url">gitbook</a>
+            <a href="/2019/11/28/%E5%85%B6%E4%BB%96/markdown%E6%95%99%E7%A8%8B/" class="post-title-link" itemprop="url">markdown教程</a>
         </h1>
 
         <div class="post-meta">
@@ -417,7 +275,18 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
+              <time title="创建时间：2019-11-28 10:39:22" itemprop="dateCreated datePublished" datetime="2019-11-28T10:39:22+08:00">2019-11-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/markdown/" itemprop="url" rel="index">
+                    <span itemprop="name">markdown</span>
+                  </a>
+                </span>
             </span>
 
           
@@ -431,43 +300,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>GitBook 是一个基于 Node.js 的命令行工具，可使用 Github/Git 和 Markdown 来制作精美的电子书。</p>
-<p>安装gitbook之前得先安装nodejs</p>
-<p>npm install -g gitbook-cli</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">$ gitbook -h</span><br><span class="line"></span><br><span class="line">Usage: gitbook [options] [command]</span><br><span class="line"></span><br><span class="line">Commands:</span><br><span class="line"></span><br><span class="line">build [options] [source_dir] 编译指定目录，输出Web格式(_book文件夹中)</span><br><span class="line"></span><br><span class="line">serve [options] [source_dir] 监听文件变化并编译指定目录，同时会创建一个服务器用于预览Web</span><br><span class="line"></span><br><span class="line">pdf [options] [source_dir] 编译指定目录，输出PDF</span><br><span class="line"></span><br><span class="line">epub [options] [source_dir] 编译指定目录，输出epub</span><br><span class="line"></span><br><span class="line">mobi [options] [source_dir] 编译指定目录，输出mobi</span><br><span class="line"></span><br><span class="line">init [source_dir]   通过SUMMARY.md生成作品目录</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line"></span><br><span class="line">-h, --help     output usage information</span><br><span class="line"></span><br><span class="line">-V, --version  output the version number</span><br></pre></td></tr></table></figure>
-
-<h3 id="安装完成后，可使用gitbook搭建一个demo-web站点"><a href="#安装完成后，可使用gitbook搭建一个demo-web站点" class="headerlink" title="安装完成后，可使用gitbook搭建一个demo-web站点"></a>安装完成后，可使用gitbook搭建一个demo-web站点</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">cd /home/apps/gitbook</span><br><span class="line">mkdir demo</span><br><span class="line">cd demo</span><br><span class="line"># 初始化之后会看到两个文件，README.md ，SUMMARY.md</span><br><span class="line">gitbook init</span><br><span class="line"># 生成静态站点，当前目录会生成_book目录，即web静态站点</span><br><span class="line">gitbook build ./</span><br><span class="line"># 启动web站点，默认浏览地址：http://localhost:4000</span><br><span class="line">gitbook serve ./</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">or   gitbook serve --lrport 35288 --port 4001 /path2/your_another_doc_dir/  </span><br><span class="line"></span><br><span class="line">## 持续集成原理，通过gitlab-runner注册该节点192.168.62.174到gitlab中心，提交dev代码时自动拉取到该节点上，自动同步到项目目录/workspace/gprp/ucentergitbook，当该目录变动时程序会自动重启，目前重启时间29.6s（耗时长应该是插件比较多，文件比较多的原因）， 20180822</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-</blockquote>
-<p>gitbook 好卡啊 我可以发布到我的个人网站吗?</p>
-<p>当然可以，gitbook build之后的_book 就是一个完整的web目录, 你可以放置到你的个人网站上.</p>
-<p>一个更好的做法是直接发布到github的gh-pages上, 由于gitbook每次build都会重新生成整个目录.所以你需要利用gulp-gh-pages或grunt-gh-pages等工具进行发布.</p>
-<p><a href="https://github.com/regularjs/guide/tree/master" target="_blank" rel="noopener">你可以参考我的做法</a>, 这样一键gulp deploy可以完成指定目录_book发布gh-pages.</p>
-<blockquote>
-</blockquote>
-<h3 id="nodejs官网"><a href="#nodejs官网" class="headerlink" title="nodejs官网"></a><a href="https://nodejs.org/en/" target="_blank" rel="noopener">nodejs官网</a></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">nodejs http://www.runoob.com/nodejs/nodejs-install-setup.html</span><br><span class="line"></span><br><span class="line">1、下载二进制文件后 设置环境变量、/etc/profile:</span><br><span class="line"></span><br><span class="line">export NODE_HOME=/usr/local/node-v6.11.1-linux-x64</span><br><span class="line"></span><br><span class="line">export PATH=$NODE_HOME/bin:$PATH</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">2、下载源码，你需要在https://nodejs.org/en/download/下载最新的Nodejs版本，本文以v0.10.24为例:</span><br><span class="line"></span><br><span class="line">wget http://nodejs.org/dist/v0.10.24/node-v0.10.24.tar.gz</span><br><span class="line"></span><br><span class="line">tar zxvf node-v0.10.24.tar.gz</span><br><span class="line"></span><br><span class="line">3、 编译安装</span><br><span class="line"></span><br><span class="line">cd node-v0.10.24</span><br><span class="line"></span><br><span class="line">./configure --prefix=/usr/local/node/0.10.24</span><br><span class="line"></span><br><span class="line">make</span><br><span class="line"></span><br><span class="line">make install</span><br><span class="line"></span><br><span class="line">vim /etc/profile</span><br><span class="line"></span><br><span class="line">export NODE_HOME=/usr/local/node/0.10.24</span><br><span class="line"></span><br><span class="line">export PATH=$NODE_HOME/bin:$PATH</span><br><span class="line"></span><br><span class="line">source /etc/profile</span><br><span class="line"></span><br><span class="line">node -v</span><br><span class="line"></span><br><span class="line">输出 v0.10.24 表示配置成功</span><br><span class="line"></span><br><span class="line">npm模块安装路径</span><br><span class="line"></span><br><span class="line">/usr/local/node/0.10.24/lib/node_modules/</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="SUMMARY-md-自动生成脚本"><a href="#SUMMARY-md-自动生成脚本" class="headerlink" title="SUMMARY.md 自动生成脚本"></a>SUMMARY.md <a href="https://www.npmjs.com/package/gitbook-summary" target="_blank" rel="noopener">自动生成脚本</a></h3><p>npm install -g gitbook-summary</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Generate a SUMMARY.md Simply</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$ cd /path/to/your/book/</span><br><span class="line"></span><br><span class="line">$ book sm -i _book   (排除_book目录)</span><br><span class="line"></span><br><span class="line">sed -i -e &apos;/- Node Modules/,11d&apos; SUMMARY.md</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="gitlab-runner"><a href="#gitlab-runner" class="headerlink" title="gitlab-runner"></a>gitlab-runner</h3><p>以gitlab-runner用户运行</p>
-<p>在gitlab项目-settings-Pipelines创建token </p>
-<p>参考 <a href="https://segmentfault.com/a/1190000007180257" target="_blank" rel="noopener">https://segmentfault.com/a/1190000007180257</a></p>
-<p>官方文档 <a href="https://docs.gitlab.com/runner/register/index.html" target="_blank" rel="noopener">https://docs.gitlab.com/runner/register/index.html</a></p>
-<p>.gitlab-ci.yml</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">before_script:</span><br><span class="line"></span><br><span class="line">  - export NODE_HOME=/usr/local/node-v6.11.1-linux-x64</span><br><span class="line"></span><br><span class="line">  - export PATH=$NODE_HOME/bin:$PATH</span><br><span class="line"></span><br><span class="line">deploy:</span><br><span class="line"></span><br><span class="line">  stage: deploy</span><br><span class="line"></span><br><span class="line">  script:</span><br><span class="line"></span><br><span class="line">    - id</span><br><span class="line"></span><br><span class="line">    - rsync -avz ./  /workspace/gprp/ucentergitbook/</span><br><span class="line"></span><br><span class="line">    - cd /workspace/gprp/ucentergitbook</span><br><span class="line"></span><br><span class="line">    - book ms -i _book</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h3><p>先把插件写进book.json，然后用gitlab-runner运行gitbook install，会安装缺少的插件</p>
-<p><a href="http://www.chengweiyang.cn/gitbook/plugins/functional/codeblock-filename.html" target="_blank" rel="noopener">http://www.chengweiyang.cn/gitbook/plugins/functional/codeblock-filename.html</a></p>
-<p><a href="http://www.cnblogs.com/zhangjk1993/p/5066771.html" target="_blank" rel="noopener">http://www.cnblogs.com/zhangjk1993/p/5066771.html</a></p>
-<h3 id="隐藏掉Published-with-GitBook"><a href="#隐藏掉Published-with-GitBook" class="headerlink" title="隐藏掉Published with GitBook"></a>隐藏掉Published with GitBook</h3><p><a href="https://www.jianshu.com/p/9c706dfa2d4e" target="_blank" rel="noopener">https://www.jianshu.com/p/9c706dfa2d4e</a></p>
+          <h3 id="教程网址"><a href="#教程网址" class="headerlink" title="教程网址"></a>教程网址</h3><ul>
+<li>教程 <a href="http://www.jianshu.com/p/q81RER" target="_blank" rel="noopener">http://www.jianshu.com/p/q81RER</a>   <a href="http://blog.csdn.net/phunxm/article/details/49565427" target="_blank" rel="noopener">http://blog.csdn.net/phunxm/article/details/49565427</a></li>
+<li>插入图片 <a href="https://www.jianshu.com/p/280c6a6f2594" target="_blank" rel="noopener">https://www.jianshu.com/p/280c6a6f2594</a></li>
+<li>为知markdown: <a href="http://www.wiz.cn/feature-markdown.html" target="_blank" rel="noopener">http://www.wiz.cn/feature-markdown.html</a></li>
+</ul>
+<h3 id="MarkDown快捷键"><a href="#MarkDown快捷键" class="headerlink" title="MarkDown快捷键"></a>MarkDown快捷键</h3><p>通用工具</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">段落引用 &gt; Ctrl + Q</span><br><span class="line">新的段落--- Ctrl + R</span><br><span class="line">列表项 - Ctrl + U</span><br><span class="line">有序列表项 1. 2. Ctrl + O</span><br><span class="line">斜体文本CONTENT Ctrl + I</span><br><span class="line">插入粗体 Ctrl + B</span><br><span class="line">删除当前行 Ctrl + D</span><br><span class="line">搜索 Ctrl + F</span><br><span class="line">搜索文档 Ctrl + Alt + F</span><br><span class="line">插入图像 Ctrl + G</span><br><span class="line">插入标题 Ctrl + H</span><br><span class="line">插入代码 Ctrl + K</span><br><span class="line">插入超链接 Ctrl + L</span><br><span class="line">創建新文稿 Ctrl + Alt + N</span><br><span class="line">主題切换 Ctrl + Alt + J</span><br><span class="line">编辑模式 Ctrl + M</span><br><span class="line">阅读模式 Ctrl + Alt + M</span><br><span class="line">全屏 F11</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -487,7 +326,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/java%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/%E5%85%B6%E4%BB%96/java%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -501,7 +340,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2019/07/16/java%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="post-title-link" itemprop="url">java内存管理</a>
+            <a href="/2019/11/28/%E5%85%B6%E4%BB%96/java%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="post-title-link" itemprop="url">java内存管理</a>
         </h1>
 
         <div class="post-meta">
@@ -511,7 +350,24 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
+              <time title="创建时间：2019-11-28 10:38:43" itemprop="dateCreated datePublished" datetime="2019-11-28T10:38:43+08:00">2019-11-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" itemprop="url" rel="index">
+                    <span itemprop="name">性能优化</span>
+                  </a>
+                </span>
             </span>
 
           
@@ -564,7 +420,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/jumpserver/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/%E5%85%B6%E4%BB%96/jumpserver/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -578,7 +434,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2019/07/16/jumpserver/" class="post-title-link" itemprop="url">jumpserver</a>
+            <a href="/2019/11/28/%E5%85%B6%E4%BB%96/jumpserver/" class="post-title-link" itemprop="url">jumpserver虚拟环境启动</a>
         </h1>
 
         <div class="post-meta">
@@ -588,15 +444,25 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
+              <time title="创建时间：2019-11-28 10:37:42" itemprop="dateCreated datePublished" datetime="2019-11-28T10:37:42+08:00">2019-11-28</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-09-25 10:42:28" itemprop="dateModified" datetime="2019-09-25T10:42:28+08:00">2019-09-25</time>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
               </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/jumpserver/" itemprop="url" rel="index">
+                    <span itemprop="name">jumpserver</span>
+                  </a>
+                </span>
+            </span>
 
           
 
@@ -631,7 +497,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/markdown/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/%E5%85%B6%E4%BB%96/mac/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -645,7 +511,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2019/07/16/markdown/" class="post-title-link" itemprop="url">markdown</a>
+            <a href="/2019/11/28/%E5%85%B6%E4%BB%96/mac/" class="post-title-link" itemprop="url">mac命令及其他</a>
         </h1>
 
         <div class="post-meta">
@@ -655,228 +521,19 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
+              <time title="创建时间：2019-11-28 10:36:14" itemprop="dateCreated datePublished" datetime="2019-11-28T10:36:14+08:00">2019-11-28</time>
             </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="教程网址"><a href="#教程网址" class="headerlink" title="教程网址"></a>教程网址</h3><ul>
-<li>教程 <a href="http://www.jianshu.com/p/q81RER" target="_blank" rel="noopener">http://www.jianshu.com/p/q81RER</a>   <a href="http://blog.csdn.net/phunxm/article/details/49565427" target="_blank" rel="noopener">http://blog.csdn.net/phunxm/article/details/49565427</a></li>
-<li>插入图片 <a href="https://www.jianshu.com/p/280c6a6f2594" target="_blank" rel="noopener">https://www.jianshu.com/p/280c6a6f2594</a></li>
-<li>为知markdown: <a href="http://www.wiz.cn/feature-markdown.html" target="_blank" rel="noopener">http://www.wiz.cn/feature-markdown.html</a></li>
-</ul>
-<h3 id="MarkDown快捷键"><a href="#MarkDown快捷键" class="headerlink" title="MarkDown快捷键"></a>MarkDown快捷键</h3><p>通用工具</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">段落引用 &gt; Ctrl + Q</span><br><span class="line">新的段落--- Ctrl + R</span><br><span class="line">列表项 - Ctrl + U</span><br><span class="line">有序列表项 1. 2. Ctrl + O</span><br><span class="line">斜体文本CONTENT Ctrl + I</span><br><span class="line">插入粗体 Ctrl + B</span><br><span class="line">删除当前行 Ctrl + D</span><br><span class="line">搜索 Ctrl + F</span><br><span class="line">搜索文档 Ctrl + Alt + F</span><br><span class="line">插入图像 Ctrl + G</span><br><span class="line">插入标题 Ctrl + H</span><br><span class="line">插入代码 Ctrl + K</span><br><span class="line">插入超链接 Ctrl + L</span><br><span class="line">創建新文稿 Ctrl + Alt + N</span><br><span class="line">主題切换 Ctrl + Alt + J</span><br><span class="line">编辑模式 Ctrl + M</span><br><span class="line">阅读模式 Ctrl + Alt + M</span><br><span class="line">全屏 F11</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/apollo/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/16/apollo/" class="post-title-link" itemprop="url">apollo</a>
-        </h1>
-
-        <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="fa fa-folder-o"></i>
               </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="apollo"><a href="#apollo" class="headerlink" title="apollo"></a>apollo</h2><p><a href="https://github.com/ctripcorp/apollo" target="_blank" rel="noopener">https://github.com/ctripcorp/apollo</a></p>
-<p>portal通过admin来管理config所以要给portal开通每个admin的8090端口</p>
-<p>升级账户管理</p>
-<p><a href="https://github.com/ctripcorp/apollo/wiki/Portal-%E5%AE%9E%E7%8E%B0%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E5%8A%9F%E8%83%BD" target="_blank" rel="noopener">https://github.com/ctripcorp/apollo/wiki/Portal-%E5%AE%9E%E7%8E%B0%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E5%8A%9F%E8%83%BD</a></p>
-<h3 id="新增uat环境，"><a href="#新增uat环境，" class="headerlink" title="新增uat环境，"></a>新增uat环境，</h3><h4 id="建立数据库uatApolloConfigDB"><a href="#建立数据库uatApolloConfigDB" class="headerlink" title="建立数据库uatApolloConfigDB"></a>建立数据库uatApolloConfigDB</h4><ul>
-<li>更改uat-apolloconfigdb.sql:</li>
-</ul>
-<p>`CREATE DATABASE IF NOT EXISTS uatApolloConfigDB DEFAULT CHARACTER SET = utf8mb4;</p>
-<p>Use uatApolloConfigDB;`</p>
-<p><code>ServerConfig       (&#39;eureka.service.url&#39;, &#39;default&#39;, &#39;http://42.62.2.211:8080/eureka/&#39;, &#39;Eureka服务Url，多个service以英文逗号分隔&#39;),</code></p>
-<ul>
-<li>导入数据：</li>
-</ul>
-<p><code>/usr/local/mysql/bin/mysql -uroot -p</code>cat /etc/savep <code>uatApolloConfigDB &lt; ./uat-apolloconfigdb.sql</code></p>
-<ul>
-<li>创建apollo账户</li>
-</ul>
-<p><code>grant all privileges on uatApolloConfigDB.* to &#39;apollo&#39;@&#39;10.0.0.211&#39;;</code></p>
-<h4 id="更改构建脚本uat-build-sh"><a href="#更改构建脚本uat-build-sh" class="headerlink" title="更改构建脚本uat-build.sh"></a>更改构建脚本uat-build.sh</h4><p>apollo_config_db_url=jdbc:mysql://10.0.0.198:3306/uatApolloConfigDB?characterEncoding=utf8</p>
-<h3 id="访问feed项目的本地配置"><a href="#访问feed项目的本地配置" class="headerlink" title="访问feed项目的本地配置"></a>访问feed项目的本地配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://10.0.0.218:8080/configs/feed/default/application?ip=10.0.0.213</span><br></pre></td></tr></table></figure>
-<h3 id="删除应用"><a href="#删除应用" class="headerlink" title="删除应用"></a>删除应用</h3><p><a href="https://github.com/ctripcorp/apollo/wiki/%E9%83%A8%E7%BD%B2&amp;%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98#51-%E5%A6%82%E4%BD%95%E5%88%A0%E9%99%A4%E5%BA%94%E7%94%A8" target="_blank" rel="noopener">https://github.com/ctripcorp/apollo/wiki/%E9%83%A8%E7%BD%B2&amp;%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98#51-%E5%A6%82%E4%BD%95%E5%88%A0%E9%99%A4%E5%BA%94%E7%94%A8</a></p>
-<h3 id="apollo-client部署到仓库"><a href="#apollo-client部署到仓库" class="headerlink" title="apollo client部署到仓库"></a>apollo client部署到仓库</h3><p>应该是</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn clean deploy -DskipTests -pl apollo-client -am $META_SERVERS_OPTS</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/monitor/skywalking/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/16/monitor/skywalking/" class="post-title-link" itemprop="url">monitor/skywalking</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="配置文档"><a href="#配置文档" class="headerlink" title="配置文档"></a>配置文档</h3><p><a href="https://github.com/apache/incubator-skywalking/tree/master/docs/en/setup" target="_blank" rel="noopener">https://github.com/apache/incubator-skywalking/tree/master/docs/en/setup</a></p>
-<p>集群模式：1个webserver，2个collector，1个es集群（目前有3个节点），zookeeper（三个节点），每个应用配套一个agent，</p>
-<h3 id="增加过滤插件"><a href="#增加过滤插件" class="headerlink" title="增加过滤插件"></a>增加过滤插件</h3><p><a href="https://github.com/apache/incubator-skywalking/blob/5.x/apm-sniffer/optional-plugins/trace-ignore-plugin/README_CN.md" target="_blank" rel="noopener">https://github.com/apache/incubator-skywalking/blob/5.x/apm-sniffer/optional-plugins/trace-ignore-plugin/README_CN.md</a></p>
-<h3 id="需要注意的是"><a href="#需要注意的是" class="headerlink" title="需要注意的是"></a>需要注意的是</h3><ol>
-<li><p>不同版本的数据格式可能不一样，当升级版本时需要清除之前的数据。</p>
-</li>
-<li><p>注意两个配置文件collector的application.yml和agent的agent.config，collector的监听ip是根据hostname的ip指向来确定(application.yml中配置为host: 0.0.0.0的除外)</p>
-</li>
-<li><p>应用端tomcat或者jetty版本也有要求，线上用jetty9版本，在启动脚本加入”-javaagent:$JETTY_BASE/agent/skywalking-agent.jar”</p>
-</li>
-<li><p>webappService.sh中–collector.ribbon.listOfServers=IP1:10800,IP2:10800，IP1，IP2为相应的两个collector地址</p>
-</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/monitor/%E7%9B%91%E6%8E%A7%E5%91%BD%E4%BB%A4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/16/monitor/%E7%9B%91%E6%8E%A7%E5%91%BD%E4%BB%A4/" class="post-title-link" itemprop="url">monitor/监控命令</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/system/" itemprop="url" rel="index">
+                    <span itemprop="name">system</span>
+                  </a>
                 </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-27 18:06:45" itemprop="dateModified" datetime="2019-11-27T18:06:45+08:00">2019-11-27</time>
-              </span>
+            </span>
 
           
 
@@ -889,58 +546,443 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>###命令大全： <a href="http://man.linuxde.net/" target="_blank" rel="noopener">http://man.linuxde.net/</a></p>
-<h4 id="查看历史状态：sar"><a href="#查看历史状态：sar" class="headerlink" title="查看历史状态：sar"></a>查看历史状态：sar</h4><pre><code>cpu: cpu
-内存： sar -r
- http://blog.csdn.net/sunlylorn/article/details/6215137 </code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">1. sar是做什么的？</span><br><span class="line"> </span><br><span class="line">主要负责收集、汇报与存储系统运行信息的。</span><br><span class="line"> </span><br><span class="line">2. sar怎么控制信息输出的时间间隔和次数？</span><br><span class="line"> </span><br><span class="line">有两个参数非常非常常用，就是“时间间隔”和“输出次数”。</span><br><span class="line"> </span><br><span class="line">时间间隔表示两次信息输出之间的时间间隔，单位是秒。如果这个值被设置为0，则表示所输出的信息是从开机到现在为止的信息平均值。如果不是0，sar计算就都是从当前开始的信息的平均值。</span><br><span class="line"> </span><br><span class="line">输出次数表示输出系统信息的次数，默认是1次。如果这个值被设置为0，则会永远的输出下去。</span><br><span class="line"> </span><br><span class="line">比如：sar 60 5 表示每60秒输出一次，共输出5次。（如果你脑子够快的话，会发现这个命令将历时300秒，因为每一次信息输出前会先停顿60秒的。）</span><br><span class="line">http://roclinux.cn/</span><br><span class="line"></span><br><span class="line">await表示平均每次设备I/O操作的等待时间（以毫秒为单位）。 </span><br><span class="line">svctm表示平均每次设备I/O操作的服务时间（以毫秒为单位）。</span><br><span class="line">%util表示一秒中有百分之几的时间用于I/O操作。 </span><br><span class="line">对以磁盘IO性能，一般有如下评判标准：</span><br><span class="line">正常情况下svctm应该是小于await值的，而svctm的大小和磁盘性能有关，CPU、内存的负荷也会对svctm值造成影响，过多的请求也会间接的导致svctm值的增加。</span><br><span class="line">await值的大小一般取决与svctm的值和I/O队列长度以及I/O请求模式，如果svctm的值与await很接近，表示几乎没有I/O等待，磁盘性能很好，如果await的值远高于svctm的值，则表示I/O队列等待太长，系统上运行的应用程序将变慢，此时可以通过更换更快的硬盘来解决问题。</span><br><span class="line">%util项的值也是衡量磁盘I/O的一个重要指标，如果%util接近100%，表示磁盘产生的I/O请求太多，I/O系统已经满负荷的在工作，该磁盘可能存在瓶颈。长期下去，势必影响系统的性能，可以通过优化程序或者通过更换更高、更快的磁盘来解决此问题。</span><br><span class="line"></span><br><span class="line">sar命令使用-n选项可以汇报网络相关信息，可用的参数包括：DEV、EDEV、SOCK和FULL。</span><br><span class="line"></span><br><span class="line">如果你使用DEV关键字，那么sar将汇报和网络设备相关的信息，如lo，eth0或eth1等，例如：</span><br><span class="line"></span><br><span class="line">IFACE：就是网络设备的名称；</span><br><span class="line">rxpck/s：每秒钟接收到的包数目</span><br><span class="line">txpck/s：每秒钟发送出去的包数目</span><br><span class="line">rxbyt/s：每秒钟接收到的字节数</span><br><span class="line">txbyt/s：每秒钟发送出去的字节数</span><br><span class="line">rxcmp/s：每秒钟接收到的压缩包数目</span><br><span class="line">txcmp/s：每秒钟发送出去的压缩包数目</span><br><span class="line">txmcst/s：每秒钟接收到的多播包的包数目</span><br><span class="line"></span><br><span class="line">来源： http://88fly.blog.163.com/blog/static/1226803902012514710581/</span><br></pre></td></tr></table></figure>
+          <h3 id="ssh-agent"><a href="#ssh-agent" class="headerlink" title="ssh-agent"></a>ssh-agent</h3><ol>
+<li><p>Open Terminal.app.</p>
+</li>
+<li><p>sudo vi /etc/ssh_config<br>You will be asked for your password now. Feel free to use your preferred editor here.</p>
+</li>
+<li><p>Add the following two lines to the top of the file:<br>Host *<br>ForwardAgent yes</p>
+</li>
+<li><p>Save the file and exit your editor.<br><a href="https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/" target="_blank" rel="noopener">https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/</a></p>
+</li>
+<li><p>Connection refused or timeout problem  <a href="https://wiki.archlinux.org/index.php/Secure_Shell" target="_blank" rel="noopener">https://wiki.archlinux.org/index.php/Secure_Shell</a></p>
+</li>
+<li><p>原理 <a href="http://blog.csdn.net/sdcxyz/article/details/41487897" target="_blank" rel="noopener">http://blog.csdn.net/sdcxyz/article/details/41487897</a></p>
+</li>
+</ol>
+<p><a href="http://wiki.jikexueyuan.com/project/github-developer-guides/using-ssh-agent.html" target="_blank" rel="noopener">http://wiki.jikexueyuan.com/project/github-developer-guides/using-ssh-agent.html</a></p>
+<h4 id="ssh-config"><a href="#ssh-config" class="headerlink" title="~/.ssh/config"></a>~/.ssh/config</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Host *</span><br><span class="line"> AddKeysToAgent yes</span><br><span class="line"> UseKeychain yes</span><br><span class="line"> IdentityFile ~/.ssh/id_rsa</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Host *</span><br><span class="line">ForwardAgent yes</span><br><span class="line">AddKeysToAgent yes</span><br><span class="line">UseKeychain yes</span><br><span class="line">VerifyHostKeyDNS yes</span><br><span class="line"></span><br><span class="line">StrictHostKeyChecking no</span><br><span class="line">IdentityFile ~/.ssh/id_rsa</span><br></pre></td></tr></table></figure>
 
-<h6 id="按进程查看流量占用-nethogs"><a href="#按进程查看流量占用-nethogs" class="headerlink" title="按进程查看流量占用: nethogs"></a>按进程查看流量占用: nethogs</h6><p>yum install nethogs</p>
-<p>dstat 监控系统参数<br>yum install dstat</p>
-<p>###网络<br>网络监控软件 mtr<br>mtr ip</p>
-<ul>
-<li>ncat<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">yum install nmap-ncat</span><br><span class="line">监听：ncat -u -l 11940</span><br><span class="line">连接：ncat -u ip 11940  输入回车 看是否远端有同样数据打印</span><br><span class="line">http://www.jianshu.com/p/af6766e428ec</span><br><span class="line">http://www.itye.org/archives/3082</span><br></pre></td></tr></table></figure></li>
-<li>nc<br>nc -uz 192.168.63.229 2249  </li>
+<h4 id="运行程序："><a href="#运行程序：" class="headerlink" title="运行程序："></a>运行程序：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">ssh-agent</span><br><span class="line"></span><br><span class="line">ssh-add -K ~/.ssh/id_rsa</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="ipv6-关闭ipv6-设置ipv4"><a href="#ipv6-关闭ipv6-设置ipv4" class="headerlink" title="ipv6 关闭ipv6  设置ipv4"></a>ipv6 关闭ipv6  设置ipv4</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">networksetup -listallnetworkservices</span><br><span class="line"></span><br><span class="line">sudo networksetup -setv6off &quot;USB Ethernet&quot;</span><br><span class="line"></span><br><span class="line">networksetup -setmanual &quot;USB Ethernet&quot; 192.168.51.36 255.255.240.0 192.168.50.138</span><br><span class="line"></span><br><span class="line">networksetup -setmanual &quot;USB Ethernet&quot; 192.168.51.36 255.255.240.0 192.168.50.1</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="zsh"><a href="#zsh" class="headerlink" title="zsh"></a>zsh</h3><p><a href="https://www.jianshu.com/p/ae378aa725cf" target="_blank" rel="noopener">https://www.jianshu.com/p/ae378aa725cf</a></p>
+<p><a href="http://macshuo.com/?p=676" target="_blank" rel="noopener">http://macshuo.com/?p=676</a></p>
+<h3 id="路由表"><a href="#路由表" class="headerlink" title="路由表"></a>路由表</h3><ul>
+<li>查看</li>
 </ul>
-<p><a href="http://369369.blog.51cto.com/319630/805726/" target="_blank" rel="noopener">http://369369.blog.51cto.com/319630/805726/</a><br>iptraf<br>nload<br>yum install -y gcc* ncurses ncurses-devel</p>
-<p><a href="http://man.linuxde.net/iptraf" target="_blank" rel="noopener">http://man.linuxde.net/iptraf</a></p>
-<p>nethogs: 按进程查看流量占用<br>yum install nethogs</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Pmap 命令：查看进程用了多少内存</span><br><span class="line">怀疑CPU存在瓶颈，可用 sar -u 和 sar -q 等来查看</span><br><span class="line">怀疑内存存在瓶颈，可用sar -B、sar -r 和 sar -W 等来查看</span><br><span class="line">怀疑I/O存在瓶颈，可用 sar -b、sar -u 和 sar -d 等来查看</span><br><span class="line">http://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/sar.html</span><br></pre></td></tr></table></figure>
-<h4 id="cpu"><a href="#cpu" class="headerlink" title="cpu:"></a>cpu:</h4><p>vmstat 只能查看整体CPU使用情况<br>mpstat 处理相关统计信息</p>
-<h3 id="io"><a href="#io" class="headerlink" title="io"></a>io</h3><p><a href="http://www.sijitao.net/1898.html" target="_blank" rel="noopener">http://www.sijitao.net/1898.html</a><br><a href="http://blog.itpub.net/29320885/viewspace-1222577/" target="_blank" rel="noopener">http://blog.itpub.net/29320885/viewspace-1222577/</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">rkB/s：每秒从设备读取的数据量（单位：KB）</span><br><span class="line"></span><br><span class="line">wkB/s：每秒写入设备的数据量（单位：KB）</span><br><span class="line"></span><br><span class="line">rMB/s：每秒从设备读取的数据量（单位：MB）</span><br><span class="line"></span><br><span class="line">wMB/s：每秒写入设备的数据量（单位：MB）</span><br><span class="line"></span><br><span class="line">avgrq-sz	：平均每次IO操作的数据量(扇区数为单位)</span><br><span class="line"></span><br><span class="line">avgqu-sz：平均等待处理的IO请求队列长度 </span><br><span class="line"></span><br><span class="line">await：I/O请求等待时间的平均值（单位：毫秒）</span><br><span class="line"></span><br><span class="line">svctm：I/O请求处理时间的平均值（单位：毫秒）</span><br><span class="line"></span><br><span class="line">%util：消耗在I/O请求中的CPU时间百分比（设备带宽利用率）。如果该值接近100%说明设备出现了瓶颈</span><br></pre></td></tr></table></figure>
+<p>ip sh ro</p>
+<p>netstat -rn</p>
+<ul>
+<li>删除路由条目</li>
+</ul>
+<p>route delete 192.168.32.0/19</p>
+<h3 id="xcode-command-line-tool"><a href="#xcode-command-line-tool" class="headerlink" title="xcode command line tool"></a>xcode command line tool</h3><p>Terminal 运行 xcode-select –install 然后点击安装<br>登录<a href="https://developer.apple.com/download/more/" target="_blank" rel="noopener">https://developer.apple.com/download/more/</a> 然后下载 dmg 安装</p>
+<h3 id="快捷键"><a href="#快捷键" class="headerlink" title="快捷键"></a>快捷键</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">Ctrl + a 跳到行首</span><br><span class="line">Ctrl + e 跳到行尾</span><br><span class="line">Ctrl + d 删除一个字符，相当于通常的Delete键（命令行若无所有字符，则相当于exit；处理多行标准输入时也表示eof）</span><br><span class="line">Ctrl + h 退格删除一个字符，相当于通常的Backspace键</span><br><span class="line">Ctrl + u 删除光标之前到行首的字符</span><br><span class="line">Ctrl + k 删除光标之前到行尾的字符</span><br><span class="line">Ctrl + c 取消当前行输入的命令，相当于Ctrl + Break</span><br><span class="line">Ctrl + a 光标移动到行首（Ahead of line），相当于通常的Home键</span><br><span class="line">Ctrl + e 光标移动到行尾（End of line）</span><br><span class="line">Ctrl + f 光标向前(Forward)移动一个字符位置</span><br><span class="line">Ctrl + b 光标往回(Backward)移动一个字符位置</span><br><span class="line">Ctrl + l 清屏，相当于执行clear命令</span><br><span class="line">Ctrl + p 调出命令历史中的前一条（Previous）命令，相当于通常的上箭头</span><br><span class="line">Ctrl + n 调出命令历史中的下一条（Next）命令，相当于通常的上箭头</span><br><span class="line">Ctrl + r 显示：号提示，根据用户输入查找相关历史命令（reverse-i-search）&lt;/p&gt; &lt;p&gt;次常用快捷键：</span><br><span class="line">Alt + f 光标向前（Forward）移动到下一个单词</span><br><span class="line">Alt + b 光标往回（Backward）移动到前一个单词</span><br><span class="line">Ctrl + w 删除从光标位置前到当前所处单词（Word）的开头</span><br><span class="line">Alt + d 删除从光标位置到当前所处单词的末尾</span><br><span class="line">Ctrl + y 粘贴最后一次被删除的单词</span><br><span class="line">Command + K 清屏</span><br><span class="line">Command + T 新建标签</span><br><span class="line">Command +W 关闭当前标签页</span><br><span class="line">Command + S 保存终端输出</span><br><span class="line">Command + D 垂直分隔当前标签页</span><br><span class="line">Command + Shift + D 水平分隔当前标签页</span><br><span class="line">Command + shift + &#123;或&#125; 向左/向右切换标签</span><br></pre></td></tr></table></figure>
 
-<h3 id="disk-check"><a href="#disk-check" class="headerlink" title="disk check"></a>disk check</h3><p><a href="http://chaorenyong.blog.51cto.com/2163445/1051859/" target="_blank" rel="noopener">http://chaorenyong.blog.51cto.com/2163445/1051859/</a><br><a href="http://blog.chinaunix.net/uid-25135004-id-3139293.html" target="_blank" rel="noopener">http://blog.chinaunix.net/uid-25135004-id-3139293.html</a></p>
-<h3 id="ps-vmstat-top"><a href="#ps-vmstat-top" class="headerlink" title="ps vmstat top"></a>ps vmstat top</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ps aux看到的进程%CPU是该进程的全寿命均值,ps是从进程开始就开始算的，是平均的占用率.</span><br><span class="line">而top是从上次刷新开始算的，一般几秒钟一刷，可以认为是即时的。而桌面系统我们一般更关注即时的，所以top的cpu占用率才是我需要的。而且top默认cpu的占用率的和并不是100%，而是核数x100%，所以有时会有一个进程占用超过100%的情况。</span><br></pre></td></tr></table></figure>
+<h3 id="恢复默认设置"><a href="#恢复默认设置" class="headerlink" title="恢复默认设置"></a>恢复默认设置</h3><p><code>defaults delete com.googlecode.iterm2</code></p>
+<h3 id="mac-jenkins"><a href="#mac-jenkins" class="headerlink" title="mac jenkins"></a>mac jenkins</h3><p>重启sudo launchctl load /Library/LaunchDaemons/org.jenkins-ci.plist<br>关闭sudo launchctl unload /Library/LaunchDaemons/org.jenkins-ci.plist</p>
+<h3 id="mac-gitlab"><a href="#mac-gitlab" class="headerlink" title="mac gitlab"></a>mac gitlab</h3><p>docker start </p>
+<h3 id="远程到windows"><a href="#远程到windows" class="headerlink" title="远程到windows"></a>远程到windows</h3><p><a href="https://www.microsoft.com/zh-cn/p/microsoft-remote-desktop/9wzdncrfj3ps?activetab=pivot%3Aoverviewtab" target="_blank" rel="noopener">https://www.microsoft.com/zh-cn/p/microsoft-remote-desktop/9wzdncrfj3ps?activetab=pivot%3Aoverviewtab</a><br>Remote Desktop clients</p>
+<h3 id="安装golang"><a href="#安装golang" class="headerlink" title="安装golang"></a>安装golang</h3><p><a href="https://xclient.info/s/goland.html" target="_blank" rel="noopener">https://xclient.info/s/goland.html</a><br>Little Snitch 4.4.2 关闭golang访问网络</p>
+<h3 id="jumpserver-sz-rz"><a href="#jumpserver-sz-rz" class="headerlink" title="jumpserver sz rz"></a>jumpserver sz rz</h3><p><a href="https://github.com/aurora/iterm2-zmodem" target="_blank" rel="noopener">https://github.com/aurora/iterm2-zmodem</a></p>
+<h2 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h2><p>创建icloud的软连接<code>sudo ln -sf /Users/xujingbin/Library/Mobile\ Documents/com\~apple\~CloudDocs /icloud</code></p>
 
-<h3 id="java进程监控"><a href="#java进程监控" class="headerlink" title="java进程监控"></a>java进程监控</h3><ol>
-<li><p>pstack $pid查看每个线程栈信息</p>
-</li>
-<li><p>jstack -l $pid</p>
-</li>
-<li><p>/opt/jdk1.8.0_131/bin/jstat -gcutil $pid 1000 59</p>
-</li>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/27/k8s/%E4%BC%98%E9%9B%85%E9%80%80%E5%87%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/27/k8s/%E4%BC%98%E9%9B%85%E9%80%80%E5%87%BA/" class="post-title-link" itemprop="url">pod优雅退出</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2019-11-27 16:24:35 / 修改时间：16:28:12" itemprop="dateCreated datePublished" datetime="2019-11-27T16:24:35+08:00">2019-11-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/k8s/" itemprop="url" rel="index">
+                    <span itemprop="name">k8s</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="优雅退出"><a href="#优雅退出" class="headerlink" title="优雅退出"></a>优雅退出</h1><ol>
+<li>用户发送一个命令来删除Pod，默认的优雅退出时间是30秒</li>
+<li>API服务器中的Pod更新时间，超过该时间Pod被认为死亡</li>
+<li>在客户端命令的的里面，Pod显示为”Terminating（退出中）”的状态</li>
+<li>（与第3同时）当Kubelet看到Pod标记为退出中的时候，因为第2步中时间已经设置了，它开始pod关闭的流程<ol>
+<li>如果该Pod定义了一个停止前的钩子，其会在pod内部被调用。如果钩子在优雅退出时间段超时仍然在运行，第二步会意一个很小的优雅时间断被调用</li>
+<li>进程被发送TERM的信号</li>
 </ol>
-<h3 id="系统进程数"><a href="#系统进程数" class="headerlink" title="系统进程数"></a>系统进程数</h3><ol start="4">
-<li><p>查看线程数<code>pstree -p 14507 |wc -l</code></p>
 </li>
-<li><p>查看系统级线程数<code>pstree -p |wc -l</code></p>
-</li>
-<li><p>查看所有用户创建的进程数<code>ps h -Led -o user | sort | uniq -c | sort -n</code></p>
-</li>
-<li><p>查看hfds用户创建的进程数 <code>ps -o nlwp,pid,lwp,args -u hdfs | sort -n</code></p>
-</li>
-<li><p>查看用户级最大线程数<code>ulimit -u</code></p>
-</li>
-<li><p>查看当前用户进程数ps ux |wc -l</p>
-</li>
-<li><p>使用top命令，具体用法是 top -H</p>
-<pre><code>加上这个选项，top的每一行就不是显示一个进程，而是一个线程。</code></pre></li>
-<li><p>使用ps命令，具体用法是 ps -xH</p>
-<pre><code>这样可以查看所有存在的线程，也可以使用grep作进一步的过滤。</code></pre></li>
-<li><p>使用ps命令，具体用法是 ps -mq PID</p>
-<pre><code>这样可以看到指定的进程产生的线程数目。</code></pre></li>
+<li>（与第三步同时进行）Pod从service的列表中被删除，不在被认为是运行着的pod的一部分。缓慢关闭的pod可以继续对外服务，当负载均衡器将他们轮流移除。</li>
+<li>当优雅退出时间超时了，任何pod中正在运行的进程会被发送SIGKILL信号被杀死。</li>
+<li>Kubelet会完成pod的删除，将优雅退出的时间设置为0（表示立即删除）。pod从API中删除，不在对客户端可见。</li>
 </ol>
 
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/27/k8s/k8s-commands/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/27/k8s/k8s-commands/" class="post-title-link" itemprop="url">k8s/k8s-commands</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-27 16:20:33" itemprop="dateCreated datePublished" datetime="2019-11-27T16:20:33+08:00">2019-11-27</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="验证etcd集群健康"><a href="#验证etcd集群健康" class="headerlink" title="验证etcd集群健康"></a>验证etcd集群健康</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">./etcdctl \</span><br><span class="line">&gt; --ca-file=/k8s/etcd/ssl/ca.pem \</span><br><span class="line">&gt; --cert-file=/k8s/etcd/ssl/server.pem \</span><br><span class="line">&gt; --key-file=/k8s/etcd/ssl/server-key.pem \</span><br><span class="line">&gt; --endpoints=&quot;https://10.10.0.53:2379,\</span><br><span class="line">&gt; https://10.10.0.54:2379,\</span><br><span class="line">&gt; https://10.10.0.55:2379&quot; cluster-health</span><br><span class="line">member 1ca36336d928244b is healthy: got healthy result from https://10.10.0.53:2379</span><br><span class="line">member db620ed95a17d488 is healthy: got healthy result from https://10.10.0.54:2379</span><br><span class="line">member f98f214e597b0df0 is healthy: got healthy result from https://10.10.0.55:2379</span><br><span class="line">cluster is healthy</span><br></pre></td></tr></table></figure>
+
+<p>cfssl gencert <br>  -ca=${DIR}/etcd-ca.pem <br>  -ca-key=${DIR}/etcd-ca-key.pem <br>  -config=ca-config.json <br>  -hostname=127.0.0.1,10.10.0.53,10.10.0.54,10.10.0.55 <br>  -profile=kubernetes <br>  etcd-csr.json | cfssljson -bare ${DIR}/etcd</p>
+<p>/k8s/etcd/bin/etcdctl –ca-file=/k8s/etcd/ssl/ca.pem –cert-file=/k8s/etcd/ssl/server.pem –key-file=/k8s/etcd/ssl/server-key.pem –endpoints=”<a href="https://10.10.0.53:2379,https://10.10.0.54:2379,https://10.10.0.55:2379&quot;" target="_blank" rel="noopener">https://10.10.0.53:2379,https://10.10.0.54:2379,https://10.10.0.55:2379&quot;</a>  set /k8s/network/config  ‘{ “Network”: “10.254.0.0/16”, “Backend”: {“Type”: “vxlan”}}’</p>
+<p>/k8s/etcd/bin/etcdctl –ca-file=/k8s/etcd/ssl/ca.pem –cert-file=/k8s/etcd/ssl/server.pem –key-file=/k8s/etcd/ssl/server-key.pem –endpoints=”<a href="https://10.10.0.53:2379,https://10.10.0.54:2379,https://10.10.0.55:2379&quot;" target="_blank" rel="noopener">https://10.10.0.53:2379,https://10.10.0.54:2379,https://10.10.0.55:2379&quot;</a>  get /k8s/network/config</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/27/jenkins/k8s%E4%B9%8Bjenkins%E6%90%AD%E5%BB%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/27/jenkins/k8s%E4%B9%8Bjenkins%E6%90%AD%E5%BB%BA/" class="post-title-link" itemprop="url">jenkins部署到k8s</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2019-11-27 16:12:04 / 修改时间：16:28:12" itemprop="dateCreated datePublished" datetime="2019-11-27T16:12:04+08:00">2019-11-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/k8s/" itemprop="url" rel="index">
+                    <span itemprop="name">k8s</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/k8s/jenkins/" itemprop="url" rel="index">
+                    <span itemprop="name">jenkins</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="在k8s上部署jenkins，解决部署并发量问题和slave管理问题"><a href="#在k8s上部署jenkins，解决部署并发量问题和slave管理问题" class="headerlink" title="在k8s上部署jenkins，解决部署并发量问题和slave管理问题"></a>在k8s上部署jenkins，解决部署并发量问题和slave管理问题</h1><p>本文提供了slave的dockerfile，master直接采用官方镜像，部署在测试环境，所以存储用的节点的本地存储</p>
+<h2 id="参考站点https-www-kancloud-cn-huyipow-kubernetes-716441"><a href="#参考站点https-www-kancloud-cn-huyipow-kubernetes-716441" class="headerlink" title="参考站点https://www.kancloud.cn/huyipow/kubernetes/716441"></a>参考站点<a href="https://www.kancloud.cn/huyipow/kubernetes/716441" target="_blank" rel="noopener">https://www.kancloud.cn/huyipow/kubernetes/716441</a></h2><h2 id="dockerfile-jnlp"><a href="#dockerfile-jnlp" class="headerlink" title="dockerfile jnlp"></a>dockerfile jnlp</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from jenkins/jnlp-slave:3.35-5-alpine</span><br><span class="line">USER root</span><br><span class="line">RUN apk update</span><br><span class="line">RUN apk add docker</span><br><span class="line">RUN apk add python</span><br><span class="line">RUN apk add py-pip \</span><br><span class="line">&amp;&amp; pip install requests \</span><br><span class="line">&amp;&amp; pip install kubernetes \</span><br><span class="line">&amp;&amp; rm -rf /var/cache/apk/*</span><br><span class="line">ENTRYPOINT [&quot;jenkins-agent&quot;]</span><br></pre></td></tr></table></figure>
+
+<h3 id="jenkins-yaml"><a href="#jenkins-yaml" class="headerlink" title="jenkins.yaml"></a>jenkins.yaml</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">apiVersion: extensions/v1beta1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: jenkins</span><br><span class="line">  namespace: kube-ops</span><br><span class="line">spec:</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: jenkins</span><br><span class="line">    spec:</span><br><span class="line">      terminationGracePeriodSeconds: 10</span><br><span class="line">      serviceAccountName: jenkins</span><br><span class="line">      containers:</span><br><span class="line">      - name: jenkins</span><br><span class="line">        image: jenkins/jenkins:lts</span><br><span class="line">        imagePullPolicy: IfNotPresent</span><br><span class="line">        ports:</span><br><span class="line">        - containerPort: 8080</span><br><span class="line">          name: web</span><br><span class="line">          protocol: TCP</span><br><span class="line">        - containerPort: 50000</span><br><span class="line">          name: agent</span><br><span class="line">          protocol: TCP</span><br><span class="line">        resources:</span><br><span class="line">          limits:</span><br><span class="line">            cpu: 2000m</span><br><span class="line">            memory: 4Gi</span><br><span class="line">          requests:</span><br><span class="line">            cpu: 1000m</span><br><span class="line">            memory: 2Gi</span><br><span class="line">        livenessProbe:</span><br><span class="line">          httpGet:</span><br><span class="line">            path: /login</span><br><span class="line">            port: 8080</span><br><span class="line">          initialDelaySeconds: 60</span><br><span class="line">          timeoutSeconds: 5</span><br><span class="line">          failureThreshold: 12</span><br><span class="line">        readinessProbe:</span><br><span class="line">          httpGet:</span><br><span class="line">            path: /login</span><br><span class="line">            port: 8080</span><br><span class="line">          initialDelaySeconds: 60</span><br><span class="line">          timeoutSeconds: 5</span><br><span class="line">          failureThreshold: 12</span><br><span class="line">        volumeMounts:</span><br><span class="line">        - name: jenkinshome</span><br><span class="line">          subPath: jenkins</span><br><span class="line">          mountPath: /var/jenkins_home</span><br><span class="line">        env:</span><br><span class="line">        - name: LIMITS_MEMORY</span><br><span class="line">          valueFrom:</span><br><span class="line">            resourceFieldRef:</span><br><span class="line">              resource: limits.memory</span><br><span class="line">              divisor: 1Mi</span><br><span class="line">        - name: JAVA_OPTS</span><br><span class="line">          value: -Xmx$(LIMITS_MEMORY)m -XshowSettings:vm -Dhudson.slaves.NodeProvisioner.initialDelay=0 -Dhudson.slaves.NodeProvisioner.MARGIN=50 -Dhudson.slaves.NodeProvisioner.MARGIN0=0.85 -Duser.timezone=Asia/Shanghai</span><br><span class="line">      securityContext:</span><br><span class="line">        fsGroup: 1000</span><br><span class="line">      nodeSelector:</span><br><span class="line">        kubernetes.io/hostname: node1215</span><br><span class="line">      volumes:</span><br><span class="line">      - hostPath:</span><br><span class="line">          path: /data/jenkins/</span><br><span class="line">          type: &quot;&quot;</span><br><span class="line">        name: jenkinshome</span><br><span class="line">#      - name: jenkinshome</span><br><span class="line">#        persistentVolumeClaim:</span><br><span class="line">#          claimName: opspvc</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: jenkins</span><br><span class="line">  namespace: kube-ops</span><br><span class="line">  labels:</span><br><span class="line">    app: jenkins</span><br><span class="line">spec:</span><br><span class="line">  selector:</span><br><span class="line">    app: jenkins</span><br><span class="line">  ports:</span><br><span class="line">  - name: web</span><br><span class="line">    port: 8080</span><br><span class="line">    targetPort: web</span><br><span class="line">    nodePort: 30080</span><br><span class="line">  - name: agent</span><br><span class="line">    port: 50000</span><br><span class="line">    targetPort: agent</span><br><span class="line">  type: NodePort</span><br></pre></td></tr></table></figure>
+
+<h3 id="rbac-yaml"><a href="#rbac-yaml" class="headerlink" title="rbac.yaml"></a>rbac.yaml</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: ServiceAccount</span><br><span class="line">metadata:</span><br><span class="line">  name: jenkins</span><br><span class="line">  namespace: kube-ops</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">kind: Role</span><br><span class="line">apiVersion: rbac.authorization.k8s.io/v1beta1</span><br><span class="line">metadata:</span><br><span class="line">  name: jenkins</span><br><span class="line">  namespace: kube-ops</span><br><span class="line">rules:</span><br><span class="line">  - apiGroups: [&quot;&quot;]</span><br><span class="line">    resources: [&quot;pods&quot;]</span><br><span class="line">    verbs: [&quot;create&quot;,&quot;delete&quot;,&quot;get&quot;,&quot;list&quot;,&quot;patch&quot;,&quot;update&quot;,&quot;watch&quot;]</span><br><span class="line">  - apiGroups: [&quot;&quot;]</span><br><span class="line">    resources: [&quot;pods/exec&quot;]</span><br><span class="line">    verbs: [&quot;create&quot;,&quot;delete&quot;,&quot;get&quot;,&quot;list&quot;,&quot;patch&quot;,&quot;update&quot;,&quot;watch&quot;]</span><br><span class="line">  - apiGroups: [&quot;&quot;]</span><br><span class="line">    resources: [&quot;pods/log&quot;]</span><br><span class="line">    verbs: [&quot;get&quot;,&quot;list&quot;,&quot;watch&quot;]</span><br><span class="line">  - apiGroups: [&quot;&quot;]</span><br><span class="line">    resources: [&quot;secrets&quot;]</span><br><span class="line">    verbs: [&quot;get&quot;]</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">apiVersion: rbac.authorization.k8s.io/v1beta1</span><br><span class="line">kind: RoleBinding</span><br><span class="line">metadata:</span><br><span class="line">  name: jenkins</span><br><span class="line">  namespace: kube-ops</span><br><span class="line">roleRef:</span><br><span class="line">  apiGroup: rbac.authorization.k8s.io</span><br><span class="line">  kind: Role</span><br><span class="line">  name: jenkins</span><br><span class="line">subjects:</span><br><span class="line">  - kind: ServiceAccount</span><br><span class="line">    name: jenkins</span><br><span class="line">    namespace: kube-ops</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/27/%E5%85%B6%E4%BB%96/hexo%E6%90%AD%E5%BB%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/27/%E5%85%B6%E4%BB%96/hexo%E6%90%AD%E5%BB%BA/" class="post-title-link" itemprop="url">hexo环境搭建</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2019-11-27 15:51:08 / 修改时间：16:51:37" itemprop="dateCreated datePublished" datetime="2019-11-27T15:51:08+08:00">2019-11-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" itemprop="url" rel="index">
+                    <span itemprop="name">环境搭建</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/hexo/" itemprop="url" rel="index">
+                    <span itemprop="name">hexo</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          hexo环境安装及参考文档
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/11/27/%E5%85%B6%E4%BB%96/hexo%E6%90%AD%E5%BB%BA/">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/27/%E9%98%BF%E9%87%8C%E4%BA%91/slb%E5%81%A5%E5%BA%B7%E6%A3%80%E6%9F%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/27/%E9%98%BF%E9%87%8C%E4%BA%91/slb%E5%81%A5%E5%BA%B7%E6%A3%80%E6%9F%A5/" class="post-title-link" itemprop="url">阿里云slb健康检查</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-27 11:36:59" itemprop="dateCreated datePublished" datetime="2019-11-27T11:36:59+08:00">2019-11-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%98%BF%E9%87%8C%E4%BA%91/" itemprop="url" rel="index">
+                    <span itemprop="name">阿里云</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%98%BF%E9%87%8C%E4%BA%91/slb/" itemprop="url" rel="index">
+                    <span itemprop="name">slb</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          阿里云slb健康检查
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/11/27/%E9%98%BF%E9%87%8C%E4%BA%91/slb%E5%81%A5%E5%BA%B7%E6%A3%80%E6%9F%A5/">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1003,20 +1045,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">78</span>
+          <span class="site-state-item-count">80</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">46</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-count">56</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

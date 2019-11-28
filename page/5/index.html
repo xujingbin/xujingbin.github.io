@@ -140,17 +140,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">23</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">56</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">10</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">46</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">78</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">80</span></a>
 
   </li>
   </ul>
@@ -179,7 +179,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/monitor/consul/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/27/jenkins/k8s/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -193,7 +193,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2019/07/16/monitor/consul/" class="post-title-link" itemprop="url">monitor/consul</a>
+            <a href="/2019/11/27/jenkins/k8s/" class="post-title-link" itemprop="url">k8s持续部署</a>
         </h1>
 
         <div class="post-meta">
@@ -203,7 +203,24 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
+              <time title="创建时间：2019-11-27 11:28:13" itemprop="dateCreated datePublished" datetime="2019-11-27T11:28:13+08:00">2019-11-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/jenkins/" itemprop="url" rel="index">
+                    <span itemprop="name">jenkins</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/jenkins/pipeline/" itemprop="url" rel="index">
+                    <span itemprop="name">pipeline</span>
+                  </a>
+                </span>
             </span>
 
           
@@ -217,23 +234,417 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="consul"><a href="#consul" class="headerlink" title="consul"></a>consul</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">./consul agent -server -bootstrap-expect=1 -data-dir=/tmp/consul -node=agent-noe -bind=10.0.0.218 -enable-script-checks=true -config-dir=/etc/consul.d</span><br><span class="line"></span><br><span class="line"> ./consul agent -data-dir=/tmp/consul -node=agent-two-bind=10.0.0.195 -enable-script-checks=true -config-dir=/etc/consul.d   -retry-join=&quot;10.0.0.218&quot;</span><br><span class="line"></span><br><span class="line">kill -HUP $&#123;consulPid&#125; #重新载入配置文件。 consul reload #重新载入配置文件</span><br><span class="line"></span><br><span class="line">使用Ctrl+C或kill -INT来gracefully停止agent./consul kv put key value</span><br><span class="line"></span><br><span class="line">./consul kv get key</span><br><span class="line"></span><br><span class="line">./consul kv delete</span><br><span class="line"></span><br><span class="line">./consul kv get -recurse</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">curl http://localhost:8500/v1/kv/?keys</span><br><span class="line"></span><br><span class="line">curl http://localhost:8500/v1/kv/foo</span><br><span class="line"></span><br><span class="line"> curl http://localhost:8500/v1/kv/foo?raw</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">put</span><br><span class="line"></span><br><span class="line">curl --request PUT --data &apos;contents&apos; http://localhost:8500/v1/kv/my-key</span><br><span class="line"></span><br><span class="line">curl --request PUT --data @contents http://localhost:8500/v1/kv/my-key</span><br><span class="line"></span><br><span class="line">curl --request DELETE http://localhost:8500/v1/kv/my-key</span><br><span class="line"></span><br><span class="line"> consul force-leave</span><br><span class="line"></span><br><span class="line">查看本机</span><br><span class="line"></span><br><span class="line">curl localhost:8500/v1/agent/services</span><br><span class="line"></span><br><span class="line">查看全局</span><br><span class="line"></span><br><span class="line">curl localhost:8500/v1/catalog/service/consul</span><br><span class="line"></span><br><span class="line">curl localhost:8500/v1/catalog/services</span><br><span class="line"></span><br><span class="line">./consul catalog services</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">curl \</span><br><span class="line"></span><br><span class="line">    --request PUT \</span><br><span class="line"></span><br><span class="line">    --data @payload.json \</span><br><span class="line"></span><br><span class="line">    https://consul.rocks/v1/catalog/register</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">curl -X PUT -d @./nginx.json localhost:8500/v1/agent/service/register</span><br><span class="line"></span><br><span class="line">curl -X PUT -d @/usr/local/proms-agent/script/conf/sys.json localhost:8500/v1/agent/service/register</span><br><span class="line"></span><br><span class="line">curl --request PUT  localhost:8500/v1/agent/service/deregister/nginx</span><br><span class="line"></span><br><span class="line"> curl -X PUT -d @./aa.json localhost:8500/v1/catalog/deregister</span><br></pre></td></tr></table></figure>
+          <h3 id="java项目打包到docker仓库，并更新k8s集群应用"><a href="#java项目打包到docker仓库，并更新k8s集群应用" class="headerlink" title="java项目打包到docker仓库，并更新k8s集群应用"></a>java项目打包到docker仓库，并更新k8s集群应用</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/11/27/jenkins/k8s/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
 
-<p><a href="https://www.robustperception.io/finding-consul-services-to-monitor-with-prometheus/" target="_blank" rel="noopener">https://www.robustperception.io/finding-consul-services-to-monitor-with-prometheus/</a></p>
-<p><a href="http://www.cnblogs.com/vovlie/p/Nginx_monitoring.html" target="_blank" rel="noopener">http://www.cnblogs.com/vovlie/p/Nginx_monitoring.html</a></p>
-<p>{</p>
-<p>  “ui”: true,</p>
-<p>  “data_dir”: “/tmp/consul”,</p>
-<p>  “client_addr”: “0.0.0.0”,</p>
-<p>  “advertise_addr”: “10.0.0.218”,</p>
-<p>  “server”: true,</p>
-<p>  “retry_interval”: “30s”,</p>
-<p>  “retry_max”: 10,</p>
-<p>  “log_level”: “INFO”,</p>
-<p>  “datacenter”: “sen_hua_kan_dan_qiao”,</p>
-<p>  “rejoin_after_leave”: true,</p>
-<p>  “leave_on_terminate”: true</p>
-<p>}</p>
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/27/jenkins/app-nginx/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/27/jenkins/app-nginx/" class="post-title-link" itemprop="url">持续部署war包应用nginx</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-27 11:28:13" itemprop="dateCreated datePublished" datetime="2019-11-27T11:28:13+08:00">2019-11-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/jenkins/" itemprop="url" rel="index">
+                    <span itemprop="name">jenkins</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/jenkins/pipeline/" itemprop="url" rel="index">
+                    <span itemprop="name">pipeline</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          更新war包，rsync+nginx平滑上下线
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/11/27/jenkins/app-nginx/">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/27/jenkins/app-jetty/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/27/jenkins/app-jetty/" class="post-title-link" itemprop="url">持续部署war包应用haproxy</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-27 11:28:13" itemprop="dateCreated datePublished" datetime="2019-11-27T11:28:13+08:00">2019-11-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/jenkins/" itemprop="url" rel="index">
+                    <span itemprop="name">jenkins</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/jenkins/pipeline/" itemprop="url" rel="index">
+                    <span itemprop="name">pipeline</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          更新应用war包，salt+haproxy自动上下线操作
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/11/27/jenkins/app-jetty/">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/27/jenkins/app-spring-cloud/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/27/jenkins/app-spring-cloud/" class="post-title-link" itemprop="url">持续部署jar包应用 微服务</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-27 11:28:13" itemprop="dateCreated datePublished" datetime="2019-11-27T11:28:13+08:00">2019-11-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/jenkins/" itemprop="url" rel="index">
+                    <span itemprop="name">jenkins</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/jenkins/pipeline/" itemprop="url" rel="index">
+                    <span itemprop="name">pipeline</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          更新微服务jar包，采用spring cloud自动熔断机制
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/11/27/jenkins/app-spring-cloud/">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/27/jenkins/hadoop/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/27/jenkins/hadoop/" class="post-title-link" itemprop="url">打包jar文件到hdfs，用spark跑定时任务</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-27 11:28:13" itemprop="dateCreated datePublished" datetime="2019-11-27T11:28:13+08:00">2019-11-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/jenkins/" itemprop="url" rel="index">
+                    <span itemprop="name">jenkins</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/jenkins/pipeline/" itemprop="url" rel="index">
+                    <span itemprop="name">pipeline</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          打jar包到hdfs，跑定时任务
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/11/27/jenkins/hadoop/">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/27/ansible/inventory/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/27/ansible/inventory/" class="post-title-link" itemprop="url">一、ansible Inventory 主机清单</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-27 11:28:13" itemprop="dateCreated datePublished" datetime="2019-11-27T11:28:13+08:00">2019-11-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ansible/" itemprop="url" rel="index">
+                    <span itemprop="name">ansible</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="hosts文件"><a href="#hosts文件" class="headerlink" title="hosts文件"></a>hosts文件</h3><ol>
+<li>本教程忽略了ansible的安装和ssh免密码登录配置</li>
+<li>ansible必须通过Inventory 来管理主机，不存在hosts文件里的主机无法操控。</li>
+<li>该hosts文件包含了4组主机，其中web组是由web_pc和web_app组成，主机ip也可以用主机名代替,主机名支持正则表达式，还可加入详细的连接参数，这里不列举</li>
+<li>往后章节都以该hosts文件为基础<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[web_pc]</span><br><span class="line">192.168.62.202</span><br><span class="line">192.168.62.140</span><br><span class="line">[web_app]</span><br><span class="line">192.168.62.202</span><br><span class="line">192.168.62.154</span><br><span class="line">[web:children]</span><br><span class="line">web_pc</span><br><span class="line">web_app</span><br><span class="line">[kafka]</span><br><span class="line">10.19.64.19[6:8]</span><br><span class="line">10.19.3.185</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
 
       
     </div>
@@ -253,7 +664,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/monitor/grafana/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/27/ansible/useradd/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -267,7 +678,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2019/07/16/monitor/grafana/" class="post-title-link" itemprop="url">monitor/grafana</a>
+            <a href="/2019/11/27/ansible/useradd/" class="post-title-link" itemprop="url">ansible添加用户</a>
         </h1>
 
         <div class="post-meta">
@@ -277,14 +688,233 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
+              <time title="创建时间：2019-11-27 11:28:13" itemprop="dateCreated datePublished" datetime="2019-11-27T11:28:13+08:00">2019-11-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ansible/" itemprop="url" rel="index">
+                    <span itemprop="name">ansible</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ol>
+<li>运维需要管理许多开发人员的pub文件，统一存储在/etc/ansible/user.keypubs/.id_rsa.pub下，</li>
+<li>/etc/ansible/useradd.yml文件，添加zhangsan用户，只需修改vars下的用户、组名和执行的机器组hosts<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">- hosts: centos6</span><br><span class="line">  remote_user: dinggel</span><br><span class="line">  gather_facts: false</span><br><span class="line">  become: yes</span><br><span class="line">  vars:</span><br><span class="line">    - &#123;name: zhangsan, group: zhangsan&#125;</span><br><span class="line">  tasks:</span><br><span class="line">    - name: user add</span><br><span class="line">      user: name=&#123;&#123; name &#125;&#125;</span><br><span class="line">    - name: mkdir /home/&#123;&#123; name &#125;&#125;/.ssh</span><br><span class="line">      file: path=/home/&#123;&#123; name &#125;&#125;/.ssh state=directory owner=&#123;&#123; name &#125;&#125; mode=0700</span><br><span class="line">    - name: user add</span><br><span class="line">      action: file path=/home/&#123;&#123; name &#125;&#125;/.ssh/authorized_keys state=touch  owner=&#123;&#123; name &#125;&#125; mode=0600</span><br><span class="line"></span><br><span class="line">    - name: ssh-copy</span><br><span class="line">      authorized_key:</span><br><span class="line">        user: &quot;&#123;&#123; name &#125;&#125;&quot;</span><br><span class="line">        key: &quot;&#123;&#123; lookup(&apos;file&apos;, &apos;/etc/ansible/user.keypubs/&#123;&#123; name &#125;&#125;.id_rsa.pub&apos;) &#125;&#125;&quot;</span><br><span class="line">        path: /home/&#123;&#123; name &#125;&#125;/.ssh/authorized_keys</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/27/ansible/modules/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/27/ansible/modules/" class="post-title-link" itemprop="url">二、ansible各个模块</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-27 11:28:13" itemprop="dateCreated datePublished" datetime="2019-11-27T11:28:13+08:00">2019-11-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ansible/" itemprop="url" rel="index">
+                    <span itemprop="name">ansible</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="ping-验证ssh是否正常-正常则返回pong"><a href="#ping-验证ssh是否正常-正常则返回pong" class="headerlink" title="ping 验证ssh是否正常,正常则返回pong"></a>ping 验证ssh是否正常,正常则返回pong</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">➜  ansible ansible web -m ping</span><br><span class="line">192.168.62.154 | SUCCESS =&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: false,</span><br><span class="line">    &quot;ping&quot;: &quot;pong&quot;</span><br><span class="line">&#125;</span><br><span class="line">192.168.62.202 | SUCCESS =&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: false,</span><br><span class="line">    &quot;ping&quot;: &quot;pong&quot;</span><br><span class="line">&#125;</span><br><span class="line">192.168.62.140 | SUCCESS =&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: false,</span><br><span class="line">    &quot;ping&quot;: &quot;pong&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="command-与-shell在远程节点执行命令"><a href="#command-与-shell在远程节点执行命令" class="headerlink" title="command 与 shell在远程节点执行命令"></a>command 与 shell在远程节点执行命令</h3><p> shell模块可以使用管道，而command则不可以, 常用shell</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">➜  ansible ansible web1 -m shell -a &apos;uptime&apos;</span><br><span class="line">192.168.62.140 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line"> 21:00:12 up 2 days,  9:42,  1 user,  load average: 0.00, 0.00, 0.00</span><br><span class="line">192.168.62.202 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line"> 21:00:12 up 2 days,  9:40,  1 user,  load average: 0.61, 0.27, 0.21</span><br><span class="line"> ➜  ansible ansible web1 -m shell -b -f 3 -a &apos;whoami&apos;</span><br><span class="line">192.168.62.202 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">root</span><br><span class="line">192.168.62.140 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">root</span><br><span class="line">-b 表示通过become为root账户，需有sudo权限</span><br><span class="line">-f 3表示并发数为3</span><br></pre></td></tr></table></figure>
+<h3 id="script-把脚本复制到远程节点后，在远程节点本地运行脚本"><a href="#script-把脚本复制到远程节点后，在远程节点本地运行脚本" class="headerlink" title="script 把脚本复制到远程节点后，在远程节点本地运行脚本"></a>script 把脚本复制到远程节点后，在远程节点本地运行脚本</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">➜  ansible ansible web1 -m script -a &apos;scripts/whoami.sh&apos;</span><br><span class="line">192.168.62.140 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: true,</span><br><span class="line">    &quot;rc&quot;: 0,</span><br><span class="line">    &quot;stderr&quot;: &quot;Shared connection to 192.168.62.140 closed.\r\n&quot;,</span><br><span class="line">    &quot;stderr_lines&quot;: [</span><br><span class="line">        &quot;Shared connection to 192.168.62.140 closed.&quot;</span><br><span class="line">    ],</span><br><span class="line">    &quot;stdout&quot;: &quot;xujingbin\r\n&quot;,</span><br><span class="line">    &quot;stdout_lines&quot;: [</span><br><span class="line">        &quot;xujingbin&quot;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line">192.168.62.202 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: true,</span><br><span class="line">    &quot;rc&quot;: 0,</span><br><span class="line">    &quot;stderr&quot;: &quot;Shared connection to 192.168.62.202 closed.\r\n&quot;,</span><br><span class="line">    &quot;stderr_lines&quot;: [</span><br><span class="line">        &quot;Shared connection to 192.168.62.202 closed.&quot;</span><br><span class="line">    ],</span><br><span class="line">    &quot;stdout&quot;: &quot;xujingbin\r\n&quot;,</span><br><span class="line">    &quot;stdout_lines&quot;: [</span><br><span class="line">        &quot;xujingbin&quot;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="copy-复制文件或目录到远程节点。默认会覆盖目标文件"><a href="#copy-复制文件或目录到远程节点。默认会覆盖目标文件" class="headerlink" title="copy 复制文件或目录到远程节点。默认会覆盖目标文件"></a>copy 复制文件或目录到远程节点。默认会覆盖目标文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">➜  ansible ansible 192.168.62.140 -m copy -a &apos;src=scripts/whoami.sh dest=/tmp/&apos;</span><br><span class="line">192.168.62.140 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: true,</span><br><span class="line">    &quot;checksum&quot;: &quot;f5fcb41f69d716f7cfe09062efee2daabd6ba5a6&quot;,</span><br><span class="line">    &quot;dest&quot;: &quot;/tmp/whoami.sh&quot;,</span><br><span class="line">    &quot;gid&quot;: 1002,</span><br><span class="line">    &quot;group&quot;: &quot;xujingbin&quot;,</span><br><span class="line">    &quot;md5sum&quot;: &quot;f1ba1d7c54e96b18261649459ceac64a&quot;,</span><br><span class="line">    &quot;mode&quot;: &quot;0664&quot;,</span><br><span class="line">    &quot;owner&quot;: &quot;xujingbin&quot;,</span><br><span class="line">    &quot;secontext&quot;: &quot;unconfined_u:object_r:user_home_t:s0&quot;,</span><br><span class="line">    &quot;size&quot;: 20,</span><br><span class="line">    &quot;src&quot;: &quot;/home/xujingbin/.ansible/tmp/ansible-tmp-1550236788.13-41588500894359/source&quot;,</span><br><span class="line">    &quot;state&quot;: &quot;file&quot;,</span><br><span class="line">    &quot;uid&quot;: 1001</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>src：要复制到远程主机的文件在本地的地址，可以是绝对路径，也可以是相对路径。如果路径是一个目录，它将递归复制。在这种情况下，如果路径使用”/“来结尾，则只复制目录里的内容，如果没有使用”/“来结尾，则包含目录在内的整个内容全部复制，类似于rsync。</p>
+<h3 id="fetch-远程节点获取文件-只能是文件-到本地目录。"><a href="#fetch-远程节点获取文件-只能是文件-到本地目录。" class="headerlink" title="fetch 远程节点获取文件(只能是文件)到本地目录。"></a>fetch 远程节点获取文件(只能是文件)到本地目录。</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">➜  ansible ansible 192.168.62.140 -m fetch -a &apos;src=/tmp/whoami.sh dest=/downloads/&apos;</span><br><span class="line">192.168.62.140 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: true,</span><br><span class="line">    &quot;checksum&quot;: &quot;f5fcb41f69d716f7cfe09062efee2daabd6ba5a6&quot;,</span><br><span class="line">    &quot;dest&quot;: &quot;/downloads/192.168.62.140/tmp/whoami.sh&quot;,</span><br><span class="line">    &quot;md5sum&quot;: &quot;f1ba1d7c54e96b18261649459ceac64a&quot;,</span><br><span class="line">    &quot;remote_checksum&quot;: &quot;f5fcb41f69d716f7cfe09062efee2daabd6ba5a6&quot;,</span><br><span class="line">    &quot;remote_md5sum&quot;: null</span><br><span class="line">&#125;</span><br><span class="line">➜  ansible ls /downloads/192.168.62.140/tmp/whoami.sh</span><br><span class="line">/downloads/192.168.62.140/tmp/whoami.sh</span><br></pre></td></tr></table></figure>
+<h3 id="file-设置远程节点的文件的文件属性"><a href="#file-设置远程节点的文件的文件属性" class="headerlink" title="file 设置远程节点的文件的文件属性"></a>file 设置远程节点的文件的文件属性</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">➜  ansible ansible 192.168.62.140 -m file -a &apos;path=/tmp/aa/bb state=directory mode=0755</span><br><span class="line"> owner=xujingbin&apos;</span><br><span class="line">192.168.62.140 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: true,</span><br><span class="line">    &quot;gid&quot;: 1002,</span><br><span class="line">    &quot;group&quot;: &quot;xujingbin&quot;,</span><br><span class="line">    &quot;mode&quot;: &quot;0755&quot;,</span><br><span class="line">    &quot;owner&quot;: &quot;xujingbin&quot;,</span><br><span class="line">    &quot;path&quot;: &quot;/tmp/aa/bb&quot;,</span><br><span class="line">    &quot;secontext&quot;: &quot;unconfined_u:object_r:user_tmp_t:s0&quot;,</span><br><span class="line">    &quot;size&quot;: 6,</span><br><span class="line">    &quot;state&quot;: &quot;directory&quot;,</span><br><span class="line">    &quot;uid&quot;: 1001</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="hostname-设置远程节点主机名"><a href="#hostname-设置远程节点主机名" class="headerlink" title="hostname 设置远程节点主机名"></a>hostname 设置远程节点主机名</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">➜  ansible ansible 192.168.62.140 -b -m hostname -a &apos;name=node140&apos;</span><br><span class="line">192.168.62.140 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;ansible_facts&quot;: &#123;</span><br><span class="line">        &quot;ansible_domain&quot;: &quot;&quot;,</span><br><span class="line">        &quot;ansible_fqdn&quot;: &quot;node140&quot;,</span><br><span class="line">        &quot;ansible_hostname&quot;: &quot;node140&quot;,</span><br><span class="line">        &quot;ansible_nodename&quot;: &quot;node140&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;changed&quot;: true,</span><br><span class="line">    &quot;name&quot;: &quot;node140&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="cron-管理计划任务"><a href="#cron-管理计划任务" class="headerlink" title="cron 管理计划任务"></a>cron 管理计划任务</h3><h3 id="yum-使用yum包管理器来管理软件包"><a href="#yum-使用yum包管理器来管理软件包" class="headerlink" title="yum 使用yum包管理器来管理软件包"></a>yum 使用yum包管理器来管理软件包</h3><ol>
+<li>安装lrzsz<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">➜  ansible ansible 192.168.62.140 -b -m yum -a &apos;name=lrzsz state=present&apos;</span><br><span class="line">192.168.62.140 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;ansible_facts&quot;: &#123;</span><br><span class="line">        &quot;pkg_mgr&quot;: &quot;yum&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;changed&quot;: true,</span><br><span class="line">    &quot;msg&quot;: &quot;&quot;,</span><br><span class="line">    &quot;rc&quot;: 0,</span><br><span class="line">    &quot;results&quot;: [</span><br><span class="line">        &quot;Resolving Dependencies\n--&gt; Running transaction check\n---&gt; Package lrzsz.x86_64 0:0.12.20-36.el7 will be installed\n--&gt; Finished Dependency Resolution\n\nDependencies Resolved\n\n================================================================================\n Package         Arch             Version                  Repository      Size\n================================================================================\nInstalling:\n lrzsz           x86_64           0.12.20-36.el7           base            78 k\n\nTransaction Summary\n================================================================================\nInstall  1 Package\n\nTotal download size: 78 k\nInstalled size: 181 k\nDownloading packages:\nRunning transaction check\nRunning transaction test\nTransaction test succeeded\nRunning transaction\n  Installing : lrzsz-0.12.20-36.el7.x86_64                                  1/1 \n  Verifying  : lrzsz-0.12.20-36.el7.x86_64                                  1/1 \n\nInstalled:\n  lrzsz.x86_64 0:0.12.20-36.el7                                                 \n\nComplete!\n&quot;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>卸载tree<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">➜  ansible ansible 192.168.62.140 -b -m yum -a &apos;name=tree state=removed&apos;</span><br><span class="line">192.168.62.140 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;ansible_facts&quot;: &#123;</span><br><span class="line">        &quot;pkg_mgr&quot;: &quot;yum&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;changed&quot;: true,</span><br><span class="line">    &quot;msg&quot;: &quot;&quot;,</span><br><span class="line">    &quot;rc&quot;: 0,</span><br><span class="line">    &quot;results&quot;: [</span><br><span class="line">        &quot;正在解决依赖关系\n--&gt; 正在检查事务\n---&gt; 软件包 tree.x86_64.0.1.6.0-10.el7 将被 删除\n--&gt; 解决依赖关系完成\n\n依赖关系解决\n\n================================================================================\n Package        架构             版本                     源               大小\n================================================================================\n正在删除:\n tree           x86_64           1.6.0-10.el7             @base            87 k\n\n事务概要\n================================================================================\n移除  1 软件包\n\n安装大小：87 k\nDownloading packages:\nRunning transaction check\nRunning transaction test\nTransaction test succeeded\nRunning transaction\n  正在删除    : tree-1.6.0-10.el7.x86_64                                    1/1 \n  验证中      : tree-1.6.0-10.el7.x86_64                                    1/1 \n\n删除:\n  tree.x86_64 0:1.6.0-10.el7                                                    \n\n完毕！\n&quot;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="user-远程添加用户"><a href="#user-远程添加用户" class="headerlink" title="user 远程添加用户"></a>user 远程添加用户</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">添加账户yongyuan</span><br><span class="line">➜  ansible ansible 192.168.62.140 -b -m user -a &apos;name=yongyuan&apos;</span><br><span class="line">192.168.62.140 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: true,</span><br><span class="line">    &quot;comment&quot;: &quot;&quot;,</span><br><span class="line">    &quot;create_home&quot;: true,</span><br><span class="line">    &quot;group&quot;: 1005,</span><br><span class="line">    &quot;home&quot;: &quot;/home/yongyuan&quot;,</span><br><span class="line">    &quot;name&quot;: &quot;yongyuan&quot;,</span><br><span class="line">    &quot;shell&quot;: &quot;/bin/bash&quot;,</span><br><span class="line">    &quot;state&quot;: &quot;present&quot;,</span><br><span class="line">    &quot;system&quot;: false,</span><br><span class="line">    &quot;uid&quot;: 1004</span><br><span class="line">&#125;</span><br><span class="line">groups: 添加辅助组</span><br><span class="line">group: 指定用户的主组</span><br><span class="line"></span><br><span class="line">删除账户yongyuan,一并删除目录</span><br><span class="line">➜  ansible ansible 192.168.62.140 -b -m user -a &apos;name=yongyuan state=absent remove=yes&apos;</span><br><span class="line">192.168.62.140 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: true,</span><br><span class="line">    &quot;force&quot;: false,</span><br><span class="line">    &quot;name&quot;: &quot;yongyuan&quot;,</span><br><span class="line">    &quot;remove&quot;: true,</span><br><span class="line">    &quot;state&quot;: &quot;absent&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="get-url-从-HTTP-HTTPS-or-FTP-下载文件"><a href="#get-url-从-HTTP-HTTPS-or-FTP-下载文件" class="headerlink" title="get_url 从 HTTP, HTTPS, or FTP 下载文件"></a>get_url 从 HTTP, HTTPS, or FTP 下载文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">➜  ansible ansible 192.168.62.140 -b -m get_url -a &apos;dest=/home/xujingbin/ url=&quot;http://nginx.org/en/CHANGES&quot;&apos;</span><br><span class="line">192.168.62.140 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: true,</span><br><span class="line">    &quot;checksum_dest&quot;: null,</span><br><span class="line">    &quot;checksum_src&quot;: &quot;b07551b44f7ce834d6f979861ef92157198ecf65&quot;,</span><br><span class="line">    &quot;dest&quot;: &quot;/home/xujingbin/&quot;,</span><br><span class="line">    &quot;elapsed&quot;: 2,</span><br><span class="line">    &quot;gid&quot;: 1002,</span><br><span class="line">    &quot;group&quot;: &quot;xujingbin&quot;,</span><br><span class="line">    &quot;md5sum&quot;: &quot;a8fd7c4f8948815289093da824d12d8f&quot;,</span><br><span class="line">    &quot;mode&quot;: &quot;0700&quot;,</span><br><span class="line">    &quot;msg&quot;: &quot;OK (294414 bytes)&quot;,</span><br><span class="line">    &quot;owner&quot;: &quot;xujingbin&quot;,</span><br><span class="line">    &quot;secontext&quot;: &quot;unconfined_u:object_r:user_home_dir_t:s0&quot;,</span><br><span class="line">    &quot;size&quot;: 145,</span><br><span class="line">    &quot;src&quot;: &quot;/home/xujingbin/.ansible/tmp/ansible-tmp-1550241110.23-90701238301511/tmpRkTJmH&quot;,</span><br><span class="line">    &quot;state&quot;: &quot;directory&quot;,</span><br><span class="line">    &quot;status_code&quot;: 200,</span><br><span class="line">    &quot;uid&quot;: 1001,</span><br><span class="line">    &quot;url&quot;: &quot;http://nginx.org/en/CHANGES&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/20/db/etcd/confd+etcd+haproxy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/08/20/db/etcd/confd+etcd+haproxy/" class="post-title-link" itemprop="url">db/etcd/confd+etcd+haproxy</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2019-08-20 14:52:13 / 修改时间：14:52:40" itemprop="dateCreated datePublished" datetime="2019-08-20T14:52:13+08:00">2019-08-20</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="confd"><a href="#confd" class="headerlink" title="confd"></a>confd</h1><p><a href="https://github.com/kelseyhightower/confd" target="_blank" rel="noopener">https://github.com/kelseyhightower/confd</a></p>
+<h2 id="template"><a href="#template" class="headerlink" title="template"></a>template</h2><p><a href="https://github.com/kelseyhightower/confd/blob/master/docs/templates.md" target="_blank" rel="noopener">https://github.com/kelseyhightower/confd/blob/master/docs/templates.md</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/15/db/etcd/%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/08/15/db/etcd/%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D/" class="post-title-link" itemprop="url">db/etcd/备份恢复</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-08-15 11:22:55" itemprop="dateCreated datePublished" datetime="2019-08-15T11:22:55+08:00">2019-08-15</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-27 17:25:21" itemprop="dateModified" datetime="2019-11-27T17:25:21+08:00">2019-11-27</time>
+                <time title="修改时间：2019-11-12 19:27:12" itemprop="dateModified" datetime="2019-11-12T19:27:12+08:00">2019-11-12</time>
               </span>
 
           
@@ -298,555 +928,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>datasource prometheus</p>
-<p>根据变量复制面板Row：row options -&gt; repeat for</p>
-<p>根据变量复制面板panel：repeat pannel</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">io_util&#123;job=&quot;[[job]]&quot;, group=&quot;[[group]]&quot;,instance=~&quot;^[[hosts]]&quot;&#125;</span><br></pre></td></tr></table></figure>
-
-<p>升级新版本</p>
-<p>yum update /home/xujingbin/grafana-5.1.3-1.x86_64.rpm</p>
-<p>/etc/init.d/grafana-server restart</p>
-<p><a href="http://docs.grafana.org/reference/templating/" target="_blank" rel="noopener">http://docs.grafana.org/reference/templating/</a></p>
-<p>告警模板<br><a href="https://grafana.com/grafana/dashboards?dataSource=camptocamp-prometheus-alertmanager-datasource" target="_blank" rel="noopener">https://grafana.com/grafana/dashboards?dataSource=camptocamp-prometheus-alertmanager-datasource</a></p>
-<h1 id="grafana权限"><a href="#grafana权限" class="headerlink" title="grafana权限"></a>grafana权限</h1><p><a href="https://blog.csdn.net/liukuan73/article/details/78704395" target="_blank" rel="noopener">https://blog.csdn.net/liukuan73/article/details/78704395</a></p>
-<p>经过上面的操作，就将组织和用户进行了划分，然后在每个组织内新建数据源、DashBoard，这样，不同的用户属于不同的组织，不同的组织拥有独立的数据源以及DashBoard，就实现了多租户功能。</p>
-<p>由于数据源、 DashBoard是和组织关联的，因此没法做到一个组织内不同的用户，看到不同的DashBoard，不过Grafana新建组织，已经可以满足大部分需求了，比如有多个数据中心时，只要建立不同的数据中心组织，配上相应的数据源，就可以使用一套Grafana来展现了。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/monitor/prometheus/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/16/monitor/prometheus/" class="post-title-link" itemprop="url">monitor/prometheus</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-27 17:24:42" itemprop="dateModified" datetime="2019-11-27T17:24:42+08:00">2019-11-27</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="Prometheus的架构及持久化"><a href="#Prometheus的架构及持久化" class="headerlink" title="Prometheus的架构及持久化"></a><a href="https://segmentfault.com/a/1190000008629939" target="_blank" rel="noopener">Prometheus的架构及持久化</a></h3><h3 id="Prometheus-github"><a href="#Prometheus-github" class="headerlink" title="Prometheus github"></a><a href="https://github.com/prometheus/" target="_blank" rel="noopener">Prometheus github</a></h3><h2 id="kubernetes监控告警详解"><a href="#kubernetes监控告警详解" class="headerlink" title="kubernetes监控告警详解"></a><a href="https://blog.csdn.net/hxpjava1/article/details/80362563" target="_blank" rel="noopener">kubernetes监控告警详解</a></h2><h2 id="https-www-robustperception-io-relabel-configs-vs-metric-relabel-configs"><a href="#https-www-robustperception-io-relabel-configs-vs-metric-relabel-configs" class="headerlink" title="https://www.robustperception.io/relabel_configs-vs-metric_relabel_configs"></a><a href="https://www.robustperception.io/relabel_configs-vs-metric_relabel_configs" target="_blank" rel="noopener">https://www.robustperception.io/relabel_configs-vs-metric_relabel_configs</a></h2><h3 id="Prometheus-和-Grafana-监控系统指南"><a href="#Prometheus-和-Grafana-监控系统指南" class="headerlink" title="Prometheus 和 Grafana 监控系统指南"></a><a href="https://blog.eood.cn/prometheus-grafana-monitoring" target="_blank" rel="noopener">Prometheus 和 Grafana 监控系统指南</a></h3><ol>
-<li><p>Prometheus 的查询系统</p>
-</li>
-<li><p>这些信息分两种，一种是状态信息</p>
-</li>
-<li><p>另外一种是累加值信息，比如 haproxy_backend_http_responses_total</p>
-</li>
-</ol>
-<h3 id="config"><a href="#config" class="headerlink" title="config"></a>config</h3><p>Prometheus以scrape_interval（默认为1m）规则周期，从监控目标上收集信息。其中scrape_interval可以基于全局或基于单个metric定义；然后将监控信息持久存储在其本地存储上。<br>Prometheus以evaluation_interval（默认为1m）另一个独立的规则周期，对告警规则做定期计算。其中evaluation_interval只有全局值；然后更新告警状态。</p>
-<h3 id="启动指令"><a href="#启动指令" class="headerlink" title="启动指令"></a>启动指令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/usr/local/go/src/github.com/prometheus/prometheus/prometheus --config.file=prometheus.yml -alertmanager.url=http://42.62.2.194:9093/ -storage.local.retention 720h0m0s &amp;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">./alertmanager --config.file=alertmanager.yml &amp;</span><br><span class="line"></span><br><span class="line">gprp91 haproxy收集端</span><br><span class="line">nohup ./haproxy_exporter --haproxy.scrape-uri=unix:/tmp/haproxy.socket1 &amp;</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="报错解决"><a href="#报错解决" class="headerlink" title="报错解决"></a>报错解决</h3><p>context deadline exceeded</p>
-<p>抓取超时</p>
-<h3 id="pushgateway"><a href="#pushgateway" class="headerlink" title="pushgateway"></a>pushgateway</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  - job_name: &apos;pushgateway&apos;</span><br><span class="line"></span><br><span class="line">    static_configs:</span><br><span class="line"></span><br><span class="line">    - targets: [&apos;192.168.62.140:9091&apos;]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">python sys.py |curl --data-binary @- http://localhost:9091/metrics/job/sys/instance/node2</span><br></pre></td></tr></table></figure>
-
-<h2 id="删除指标"><a href="#删除指标" class="headerlink" title="删除指标"></a>删除指标</h2><p><a href="https://blog.51cto.com/lee90/2394989" target="_blank" rel="noopener">https://blog.51cto.com/lee90/2394989</a></p>
-<ol>
-<li>确保 prometheus 启动的时候， 加了参数  –web.enable-admin-api<br><code>./prometheus --storage.tsdb.retention=180d --web.enable-admin-api</code></li>
-<li>清理这个key的全部的数据<br><code>curl -X POST \
--g &#39;http://192.168.2.100:9090/api/v1/admin/tsdb/delete_series?match[]=up&amp;match[]=mysql_global_status_threads_running{instance=&quot;test-db13:9104&quot;,job=&quot;mysql&quot;}&#39;</code></li>
-<li>清理这个key指定时间段的数据 （清理的时间戳区间：1557903714 到 155790395 ）<br><code>curl -X POST \
--g &#39;http://192.168.2.100:9090/api/v1/admin/tsdb/delete_series?start=1557903714&amp;end=1557903954&amp;match[]=mysql_global_status_threads_running{instance=&quot;test-db13:9104&quot;,job=&quot;mysql&quot;}&#39;</code></li>
-</ol>
-<h2 id="百分位"><a href="#百分位" class="headerlink" title="百分位"></a>百分位</h2><p>Prometheus中称为quantile，其实叫percentile更准确。百分位数是指小于某个特定数值的采样点达到一定的百分比。例如，假设0.9-quantile的值为120，意思就是所有的采样值中，小于120的采样值的数量占总体采样值的90%。相应的，假设0.5-quantile的值为x，那么意思就是指小于x的采样值占总体的50%，所以0.5-quantile也指中值（median）。</p>
-<h2 id="阿里云prometheus修改配置规则"><a href="#阿里云prometheus修改配置规则" class="headerlink" title="阿里云prometheus修改配置规则"></a>阿里云prometheus修改配置规则</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">kubectl -n monitoring get prometheusrule</span><br><span class="line">更改prometheus到alermanager的地址在，阿里云控制台的容器服务-应用-发布-更新</span><br><span class="line">1340行:</span><br><span class="line">additionalAlertManagerConfigs:</span><br><span class="line">- static_configs:</span><br><span class="line"> - targets: [&quot;10.28.74.182:9093&quot;]</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/logging/fluentd-%E4%BA%8C%E8%BF%9B%E5%88%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/16/logging/fluentd-%E4%BA%8C%E8%BF%9B%E5%88%B6/" class="post-title-link" itemprop="url">logging/fluentd-二进制</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="多个配置文件"><a href="#多个配置文件" class="headerlink" title="多个配置文件"></a>多个配置文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># 绝对路径</span><br><span class="line">include /path/to/config.conf</span><br><span class="line"># 相对路径</span><br><span class="line">@include conf.d/*.conf</span><br><span class="line"># 甚至 URL</span><br><span class="line">@include http://example.com/fluent.conf</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-<h3 id="install"><a href="#install" class="headerlink" title="install"></a>install</h3><p>curl -L <a href="https://toolbelt.treasuredata.com/sh/install-redhat-td-agent3.sh" target="_blank" rel="noopener">https://toolbelt.treasuredata.com/sh/install-redhat-td-agent3.sh</a> | sh</p>
-<h3 id="fluentd-ui"><a href="#fluentd-ui" class="headerlink" title="fluentd-ui"></a>fluentd-ui</h3><p>Use id:admin / password:changeme </p>
-<h3 id="gprp-cg"><a href="#gprp-cg" class="headerlink" title="gprp_cg"></a>gprp_cg</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;match **.console.**&gt;</span><br><span class="line">  @type forward</span><br><span class="line">  send_timeout 60s</span><br><span class="line">  recover_wait 10s</span><br><span class="line">  hard_timeout 60s</span><br><span class="line">  &lt;server&gt;</span><br><span class="line">    name myserver1</span><br><span class="line">    host 10.0.0.194</span><br><span class="line">    port 24230</span><br><span class="line">  &lt;/server&gt;</span><br><span class="line">&lt;/match&gt;</span><br><span class="line">&lt;source&gt;</span><br><span class="line">   @type tail</span><br><span class="line">   path /workspace/gprp/gprp_cg/logs/console.%Y_%m_%d.jetty.log</span><br><span class="line">   pos_file /var/log/td-agent/buffer/gprp_cg.log.pos</span><br><span class="line">   tag &quot;gprp_cg.console.#&#123;Socket.gethostname&#125;&quot;</span><br><span class="line">   &lt;parse&gt;</span><br><span class="line">     @type none</span><br><span class="line">   &lt;/parse&gt;</span><br><span class="line">&lt;/source&gt;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/logging/fluentd-issues/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/16/logging/fluentd-issues/" class="post-title-link" itemprop="url">logging/fluentd-issues</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="buffer-space-has-too-many-data"><a href="#buffer-space-has-too-many-data" class="headerlink" title="buffer space has too many data"></a>buffer space has too many data</h3><p>一个项目日志量太大导致，可关闭该项目</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/logging/flume/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/16/logging/flume/" class="post-title-link" itemprop="url">logging/flume</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="flume"><a href="#flume" class="headerlink" title="flume"></a>flume</h3><p>flume 示例一收集tomcat日志 <a href="https://my.oschina.net/88sys/blog/71529" target="_blank" rel="noopener">https://my.oschina.net/88sys/blog/71529</a><br>flume 示例收集nginx日志 <a href="http://www.tuicool.com/articles/uIfI3if" target="_blank" rel="noopener">http://www.tuicool.com/articles/uIfI3if</a><br>http监控参数及配置 <a href="http://www.cnblogs.com/breg/p/5649363.html" target="_blank" rel="noopener">http://www.cnblogs.com/breg/p/5649363.html</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/logging/kafka-issues/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/16/logging/kafka-issues/" class="post-title-link" itemprop="url">logging/kafka-issues</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="Lag-offset意思就是待消费还没有消费的量"><a href="#Lag-offset意思就是待消费还没有消费的量" class="headerlink" title="Lag -offset意思就是待消费还没有消费的量"></a>Lag -offset意思就是待消费还没有消费的量</h3>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/logging/kafka/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/16/logging/kafka/" class="post-title-link" itemprop="url">logging/kafka</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="kafka"><a href="#kafka" class="headerlink" title="kafka"></a>kafka</h3><p>kafka性能瓶颈是网络带宽，node节点io<br>现在还好，还没到瓶颈，暑假就会有问题</p>
-<ul>
-<li>增加节点<blockquote>
-<p>拷贝已有节点kafka目录到新添加节点上，修改server.properites的block.id，增加/data1盘目录及jdk版本,supervisord工具管理服务</p>
-</blockquote>
-</li>
-</ul>
-<h3 id="kafka-manager"><a href="#kafka-manager" class="headerlink" title="kafka manager"></a>kafka manager</h3><p><a href="http://www.jianshu.com/p/c24ed08dfa63" target="_blank" rel="noopener">http://www.jianshu.com/p/c24ed08dfa63</a></p>
-<p><a href="https://github.com/yahoo/kafka-manager" target="_blank" rel="noopener">https://github.com/yahoo/kafka-manager</a></p>
-<p>需要设定JMX_PORT，具体操作：<br>重启前，在服务器运行export JMX_PORT=9999<br>然后运行：JMX_PORT=9999 bin/kafka-server-start.sh config/server.properties启动kafka.</p>
-<p>不要勾选JMX with SSL</p>
-<p>如果没有安装补丁，不要勾选Display Broker and Topic Size</p>
-<h4 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h4><p>重新分区到所有节点，选择topic，然后1. “Generate Partition Assignments” -&gt; “Reassion Partitions”</p>
-<p>最后进行推荐选举</p>
-<p>，大的topic需要一个个来，因为流量太大，观察Partition Information下的Under Replicated是否都为false，才可操作下一个topic(每次也只能进行一个topic操作)</p>
-<h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">bin/kafka-console-consumer.sh --bootstrap-server 10.0.0.194:9092,10.0.0.195:9092,10.0.0.199:9092 --topic test --consumer-property group.id=test2 --from-beginning</span><br></pre></td></tr></table></figure>
-
-<h3 id="kafka扩容迁移节点"><a href="#kafka扩容迁移节点" class="headerlink" title="kafka扩容迁移节点"></a>kafka扩容迁移节点</h3><p><a href="https://www.jianshu.com/p/626b147821cd" target="_blank" rel="noopener">https://www.jianshu.com/p/626b147821cd</a></p>
-<h3 id="kafka小版本升级"><a href="#kafka小版本升级" class="headerlink" title="kafka小版本升级"></a>kafka小版本升级</h3><p>在当前broker上直接关掉当前版本，启动新版本，198升级用了半个小时</p>
-<p>logs/server.log</p>
-<p>[2018-10-22 14:55:54,805] INFO [Group Metadata Manager on Broker 196]: Removed 0 expired offsets in 0 milliseconds. (kafka.coordinator.group.GroupMetadataManager)  出现此信息才可升级下一台</p>
-<h3 id="kafka-manager问题"><a href="#kafka-manager问题" class="headerlink" title="kafka manager问题"></a>kafka manager问题</h3><p>显示broker少了198，但问题可能是197节点网络不通导致</p>
-<h3 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h3><p><a href="https://www.jianshu.com/p/c9bb658dc788" target="_blank" rel="noopener">https://www.jianshu.com/p/c9bb658dc788</a><br><a href="https://www.cnblogs.com/yinzhengjie/p/9884552.html" target="_blank" rel="noopener">https://www.cnblogs.com/yinzhengjie/p/9884552.html</a></p>
-<h3 id="kafka-消费者详解"><a href="#kafka-消费者详解" class="headerlink" title="kafka 消费者详解"></a>kafka 消费者详解</h3><p><a href="https://www.jianshu.com/p/6cb86599dd60" target="_blank" rel="noopener">https://www.jianshu.com/p/6cb86599dd60</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/logging/pinpoint/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/16/logging/pinpoint/" class="post-title-link" itemprop="url">logging/pinpoint</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>应用性能管理(APM)平台</p>
-<p><img src="../images/pinpoint.png" alt="pinpoint"></p>
-<ul>
-<li>Pinpoint-Collector：收集各种性能数据</li>
-<li>Pinpoint-Agent：和自己运行的应用关联起来的探针</li>
-<li>Pinpoint-Web：将收集到的数据显示成WEB网页形式</li>
-<li>HBase Storage：收集到的数据存到HBase中</li>
-</ul>
-<p>快速默认安装</p>
-<p><a href="https://www.cnblogs.com/yyhh/p/6106472.html#yy0101" target="_blank" rel="noopener">https://www.cnblogs.com/yyhh/p/6106472.html#yy0101</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/logging/zipkin/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/16/logging/zipkin/" class="post-title-link" itemprop="url">logging/zipkin</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><a href="https://segmentfault.com/a/1190000012342007" target="_blank" rel="noopener">https://segmentfault.com/a/1190000012342007</a></p>
+          <h1 id="备份"><a href="#备份" class="headerlink" title="备份"></a>备份</h1><p>官方指出 etcd v2 和 v3 的数据不能混合存放，<a href="https://github.com/etcd-io/etcd/issues/7002" target="_blank" rel="noopener">support backup of v2 and v3 stores</a> 。</p>
+<p>特别提醒：若使用 v3 备份数据时存在 v2 的数据则不影响恢复<br>若使用 v2 备份数据时存在 v3 的数据则恢复失败<br>etcd 集群都是至少 3 台机器，官方也说明了集群容错为 (N-1)/2，所以备份数据一般都是用不到，但是鉴上次 gitlab 出现的问题，对于备份数据也要非常重视。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"># 开发环境 备份脚本在/crond</span><br><span class="line"></span><br><span class="line">IP=192.168.67.201</span><br><span class="line">BACKUP_DIR=/usr/local/backup</span><br><span class="line">mkdir -p $BACKUP_DIR</span><br><span class="line">export ETCDCTL_API=3</span><br><span class="line">/usr/local/etcd-v3.2.26-linux-amd64/bin/etcdctl --endpoints=http://$IP:2379 snapshot save $BACKUP_DIR/snap-$(date +%Y%m%d%H%M).db</span><br><span class="line">find $BACKUP_DIR -mtime +7 |xargs rm -f</span><br><span class="line"></span><br><span class="line"># 备份一个节点的数据就可以恢复，实践中，为了防止定时任务配置的节点异常没有生成备份，建议多加几个</span><br></pre></td></tr></table></figure>
+
+<h1 id="还原"><a href="#还原" class="headerlink" title="还原"></a>还原</h1><h2 id="集群单节点故障恢复"><a href="#集群单节点故障恢复" class="headerlink" title="集群单节点故障恢复"></a>集群单节点故障恢复</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">1. 查看故障节点</span><br><span class="line">etcdctl --endpoints=$ENDPOINTS endpoint health</span><br><span class="line">2. 查看节点id</span><br><span class="line">etcdctl --endpoints=$ENDPOINTS member list</span><br><span class="line">3. 删除故障节点</span><br><span class="line">etcdctl --endpoints=$ENDPOINTS member remove 81672b0117eb8ad9</span><br><span class="line">4. 下线故障节点，并删除data目录</span><br><span class="line">systemctl stop etcd</span><br><span class="line">5. 添加新节点</span><br><span class="line">etcdctl --endpoints=$ENDPOINTS member add etcd-2 --peer-urls=http://192.168.67.202:2380</span><br><span class="line">6. 修改新节点配置文件</span><br><span class="line">/usr/local/etcd-v3.2.26-linux-amd64/conf/cluster</span><br><span class="line">CLUSTER_STATE=existing</span><br><span class="line">7. 启动新节点systemctl start etcd</span><br></pre></td></tr></table></figure>
+<h2 id="单节点备份恢复"><a href="#单节点备份恢复" class="headerlink" title="单节点备份恢复"></a>单节点备份恢复</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">BACKUP_DIR=.</span><br><span class="line">#mkdir -p $BACKUP_DIR</span><br><span class="line">export ETCDCTL_API=3</span><br><span class="line">#etcdctl --endpoints=http://$IP:2379 snapshot save $BACKUP_DIR/snap.db</span><br><span class="line">##find $BACKUP_DIR -mtime +7 |xargs rm -f</span><br><span class="line">#etcdctl --endpoints=&apos;172.20.7.15:2379&apos; snapshot restore $BACKUP_DIR/snap.db --data-dir=&quot;/data2/etcd/&quot;</span><br><span class="line">#etcdctl --endpoints=&apos;172.20.7.15:2379&apos; snapshot status snap.db --write-out=table</span><br><span class="line">etcdctl --endpoints=&apos;172.20.6.123:2379&apos;  get / --prefix --keys-only</span><br><span class="line">echo &quot;---------&quot;</span><br><span class="line">etcdctl --endpoints=&apos;172.20.2.118:2379&apos;  get / --prefix --keys-only</span><br></pre></td></tr></table></figure>
+<h2 id="根据快照恢复集群"><a href="#根据快照恢复集群" class="headerlink" title="根据快照恢复集群"></a>根据快照恢复集群</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line"># 使用 etcdctl snapshot restore 生成各个节点的数据</span><br><span class="line"></span><br><span class="line"># 比较关键的变量是</span><br><span class="line"># --data-dir 需要是实际 etcd 运行时的数据目录</span><br><span class="line"># --name  --initial-advertise-peer-urls  需要用各个节点的配置</span><br><span class="line"># --initial-cluster  initial-cluster-token 需要和原集群一致</span><br><span class="line"># 本节点 --name etcd-1</span><br><span class="line"></span><br><span class="line">ETCD_1=192.168.67.54</span><br><span class="line">ETCD_2=192.168.67.55</span><br><span class="line">ETCD_3=192.168.67.56</span><br><span class="line">cd /usr/local/etcd-v3.2.26-linux-amd64</span><br><span class="line">for i in ETCD_1 ETCD_2 ETCD_3</span><br><span class="line">do</span><br><span class="line">export ETCDCTL_API=3</span><br><span class="line">bin/etcdctl snapshot restore snapshot.db \</span><br><span class="line">--data-dir=/data \</span><br><span class="line">--name $i \</span><br><span class="line">--initial-cluster $&#123;ETCD_1&#125;=http://$&#123;ETCD_1&#125;:2380,$&#123;ETCD_2&#125;=http://$&#123;ETCD_2&#125;:2380,$&#123;ETCD_3&#125;=http://$&#123;ETCD_3&#125;:2380 \</span><br><span class="line">--initial-cluster-token token-cluster-test-82788fef \</span><br><span class="line">--initial-advertise-peer-urls http://$i:2380 &amp;&amp; \</span><br><span class="line">mv data etcd_$i</span><br><span class="line"></span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">把生成的data目录 复制到其他节点</span><br></pre></td></tr></table></figure>
+
+<h1 id="参考文本"><a href="#参考文本" class="headerlink" title="参考文本"></a>参考文本</h1><p><a href="https://www.jianshu.com/p/c60c08effaaa" target="_blank" rel="noopener">https://www.jianshu.com/p/c60c08effaaa</a><br><a href="https://github.com/etcd-io/etcd/blob/master/Documentation/op-guide/recovery.md" target="_blank" rel="noopener">https://github.com/etcd-io/etcd/blob/master/Documentation/op-guide/recovery.md</a></p>
 
       
     </div>
@@ -910,20 +1000,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">78</span>
+          <span class="site-state-item-count">80</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">46</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-count">56</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
