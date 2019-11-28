@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="运维笔记" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="java项目打包到docker仓库，并更新k8s集群应用">
+<meta name="keywords" content="jenkins pipeline">
+<meta property="og:type" content="article">
+<meta property="og:title" content="k8s持续部署">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;28&#x2F;jenkins&#x2F;k8s&#x2F;index.html">
+<meta property="og:site_name" content="运维笔记">
+<meta property="og:description" content="java项目打包到docker仓库，并更新k8s集群应用">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-11-28T07:50:20.717Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2019/11/28/jenkins/k8s/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>k8s持续部署 | 运维笔记</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">运维笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">56</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">47</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">76</span></a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/jenkins/k8s/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          k8s持续部署
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-28 15:50:20" itemprop="dateCreated datePublished" datetime="2019-11-28T15:50:20+08:00">2019-11-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/jenkins/" itemprop="url" rel="index">
+                    <span itemprop="name">jenkins</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/jenkins/pipeline/" itemprop="url" rel="index">
+                    <span itemprop="name">pipeline</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="java项目打包到docker仓库，并更新k8s集群应用"><a href="#java项目打包到docker仓库，并更新k8s集群应用" class="headerlink" title="java项目打包到docker仓库，并更新k8s集群应用"></a>java项目打包到docker仓库，并更新k8s集群应用</h3><a id="more"></a>
+<h3 id="Jenkinsfile-nexus"><a href="#Jenkinsfile-nexus" class="headerlink" title="Jenkinsfile_nexus"></a>Jenkinsfile_nexus</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line">    jenkins 项目名 gprp_history-server_master_pro_CI</span><br><span class="line">    jenkins GUI上的变量配置</span><br><span class="line"></span><br><span class="line">        String: NODE, TAG，REPO_URL, BRANCH, EMAIL, credentialsId, HUB_DOCKER, PACKAGE_COMMAND, MODULE</span><br><span class="line"></span><br><span class="line">		* JOB_NAME: 项目名</span><br><span class="line">		* NODE: 发布机节点</span><br><span class="line">        * TAG值：</span><br><span class="line">            0，正常打包发布版本</span><br><span class="line">            1，更改uat、fat的版本号</span><br><span class="line">            其他，则回退到该tag版本git checkout tag，并发布</span><br><span class="line">        * REPO_URL: git项目仓库地址</span><br><span class="line">        * BRANCH: 发布的分支</span><br><span class="line">        * EMAIL: 项目负责人</span><br><span class="line">        * credentialsId: 拉取代码的public key，要有写权限</span><br><span class="line">        * HUB_DOCKER: docker的仓库地址</span><br><span class="line">        * PACKAGE_COMMAND: 特殊打包命令，可覆盖jenkinsfile的默认打包命令</span><br><span class="line">        * MODULE: 打包不依赖父pom的独立的子模块时需填写子模块的目录名，否则为空字符串</span><br><span class="line">        * USER_NAME,USER_EMAIL: git的账户及邮箱</span><br><span class="line"></span><br><span class="line">*/</span><br><span class="line">node(NODE) &#123;</span><br><span class="line">    try &#123;</span><br><span class="line">        env.GROUP = JOB_NAME.split(&quot;_&quot;)[0]</span><br><span class="line">        env.APP_NAME = JOB_NAME.split(&quot;_$&#123;BRANCH&#125;_&quot;)[0].split(&quot;$&#123;env.GROUP&#125;_&quot;)[1] //全局变量</span><br><span class="line">        env.filename=&quot;$&#123;MODULE&#125;.jar&quot;</span><br><span class="line">        //副本数</span><br><span class="line">        env.UAT_REPLICAS = 2</span><br><span class="line">        env.FAT_REPLICAS = 1</span><br><span class="line"></span><br><span class="line">        checkOut()</span><br><span class="line">        getBranchEnv()</span><br><span class="line">        getVersion()</span><br><span class="line">        compile()</span><br><span class="line">        updateDeployment()</span><br><span class="line"></span><br><span class="line">        stage(&apos;通知负责人&apos;) &#123;</span><br><span class="line">            emailext body: &quot;构建项目:$&#123;BUILD_URL&#125;\r\n构建完成&quot;, subject: &quot;构建项目$&#123;JOB_NAME&#125;【成功】&quot;, to: &quot;$&#123;EMAIL&#125;&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; catch (e) &#123;</span><br><span class="line">        echo &quot;$&#123;e.toString()&#125;&quot;</span><br><span class="line">        emailext body: &quot;构建项目:$&#123;BUILD_URL&#125;\r\n构建失败，\r\n错误消息：$&#123;e.toString()&#125;&quot;, subject: &quot;构建项目$&#123;JOB_NAME&#125;【失败】&quot;, to: &quot;$&#123;EMAIL&#125;&quot;</span><br><span class="line">        throw e</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//分支对应环境</span><br><span class="line">def getBranchEnv()&#123;</span><br><span class="line">    env.ENV = &quot;&quot;</span><br><span class="line">    if (BRANCH == &quot;master&quot;)&#123;</span><br><span class="line">        env.ENV = &quot;pro&quot;</span><br><span class="line">    &#125;else if(BRANCH == &quot;develop&quot;)&#123;</span><br><span class="line">        env.ENV = &quot;fat&quot;</span><br><span class="line">    &#125;else if(BRANCH == &quot;release&quot;)&#123;</span><br><span class="line">        env.ENV = &quot;uat&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//拉取代码</span><br><span class="line">def checkOut() &#123;</span><br><span class="line">    stage(&apos;检出代码&apos;) &#123;</span><br><span class="line">        git branch: &quot;$&#123;BRANCH&#125;&quot;, credentialsId: &quot;$&#123;credentialsId&#125;&quot;, url: &quot;$&#123;REPO_URL&#125;&quot;</span><br><span class="line">        if (TAG != &apos;0&apos; &amp;&amp; TAG != &apos;1&apos;) &#123;</span><br><span class="line">            sh &quot;git checkout $&#123;TAG&#125;&quot;</span><br><span class="line">        &#125;</span><br><span class="line">        echo &quot;检测若为master分支时，不可拉取snapshot包或取名包含snapshot的包名&quot;</span><br><span class="line">        if (BRANCH == &apos;master&apos;) &#123;</span><br><span class="line">            sh &quot;&quot;&quot;</span><br><span class="line">                if [[ `sed -n &apos;/dependencies/,/dependencies/p&apos; pom.xml| grep &apos;SNAPSHOT&apos;` ]];then</span><br><span class="line">                    exit 1</span><br><span class="line">                fi</span><br><span class="line">            &quot;&quot;&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//获取 版本信息</span><br><span class="line">def getVersion() &#123;</span><br><span class="line">    //get pom</span><br><span class="line">    def pom = readMavenPom file: &quot;pom.xml&quot;</span><br><span class="line">    if (MODULE != &apos;&apos;) &#123;</span><br><span class="line">        pom = readMavenPom file: &quot;$&#123;MODULE&#125;/pom.xml&quot;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    // get project version</span><br><span class="line">    env.VERSION = pom.getVersion()</span><br><span class="line">    if(env.VERSION == null) &#123;</span><br><span class="line">        env.VERSION = pom.getParent().getVersion()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // get release version</span><br><span class="line">    env.RELEASE = env.VERSION.split(&quot;-&quot;)[0]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    echo &quot;pom version $env.VERSION&quot;</span><br><span class="line">    echo &quot;release version: $env.RELEASE&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//编译 构建</span><br><span class="line">def compile() &#123;</span><br><span class="line"></span><br><span class="line">    stage(&apos;编译，构建镜像&apos;) &#123;</span><br><span class="line">        if (PACKAGE_COMMAND != &apos;&apos;) &#123;</span><br><span class="line">            sh &quot;$PACKAGE_COMMAND&quot;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            MVN = &quot;/usr/local/maven/bin/mvn -Dmaven.test.skip=true &quot;</span><br><span class="line">            if (MODULE != &apos;&apos;) &#123;</span><br><span class="line">                subM = getSubM(MODULE)</span><br><span class="line">            &#125;else &#123;</span><br><span class="line">                subM = &apos;&apos;</span><br><span class="line">            &#125;</span><br><span class="line">            //master 分之</span><br><span class="line">            if (BRANCH == &apos;master&apos;) &#123;</span><br><span class="line">                sh &quot;&quot;&quot;</span><br><span class="line">                    $MVN release:clean</span><br><span class="line">                    git config user.name $USER_NAME</span><br><span class="line">                    git config  user.email $USER_EMAIL</span><br><span class="line">                    $MVN release:prepare $subM -P pro -U</span><br><span class="line">                &quot;&quot;&quot;</span><br><span class="line">                </span><br><span class="line">            &#125;else if (BRANCH == &apos;develop&apos;) &#123;</span><br><span class="line">                sh &quot;$MVN clean package $subM -P fat -U&quot;</span><br><span class="line"></span><br><span class="line">            &#125;else if(BRANCH == &apos;release&apos;) &#123;</span><br><span class="line">                sh &quot;$MVN clean package $subM -P uat -Ddefault.version=$&#123;env.RELEASE&#125; -U&quot;</span><br><span class="line">                </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">def updateDeployment() &#123;</span><br><span class="line">    stage(&apos;更新应用&apos;) &#123;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def getSubM(String mod) &#123;</span><br><span class="line">    if (mod != &quot;&quot;) &#123;</span><br><span class="line">        return &quot; -pl $mod&quot;</span><br><span class="line">    &#125;</span><br><span class="line">    return &quot;&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/pipeline/" rel="tag"># pipeline</a>
+              <a href="/tags/jenkins/" rel="tag"># jenkins</a>
+              <a href="/tags/%E6%8C%81%E7%BB%AD%E9%83%A8%E7%BD%B2/" rel="tag"># 持续部署</a>
+              <a href="/tags/kubernetes/" rel="tag"># kubernetes</a>
+              <a href="/tags/k8s/" rel="tag"># k8s</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/11/28/db/mysql/issues/" rel="prev" title="mysql issues">
+      <i class="fa fa-chevron-left"></i> mysql issues
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/11/28/jenkins/jenkins/" rel="next" title="jenkins/jenkins">
+      jenkins/jenkins <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#java项目打包到docker仓库，并更新k8s集群应用"><span class="nav-number">1.</span> <span class="nav-text">java项目打包到docker仓库，并更新k8s集群应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Jenkinsfile-nexus"><span class="nav-number">2.</span> <span class="nav-text">Jenkinsfile_nexus</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">xujingbin</p>
+  <div class="site-description" itemprop="description">个人运维笔记</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">76</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">47</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xujingbin</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

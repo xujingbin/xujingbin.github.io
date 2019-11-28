@@ -179,6 +179,591 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/jenkins/jenkins/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/28/jenkins/jenkins/" class="post-title-link" itemprop="url">jenkins/jenkins</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-28 15:52:05" itemprop="dateCreated datePublished" datetime="2019-11-28T15:52:05+08:00">2019-11-28</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>[toc]</p>
+<h3 id="搭建"><a href="#搭建" class="headerlink" title="搭建"></a>搭建</h3><p><a href="https://wiki.jenkins-ci.org/display/JENKINS/Starting+and+Accessing+Jenkins" target="_blank" rel="noopener">https://wiki.jenkins-ci.org/display/JENKINS/Starting+and+Accessing+Jenkins</a><br>jenkins:    <a href="http://www.cnblogs.com/yjmyzz/p/jenkins-tutorial-part-1.html" target="_blank" rel="noopener">http://www.cnblogs.com/yjmyzz/p/jenkins-tutorial-part-1.html</a></p>
+<h3 id="部署脚本"><a href="#部署脚本" class="headerlink" title="部署脚本"></a>部署脚本</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">projectDir=&quot;/workspace/gprp/adgame_filter&quot;</span><br><span class="line"></span><br><span class="line">onlineFile=&quot;$&#123;projectDir&#125;/webapps/adgame_filter.war&quot;</span><br><span class="line"></span><br><span class="line">suf_dir=`date &quot;+%s&quot;`</span><br><span class="line"></span><br><span class="line">bakFile=&quot;$&#123;projectDir&#125;/bak/$&#123;filename&#125;-$&#123;suf_dir&#125;&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">echo &quot;发布93&quot;</span><br><span class="line"></span><br><span class="line">node_name_list=&quot;gprp93&quot;</span><br><span class="line"></span><br><span class="line">sudo  salt -L $node_name_list cmd.run  &quot;if [[ ! -d $&#123;projectDir&#125;/bak ]];then mkdir  $&#123;projectDir&#125;/bak ; fi&quot;</span><br><span class="line"></span><br><span class="line">sudo  salt -L $node_name_list cmd.run  &quot;cp $&#123;onlineFile&#125; $&#123;bakFile&#125;&quot;</span><br><span class="line"></span><br><span class="line">sudo  salt -L $node_name_list cp.get_file  salt://$JOB_NAME/target/$filename  $&#123;onlineFile&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="检测服务是否启动完毕"><a href="#检测服务是否启动完毕" class="headerlink" title="检测服务是否启动完毕"></a>检测服务是否启动完毕</h4><p>curl -s 192.16.52.94:9086/adgame_filter/anticheat/ping</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"> * 方法1 </span><br><span class="line"></span><br><span class="line">function check_url() &#123;</span><br><span class="line"></span><br><span class="line">     signal=0</span><br><span class="line"></span><br><span class="line">     while [[ &quot;$signal&quot; -ne 1 ]];do</span><br><span class="line"></span><br><span class="line">       curl -s --connect-time 4 -I $1 |grep HTTP |grep 200 &gt; /dev/null &amp;&amp; signal=1 || echo &quot;wait for service starting&quot;</span><br><span class="line"></span><br><span class="line">     done</span><br><span class="line"></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">* 方法2</span><br><span class="line"></span><br><span class="line">while ((`curl -s 192.16.106.45:1852/feed/ping.do` != &quot;pong&quot;));do</span><br><span class="line"></span><br><span class="line">   sleep 1</span><br><span class="line"></span><br><span class="line">   echo &quot;服务还没起来，等待中...&quot;;</span><br><span class="line"></span><br><span class="line">done</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">curl -u admin:admin  &apos;http://192.16.52.248:xujingbin/admin?stats/&apos; -d  &quot;action=enable&amp;b=#6&amp;s=adgame94&quot;</span><br><span class="line"></span><br><span class="line">curl -u admin:admin  &apos;http://192.16.52.248:4398/admin?stats/&apos; -d  &quot;action=enable&amp;b=#6&amp;s=adgame94&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="slave"><a href="#slave" class="headerlink" title="slave"></a>slave</h3><p><a href="https://www.cnblogs.com/derekchen/p/5892286.html" target="_blank" rel="noopener">https://www.cnblogs.com/derekchen/p/5892286.html</a><br>不需要在slave节点机器上跑jenkins服务，</p>
+<ol>
+<li>在主jenkins管理界面：系统管理-管理节点-新建节点<br>通过launch agent via java web start方式</li>
+<li>下载slave.jar包到在slave机器上，运行<br><code>java -jar slave.jar -jnlpUrl http://jenkins.xujingbindoc.com/computer/docker244/slave-agent.jnlp -secret asfsdf</code></li>
+<li>准备好jdk mvn git环境，环境变量，host 保证能连gitlab，拷贝主的jenkins账户密钥、mvn的setting到slave上</li>
+<li>如果是pipeline在jenkinsfile上指定slave，如node(‘gprp216’){}</li>
+<li>需要把jenkins_gprp_rw密钥的key放到slave机上才能git提交</li>
+<li>salt master需要修改/etc/salt/master<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">file_roots:</span><br><span class="line"></span><br><span class="line">   base:</span><br><span class="line"></span><br><span class="line">     - /workspace/workspace/</span><br><span class="line"></span><br><span class="line">interface: 192.168.62.216</span><br><span class="line"></span><br><span class="line">keep_jobs: 3</span><br><span class="line"></span><br><span class="line">key_logfile: /var/log/salt/key</span><br><span class="line"></span><br><span class="line">log_file: /var/log/salt/master</span><br><span class="line"></span><br><span class="line">state_events: True</span><br><span class="line"></span><br><span class="line">timeout: 600</span><br><span class="line"></span><br><span class="line">worker_threads: 10</span><br><span class="line">``</span><br><span class="line"></span><br><span class="line">### pipeline</span><br><span class="line">选择checkout: General SCM</span><br><span class="line"></span><br><span class="line">### rsync</span><br><span class="line"></span><br><span class="line">/etc/rsync_jenkins_gprp_solr.pass是jenkins上的密码，dest机器上也需要一个密码文件，开放873端口</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>/usr/bin/rsync  –delete   -avz  –exclude=.*     –password-file=/etc/rsync_jenkins_gprp_solr.pass   .  <a href="mailto:gprp@192.16.66.220" target="_blank" rel="noopener">gprp@192.16.66.220</a>::gprp_solr/  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">### pipeline语法</span><br><span class="line">https://www.jianshu.com/p/c8300d77cd71</span><br></pre></td></tr></table></figure>
+<pre><code>for ( String a : [&apos;aaa&apos;,&apos;vvv&apos;]){
+    echo &quot;${a}&quot;
+}
+b=[&apos;aaa&apos;,&apos;vvv&apos;]
+a=b.remove(b[-1])
+echo &quot;${b}&quot;</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 持续发布提交到仓库</span><br></pre></td></tr></table></figure>
+<p>git checkout master</p>
+<p>#git branch -D master</p>
+<p>#git checkout -b master origin/master</p>
+<p>git reset –hard origin/master</p>
+<p>#git pull</p>
+<p>git config user.name “jenkinsAgent174”</p>
+<p>git config  user.email “<a href="mailto:jenkinsAgent174@xujingbininc.com" target="_blank" rel="noopener">jenkinsAgent174@xujingbininc.com</a>“</p>
+<pre><code>
+### 联通gitlab账号
+http://vincent927.github.io/Jenkins%E4%BD%BF%E7%94%A8Gitlab%E8%B4%A6%E5%8F%B7%E5%81%9A%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86.html</code></pre>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/jenkins/k8s/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/28/jenkins/k8s/" class="post-title-link" itemprop="url">k8s持续部署</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-28 15:50:20" itemprop="dateCreated datePublished" datetime="2019-11-28T15:50:20+08:00">2019-11-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/jenkins/" itemprop="url" rel="index">
+                    <span itemprop="name">jenkins</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/jenkins/pipeline/" itemprop="url" rel="index">
+                    <span itemprop="name">pipeline</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="java项目打包到docker仓库，并更新k8s集群应用"><a href="#java项目打包到docker仓库，并更新k8s集群应用" class="headerlink" title="java项目打包到docker仓库，并更新k8s集群应用"></a>java项目打包到docker仓库，并更新k8s集群应用</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/11/28/jenkins/k8s/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/db/mysql/issues/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/28/db/mysql/issues/" class="post-title-link" itemprop="url">mysql issues</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-28 15:48:21" itemprop="dateCreated datePublished" datetime="2019-11-28T15:48:21+08:00">2019-11-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">mysql</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mysql/issues/" itemprop="url" rel="index">
+                    <span itemprop="name">issues</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ol>
+<li>查看数据库信息</li>
+</ol>
+<p>1.1. 查看表大小</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">select concat(round(sum(data_length/1024/1024),2),&apos;MB&apos;) as data from information_schema.tables where table_schema=&apos;cachecloud&apos; and table_name=&apos;standard_statistics&apos;;</span><br></pre></td></tr></table></figure>
+
+<p>1.2. 库大小</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">select sum(DATA_LENGTH)+sum(INDEX_LENGTH) from information_schema.tables </span><br><span class="line">where table_schema=&apos;数据库名&apos;;</span><br></pre></td></tr></table></figure>
+
+<p>1.3. 所有表行数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">查看mysql某个数据库下所有表的数据总条数</span><br><span class="line">use information_schema;</span><br><span class="line">select sum(TABLE_ROWS) from tables where TABLE_SCHEMA = &apos;db_name&apos;;</span><br><span class="line">查询出来的是每张表的行数</span><br><span class="line">select table_name,table_rows from tables</span><br><span class="line">where TABLE_SCHEMA = &apos;数据库名&apos;</span><br><span class="line">order by table_rows desc;</span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="2">
+<li>错误处理</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">-f, --force 强制执行sql</span><br><span class="line"></span><br><span class="line">-v,--verbose 显示更多信息</span><br><span class="line"></span><br><span class="line">--show-warnings 显示警告信息</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><p>移动数据库文件，恢复时启动报错</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">移动时报错：mv: reading `/data1/mysql3308/data/test/logs_monitor#P#p0.ibd&apos;: Input/output error`</span><br><span class="line"></span><br><span class="line">删除表，从源库dump表，恢复到211报错</span><br><span class="line"></span><br><span class="line">ERROR 1813 (HY000) at line 25: Tablespace &apos;`test`.`logs_monitor` /* Partition `p0` */&apos; exists.</span><br><span class="line"></span><br><span class="line">到test库文件夹里删除文件/data1/mysql3308/data/test/logs_monitor#P#p0.ibd再执行恢复命令即可</span><br><span class="line"></span><br><span class="line">mysql -uroot -p`cat /etc/aaavep3308` -S /tmp/mysql3308.sock test &lt; /home/xujingbin/logs_monitor.sql</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<h3 id="utf8-编码问题"><a href="#utf8-编码问题" class="headerlink" title="utf8 编码问题"></a>utf8 编码问题</h3><p>这个问题，原因是UTF-8编码有可能是两个、三个、四个字节。Emoji表情或者某些特殊字符是4个字节，而Mysql的utf8编码最多3个字节，所以数据插不进去。 修改成utf8mb4  <a href="https://blog.csdn.net/fhzaitian/article/details/53168551" target="_blank" rel="noopener">https://blog.csdn.net/fhzaitian/article/details/53168551</a></p>
+<h3 id="慢查询"><a href="#慢查询" class="headerlink" title="慢查询"></a>慢查询</h3><p><a href="https://yq.aliyun.com/articles/604272?utm_content=m_1000004526" target="_blank" rel="noopener">https://yq.aliyun.com/articles/604272?utm_content=m_1000004526</a></p>
+<h3 id="freeing-items"><a href="#freeing-items" class="headerlink" title="freeing items"></a>freeing items</h3><p>查询缓存命中率低，报错freeing items<br>实例：今天公司DB 有大量的线程是freeingitems  状态，通过排查分析是: query_cache_size=32M,而query_cache_limit=16M，太坑人了，DB游戏服务器上跑应用，还有一些大的不固定的数据抓取查询(不固定，经常变动)，结果使用了Query cache ，导致Query Cache 池的抖动，频繁有cache失效，产生了freeing items 状态,下面是官方对freeing items的解释：</p>
+<p>The thread has executed acommand. Some freeing of items done during this state involves the query cache.This state is usually followed by cleaning up.</p>
+<p>线程已经执行了命令。在这个状态中涉及的查询缓存可以得到一些释放。这个状态通常后面跟随cleaning up状态。</p>
+<p>最后把query_cache_limit改成1M，很少有freeing items 状态。uery_cache_limit和query_cache_size的设置要紧结合具体的业务现状来调整。</p>
+<h3 id="到此我们可以确定是因为服务器断电导致从库的relay-log损坏，从而导致从库复制线程报错。"><a href="#到此我们可以确定是因为服务器断电导致从库的relay-log损坏，从而导致从库复制线程报错。" class="headerlink" title="到此我们可以确定是因为服务器断电导致从库的relay log损坏，从而导致从库复制线程报错。"></a>到此我们可以确定是因为服务器断电导致从库的relay log损坏，从而导致从库复制线程报错。</h3><p> relay log损坏，那么我们可以从复制停止的位置开始重新读取主库的binlog日志。有两点需要我们注意的1. 要确认要读取的binlog日志在主库还没有被删除；2. 确定正确的重新读取位置。</p>
+<pre><code>我们要怎么确定读取位置？1. 可以通过show slave status\G;输出中的Relay_Master_Log_File，Exec_Master_Log_Pos来确定；2. 如果show slave status\G;中的值你搞不清楚，也可以通过从库errorlog中的 报错来确定位置。</code></pre> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> &gt;stop slave;</span><br><span class="line"> &gt;reset slave;</span><br><span class="line"> &gt;change master to master_host=&apos;15.12.52.17&apos;, master_user=&apos;rexxxungbinpl&apos;, master_password=&apos;rFfs2&apos;, master_port=3306, master_log_file=&apos;mysql-bin.002512&apos;, master_log_pos=159596385;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="mysql-slave-延时"><a href="#mysql-slave-延时" class="headerlink" title="mysql slave 延时"></a>mysql slave 延时</h3><p> <a href="https://www.jianshu.com/p/db58ac3304fa?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation" target="_blank" rel="noopener">https://www.jianshu.com/p/db58ac3304fa?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/db/mysql/%E5%AE%9E%E6%93%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/28/db/mysql/%E5%AE%9E%E6%93%8D/" class="post-title-link" itemprop="url">mysql实际操作</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-28 15:47:01" itemprop="dateCreated datePublished" datetime="2019-11-28T15:47:01+08:00">2019-11-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">mysql</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mysql/command/" itemprop="url" rel="index">
+                    <span itemprop="name">command</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mysql/command/%E5%91%BD%E4%BB%A4/" itemprop="url" rel="index">
+                    <span itemprop="name">命令</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="慢查询太多，针对某库设置慢查询阀值："><a href="#慢查询太多，针对某库设置慢查询阀值：" class="headerlink" title="慢查询太多，针对某库设置慢查询阀值："></a>慢查询太多，针对某库设置慢查询阀值：</h3><ol>
+<li>登录</li>
+</ol>
+<p>use gprp_ms</p>
+<p>set long_query_time=3;</p>
+<ol start="2">
+<li>刷新日志 </li>
+</ol>
+<p>mv /tmp/slowquery.log /tmp/slowquery.log-bak</p>
+<p>/usr/local/mysql/bin/mysqladmin flush-logs -uroot  -p<code>cat /etc/aaavep</code> -S /tmp/mysql.sock</p>
+<ol start="3">
+<li>日志切割</li>
+</ol>
+<p><a href="http://www.ttlsa.com/mysql/mysql-slow-log-and-error-log-to-date-cutting/" target="_blank" rel="noopener">http://www.ttlsa.com/mysql/mysql-slow-log-and-error-log-to-date-cutting/</a></p>
+<h3 id="5-7-6之后版本初始化数据库"><a href="#5-7-6之后版本初始化数据库" class="headerlink" title="5.7.6之后版本初始化数据库"></a>5.7.6之后版本初始化数据库</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">cd /usr/local/mysql</span><br><span class="line">chown -R mysql:mysql .</span><br><span class="line">./bin/mysqld --initialize-insecure --user=mysql --basedir=/usr/local/mysql --datadir=/data/mysql/data</span><br><span class="line">./bin/mysql_ssl_rsa_setup</span><br><span class="line">chown -R root .</span><br><span class="line">chown -R mysql /data/mysql/</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>MySQL 5.7.6之前的版本执行这个脚本初始化系统数据库</li>
+</ul>
+<p>./bin/mysql_install_db –user=mysql –basedir=/usr/local/mysql –datadir=/data/mysql/data</p>
+<h3 id="关闭启动"><a href="#关闭启动" class="headerlink" title="关闭启动"></a>关闭启动</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysqladmin -uroot -h127.0.0.1 -p`cat /etc/aaavep7` -P3307 shutdown</span><br><span class="line"></span><br><span class="line">mysqld_safe --defaults-file=/etc/my3307.cnf --user=mysql &amp;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="登录"><a href="#登录" class="headerlink" title="登录"></a>登录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/mysql/bin/mysql -uroot -p`cat /etc/aaavep3307` -S /tmp/mysql3307.sock</span><br></pre></td></tr></table></figure>
+
+<h3 id="设置密码"><a href="#设置密码" class="headerlink" title="设置密码"></a>设置密码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">update mysql.user set authentication_string = password(&apos;Root12!@&apos;) where user = &apos;root&apos;;</span><br><span class="line"></span><br><span class="line">GRANT SELECT, INSERT, UPDATE, CREATE, ALTER ON adgame_promotion.* TO &apos;adgame&apos;@&apos;10.%&apos; IDENTIFIED BY &apos;AD#online439&apos;;</span><br><span class="line">revoke all on *.* from dba@localhost;</span><br></pre></td></tr></table></figure>
+
+<h3 id="主从切换"><a href="#主从切换" class="headerlink" title="主从切换"></a>主从切换</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">启动</span><br><span class="line"></span><br><span class="line">/bin/sh /usr/local/mysql/bin/mysqld_safe --defaults-file=/etc/my.cnf --user=mysql&amp;</span><br><span class="line"></span><br><span class="line">停止从库</span><br><span class="line"></span><br><span class="line">stop slave io_thread</span><br><span class="line"></span><br><span class="line">show slave status\G  (</span><br><span class="line"></span><br><span class="line">查看</span><br><span class="line"></span><br><span class="line">Slave_SQL_Running_State: Slave has read allrelay log; waiting for more updates</span><br><span class="line"></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h3 id="mysql5-7-198binlog-恢复"><a href="#mysql5-7-198binlog-恢复" class="headerlink" title="mysql5.7 198binlog 恢复"></a>mysql5.7 198binlog 恢复</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/mysql/bin/mysqlbinlog --stop-position=527064411 --database=devApolloConfigDB /data/mysql/data/mysql-bin.000007 /data/mysql/data/mysql-bin.000008  &gt; /tmp/sql;</span><br><span class="line">use  devApolloConfigDB；</span><br><span class="line">source /tmp/sql</span><br></pre></td></tr></table></figure>
+
+<h3 id="转存到其他库"><a href="#转存到其他库" class="headerlink" title="转存到其他库"></a>转存到其他库</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/mysql/bin/mysqldump -uroot -p`cat /etc/aaavep` --opt adgame_promotion |/usr/local/mysql/bin/mysql -h10.0.0.198 -P3307 -uadgame -p adgame_promotion</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql5.5以上</span><br><span class="line">create database gprp_event_analysis default character set utf8mb4;</span><br></pre></td></tr></table></figure>
+
+<h3 id="innobackupex"><a href="#innobackupex" class="headerlink" title="innobackupex"></a>innobackupex</h3><p><code>innobackupex --defaults-file=/etc/my3309.cnf --ibbackup xtrabackup_51 --apply-log . --user=root --password=&#39;laaaaaaaaaaa8Xj&#39;</code></p>
+<h3 id="master宕机后-从库报错处理"><a href="#master宕机后-从库报错处理" class="headerlink" title="master宕机后 从库报错处理"></a>master宕机后 从库报错处理</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">在source那边，执行：</span><br><span class="line"></span><br><span class="line">flush logs;</span><br><span class="line">show master status;</span><br><span class="line"></span><br><span class="line">记下File, Position。</span><br><span class="line"></span><br><span class="line">在target端，执行：</span><br><span class="line"></span><br><span class="line">CHANGE MASTER TO MASTER_LOG_FILE=&apos;testdbbinlog.000008&apos;,MASTER_LOG_POS=107;</span><br><span class="line">slave start;</span><br><span class="line">show slave status \G</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/db/mongodb/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/28/db/mongodb/" class="post-title-link" itemprop="url">mongodb</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-28 15:45:48" itemprop="dateCreated datePublished" datetime="2019-11-28T15:45:48+08:00">2019-11-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mongodb/" itemprop="url" rel="index">
+                    <span itemprop="name">mongodb</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="安装配置http-www-cnblogs-com-kgdxpr-p-3519352-html"><a href="#安装配置http-www-cnblogs-com-kgdxpr-p-3519352-html" class="headerlink" title="安装配置http://www.cnblogs.com/kgdxpr/p/3519352.html"></a>安装配置<a href="http://www.cnblogs.com/kgdxpr/p/3519352.html" target="_blank" rel="noopener">http://www.cnblogs.com/kgdxpr/p/3519352.html</a></h1><p>“show dbs” 命令可以显示所有数据的列表。<br>执行 “db” 命令可以显示当前数据库对象或集合。<br>运行”use”命令，可以连接到一个指定的数据库。</p>
+<p>use DATABASE_NAME  如果数据库不存在，则创建数据库，否则切换到指定数据库。</p>
+<p>性能指标<a href="http://www.soso.io/article/73032.html" target="_blank" rel="noopener">http://www.soso.io/article/73032.html</a></p>
+<p>6.需要重点关注的 mongodb 性能指标<br>关注主要性能指标：<br>1）Faults：显示 mongodb 每秒页面故障的数量，这个是 mongodb 映射到虚拟地址空间，而不是物理内存。这个值如果飙高的话，可能意味着机器没有足够的内存来存储数据和索引。<br>2）Flushes：每秒做了多少次 fsync，显示多少次数据被刷新进了磁盘。<br>3）locked：写锁。<br>4）idx miss：索引未命中比例。<br>5）qr | qw：读写锁的请求队列长度。<br>6）conn： 当前已经建立的连接数。 </p>
+<p>7.严重的空间碎片问题<br>mongodb 如果数据修改很频繁，会出现比较严重的空间碎片问题，表现在磁盘文件扩张与实际数据量不相符，内存不够用，索引命中率低，查询效率降低。<br>碎片整理，目前我们采用的版本没有太有效的方法。<br>可以用 db.repaireDatabase() 来整理数据库，这个过程非常的慢。<br>如果是 master/slave 模式，则相当于执行一次主从切换，然后从新建立从库。<br>如果是 replSet 架构，可以停掉数据库，然后删除数据目录，从新从复制组中全同步数据，这个时候要考虑 oplog 的尺寸。<br>一个大体的步骤：<br>1）先调用rs.freeze(1200)，将每个不想让它成为 primary 的机器让它在 1200 秒内无法成为 primary(这步也可以不做)；<br>2）将 primary stepDown，不出意外新的 primary 会起来；<br>3）将原 primary kill 掉；<br>4）删掉所有 data 数据(调用 repair 很慢，真不如干掉重新来)；<br>5）再重启动原 primary 的进程；<br>6）以此循环完成整个复制组的全部重建。</p>
+<p><a href="http://www.runoob.com/mongodb/nosql.html" target="_blank" rel="noopener">http://www.runoob.com/mongodb/nosql.html</a></p>
+<p>设置下密码比较好吧 在mongodb主上创建角色管理员（需要在no auth下创建，配置文件auth=false 重启mongodb） - use admin - 创建管理员账号<br>db.createUser({user:”admin”,pwd:”XXXX”,roles:[{“role”:”userAdminAnyDatabase”,”db”:”admin”}]})</p>
+<ul>
+<li>db.getUser(‘admin’); - 授予超级管理员权限：db.grantRolesToUser( “admin” , [ { role: “root”, db: “admin” }]) - 添加监控账号<br>db.createUser({user:”zabbixuser”,pwd:”zabbixusermyxujingbin”,roles:[{role:”clusterMonitor”,db:”admin”}]}); <blockquote>
+<p>创建某个数据库普通用户（在 auth下创建,配置文件auth=true 重启mongodb） </p>
+</blockquote>
+</li>
+<li>use admin <ul>
+<li>db.auth(“admin”,”XXXX”); </li>
+<li>use dbname</li>
+</ul>
+</li>
+<li>db.createUser({user:”XXXUser”,pwd:”XXX”,roles:[{role:”dbOwner”,db:”dbname”}]}); <ul>
+<li>db.auth(“xyzcsUser”,”Cd_#edx4gg”); - db.users.find()</li>
+</ul>
+</li>
+</ul>
+<h3 id="登录"><a href="#登录" class="headerlink" title="登录"></a>登录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">bin/mongo 172.16.1.218:27017/admin -u personas1 -p personas1  认证登录</span><br><span class="line">bin/mongo --host 127.0.0.1 --port 27017 -u &apos;admin&apos; -p &apos;gprp218!!a&apos; --authenticationDatabase &quot;admin&quot; 认证登录</span><br><span class="line">bin/mongod --shutdown --dbpath /share/mongodb/27017/data/  停止</span><br><span class="line">bin/mongod -f /etc/mongo/mongodb.conf 启动</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/db/glusterFS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/28/db/glusterFS/" class="post-title-link" itemprop="url">glusterfs</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-28 15:45:20" itemprop="dateCreated datePublished" datetime="2019-11-28T15:45:20+08:00">2019-11-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/glusterfs/" itemprop="url" rel="index">
+                    <span itemprop="name">glusterfs</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><a href="https://www.cnblogs.com/terrycy/p/5915263.html" target="_blank" rel="noopener">https://www.cnblogs.com/terrycy/p/5915263.html</a></p>
+<p><a href="https://wiki.centos.org/SpecialInterestGroup/Storage/gluster-Quickstart" target="_blank" rel="noopener">https://wiki.centos.org/SpecialInterestGroup/Storage/gluster-Quickstart</a></p>
+<h3 id="server-data1-gfs"><a href="#server-data1-gfs" class="headerlink" title="server: /data1/gfs"></a>server: /data1/gfs</h3><p>194 195</p>
+<p>查看状态 gluster peer status</p>
+<p>加入节点 gluster peer probe 10.0.21.242</p>
+<p>移除节点 gluster peer detach 10.0.21.242</p>
+<p>查看逻辑卷状态 gluster volume info</p>
+<h4 id="client-tmp-gfs"><a href="#client-tmp-gfs" class="headerlink" title="client: /tmp/gfs"></a>client: /tmp/gfs</h4><p>211</p>
+<p>92</p>
+<p>45 46</p>
+<h3 id="添加客户端："><a href="#添加客户端：" class="headerlink" title="添加客户端："></a>添加客户端：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">yum -y install glusterfs glusterfs-fuse</span><br><span class="line"></span><br><span class="line">mkdir /tmp/gfs;chmod 777 /tmp/gfs</span><br><span class="line"></span><br><span class="line">mount -t glusterfs 172.16.1.194:/gv1 /tmp/gfs</span><br><span class="line"></span><br><span class="line">mount -t fuse.glusterfs</span><br><span class="line"></span><br><span class="line">echo &quot;172.16.1.194:/gfs /tmp/gfs glusterfs defaults 0 0&quot; &gt;&gt; /etc/fstab</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="volume-create-gv1-failed-data1-gfs-is-already-part-of-a-volume"><a href="#volume-create-gv1-failed-data1-gfs-is-already-part-of-a-volume" class="headerlink" title="volume create: gv1: failed: /data1/gfs is already part of a volume"></a>volume create: gv1: failed: /data1/gfs is already part of a volume</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">for i in `attr -lq .`; do setfattr -x trusted.$i .; done</span><br></pre></td></tr></table></figure>
+
+<h3 id="volume命令"><a href="#volume命令" class="headerlink" title="volume命令"></a>volume命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">gluster volume set gv1 performance.client-io-threads on</span><br><span class="line">创建volume</span><br><span class="line">gluster volume create gv0 replica 2 172.16.1.194:/data1/gv0 172.16.1.195:/data1/gv0</span><br><span class="line">gluster volume start gv0</span><br><span class="line">给volume gv0添加brick</span><br><span class="line">gluster volume add-brick gv0 replica 3 172.16.1.199:/data1/gv0</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/hadoop/hadoop-hbase-issues/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -486,553 +1071,6 @@
 
 <h3 id="disk数据平衡分布"><a href="#disk数据平衡分布" class="headerlink" title="disk数据平衡分布"></a>disk数据平衡分布</h3><p><a href="https://blog.csdn.net/liaynling/article/details/89093907" target="_blank" rel="noopener">https://blog.csdn.net/liaynling/article/details/89093907</a></p>
 
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/db/es/commands/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/28/db/es/commands/" class="post-title-link" itemprop="url">db/es/commands</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-28 15:37:48" itemprop="dateCreated datePublished" datetime="2019-11-28T15:37:48+08:00">2019-11-28</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><a href="https://www.elastic.co/guide/cn/elasticsearch/guide/current/_search_lite.html" target="_blank" rel="noopener">https://www.elastic.co/guide/cn/elasticsearch/guide/current/_search_lite.html</a></p>
-<p>命令 <a href="https://blog.csdn.net/pilihaotian/article/details/52452014" target="_blank" rel="noopener">https://blog.csdn.net/pilihaotian/article/details/52452014</a></p>
-<p>查看统计信息<code>curl &#39;172.16.1.198:9200/_cluster/stats?pretty&#39;</code></p>
-<p>查看相应指标</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">GET /_cat/nodes?help</span><br><span class="line"></span><br><span class="line">GET /_cat/nodes?v&amp;h=ip,port,heapPercent,heapMax</span><br></pre></td></tr></table></figure>
-
-
-
-<p>查看文档数量</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">curl -XGET &apos;http://172.16.1.43:9200/_count?pretty&apos; -d &apos;</span><br><span class="line">&#123;</span><br><span class="line">    &quot;query&quot;: &#123;</span><br><span class="line">        &quot;match_all&quot;: &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&apos;</span><br></pre></td></tr></table></figure>
-
-<p>查看索引</p>
-<figure class="highlight plain"><figcaption><span>'localhost:9200/_cat/indices?v'```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">查看数据`curl &apos;localhost:9200/application_component_day/_search?q=*&amp;pretty&apos;`</span><br><span class="line"></span><br><span class="line">查看节点`curl &apos;172.16.1.198:9200/_cat/nodes?v&amp;pretty&apos;`</span><br><span class="line"></span><br><span class="line">聚合</span><br><span class="line"></span><br><span class="line">https://www.elastic.co/guide/en/elasticsearch/reference/current/fielddata.html</span><br></pre></td></tr></table></figure>
-
-<p>PUT megacorp/_mapping/employee/</p>
-<p>{</p>
-<p>  “properties”: {</p>
-<pre><code>&quot;interests&quot;: { 
-
-  &quot;type&quot;:    &quot;text&quot;,
-
-  &quot;fielddata&quot;: true
-
-}</code></pre><p>  }</p>
-<p>}</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">web管理https://github.com/lmenezes/cerebro</span><br><span class="line"></span><br><span class="line">下载release二进制版本，跑起来，进入页面链接http://172.16.1.195:9200</span><br><span class="line"></span><br><span class="line">给所有索引创建副本</span><br></pre></td></tr></table></figure>
-<p>curl -XPUT <a href="http://172.16.1.218:9200/_all/_settings" target="_blank" rel="noopener">http://172.16.1.218:9200/_all/_settings</a> -d’{“index.number_of_replicas”: “1” }’</p>
-<pre><code>
-kibana控制台操作 https://www.cnblogs.com/cjsblog/p/9476813.html https://www.elastic.co/guide/en/kibana/current/index.html
-
-kibana 配置文件https://www.elastic.co/guide/en/kibana/6.6/settings.html
-
-es 优化https://blog.51cto.com/13527416/2132270?from=timeline
-</code></pre>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/db/cachecloud/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/28/db/cachecloud/" class="post-title-link" itemprop="url">cahcecloud</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-28 15:37:07" itemprop="dateCreated datePublished" datetime="2019-11-28T15:37:07+08:00">2019-11-28</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/redis/" itemprop="url" rel="index">
-                    <span itemprop="name">redis</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="cachecloud"><a href="#cachecloud" class="headerlink" title="cachecloud"></a>cachecloud</h2><p><a href="https://github.com/sohutv/cachecloud" target="_blank" rel="noopener">https://github.com/sohutv/cachecloud</a></p>
-<p>编译：mvn clean compile install -Ponline</p>
-<p><a href="https://cachecloud.github.io/2017/02/06/1.3.%E6%9C%BA%E5%99%A8%E7%9B%91%E6%8E%A7%E5%8A%9F%E8%83%BD/" target="_blank" rel="noopener">https://cachecloud.github.io/2017/02/06/1.3.%E6%9C%BA%E5%99%A8%E7%9B%91%E6%8E%A7%E5%8A%9F%E8%83%BD/</a></p>
-<p>删除的app_desc表数据</p>
-<p>mysql&gt; delete from app_desc where app_id=11\G</p>
-<p>Query OK, 1 row affected (0.00 sec)</p>
-<p>cachecloud 删除数据库app_desc表相关数据</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO `app_desc` VALUES(37,&apos;主站相似度计算 AAA 250:6380-6383&apos;,1,2,&apos;存临时数据的，计算的时候中间会用到,另几个实例添加失败172.16.1.253:6379:7168\n172.16.1.253:6380:71</span><br><span class="line">68\n172.16.1.253:6381:7168\n172.16.1.253:6382:7168&apos;,&apos;2017-09-30 14:53:41&apos;,&apos;2017-09-30 14:53:41&apos;,6,&apos;AAA&apos;,1,0,0,0,0,0,0,90,NULL,0,&apos;548bf53f4427e0a</span><br><span class="line">f3e3dab6f1d79acef&apos;,3,&apos;&apos;)</span><br></pre></td></tr></table></figure>
-<h2 id="删除下线实例"><a href="#删除下线实例" class="headerlink" title="删除下线实例"></a>删除下线实例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">delete from instance_statistics where inst_id in (select id from instance_info where status=2);</span><br><span class="line">delete from instance_info where status=2;</span><br></pre></td></tr></table></figure>
-
-<h3 id="删除下线应用"><a href="#删除下线应用" class="headerlink" title="删除下线应用"></a>删除下线应用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">delete from app_desc where status=3;</span><br></pre></td></tr></table></figure>
-
-<h3 id="删除驳回的应用"><a href="#删除驳回的应用" class="headerlink" title="删除驳回的应用"></a>删除驳回的应用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">delete from app_desc where status=4;</span><br></pre></td></tr></table></figure>
-<h3 id="添加机器"><a href="#添加机器" class="headerlink" title="添加机器"></a>添加机器</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mac本地cd /project/cachecloud</span><br><span class="line">rsync -avz cachecloud-init.sh 目标机器</span><br><span class="line">rsync -avz redis.tar.gz 目标机器</span><br><span class="line">修改cachecloud-init.sh对应的redis版本，执行sh cachecloud-init.sh cachecloud</span><br><span class="line">修改目标机器的/etc/ssh/sshd_config的密码登录权限开放，重启sshd</span><br><span class="line">在cachecloud web管理器上添加机器</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/db/mysql/issues/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/28/db/mysql/issues/" class="post-title-link" itemprop="url">mysql issues</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-28 15:34:27" itemprop="dateCreated datePublished" datetime="2019-11-28T15:34:27+08:00">2019-11-28</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/mysql/" itemprop="url" rel="index">
-                    <span itemprop="name">mysql</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/mysql/issues/" itemprop="url" rel="index">
-                    <span itemprop="name">issues</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <ol>
-<li>查看数据库信息</li>
-</ol>
-<p>1.1. 查看表大小</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">select concat(round(sum(data_length/1024/1024),2),&apos;MB&apos;) as data from information_schema.tables where table_schema=&apos;cachecloud&apos; and table_name=&apos;standard_statistics&apos;;</span><br></pre></td></tr></table></figure>
-
-<p>1.2. 库大小</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">select sum(DATA_LENGTH)+sum(INDEX_LENGTH) from information_schema.tables </span><br><span class="line">where table_schema=&apos;数据库名&apos;;</span><br></pre></td></tr></table></figure>
-
-<p>1.3. 所有表行数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">查看mysql某个数据库下所有表的数据总条数</span><br><span class="line">use information_schema;</span><br><span class="line">select sum(TABLE_ROWS) from tables where TABLE_SCHEMA = &apos;db_name&apos;;</span><br><span class="line">查询出来的是每张表的行数</span><br><span class="line">select table_name,table_rows from tables</span><br><span class="line">where TABLE_SCHEMA = &apos;数据库名&apos;</span><br><span class="line">order by table_rows desc;</span><br></pre></td></tr></table></figure>
-
-
-
-<ol start="2">
-<li>错误处理</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">-f, --force 强制执行sql</span><br><span class="line"></span><br><span class="line">-v,--verbose 显示更多信息</span><br><span class="line"></span><br><span class="line">--show-warnings 显示警告信息</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li><p>移动数据库文件，恢复时启动报错</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">移动时报错：mv: reading `/data1/mysql3308/data/test/logs_monitor#P#p0.ibd&apos;: Input/output error`</span><br><span class="line"></span><br><span class="line">删除表，从源库dump表，恢复到211报错</span><br><span class="line"></span><br><span class="line">ERROR 1813 (HY000) at line 25: Tablespace &apos;`test`.`logs_monitor` /* Partition `p0` */&apos; exists.</span><br><span class="line"></span><br><span class="line">到test库文件夹里删除文件/data1/mysql3308/data/test/logs_monitor#P#p0.ibd再执行恢复命令即可</span><br><span class="line"></span><br><span class="line">mysql -uroot -p`cat /etc/savep3308` -S /tmp/mysql3308.sock test &lt; /home/xujingbin/logs_monitor.sql</span><br></pre></td></tr></table></figure>
-
-
-
-</li>
-</ol>
-<h3 id="utf8-编码问题"><a href="#utf8-编码问题" class="headerlink" title="utf8 编码问题"></a>utf8 编码问题</h3><p>这个问题，原因是UTF-8编码有可能是两个、三个、四个字节。Emoji表情或者某些特殊字符是4个字节，而Mysql的utf8编码最多3个字节，所以数据插不进去。 修改成utf8mb4  <a href="https://blog.csdn.net/fhzaitian/article/details/53168551" target="_blank" rel="noopener">https://blog.csdn.net/fhzaitian/article/details/53168551</a></p>
-<h3 id="慢查询"><a href="#慢查询" class="headerlink" title="慢查询"></a>慢查询</h3><p><a href="https://yq.aliyun.com/articles/604272?utm_content=m_1000004526" target="_blank" rel="noopener">https://yq.aliyun.com/articles/604272?utm_content=m_1000004526</a></p>
-<h3 id="freeing-items"><a href="#freeing-items" class="headerlink" title="freeing items"></a>freeing items</h3><p>查询缓存命中率低，报错freeing items<br>实例：今天公司DB 有大量的线程是freeingitems  状态，通过排查分析是: query_cache_size=32M,而query_cache_limit=16M，太坑人了，DB游戏服务器上跑应用，还有一些大的不固定的数据抓取查询(不固定，经常变动)，结果使用了Query cache ，导致Query Cache 池的抖动，频繁有cache失效，产生了freeing items 状态,下面是官方对freeing items的解释：</p>
-<p>The thread has executed acommand. Some freeing of items done during this state involves the query cache.This state is usually followed by cleaning up.</p>
-<p>线程已经执行了命令。在这个状态中涉及的查询缓存可以得到一些释放。这个状态通常后面跟随cleaning up状态。</p>
-<p>最后把query_cache_limit改成1M，很少有freeing items 状态。uery_cache_limit和query_cache_size的设置要紧结合具体的业务现状来调整。</p>
-<h3 id="到此我们可以确定是因为服务器断电导致从库的relay-log损坏，从而导致从库复制线程报错。"><a href="#到此我们可以确定是因为服务器断电导致从库的relay-log损坏，从而导致从库复制线程报错。" class="headerlink" title="到此我们可以确定是因为服务器断电导致从库的relay log损坏，从而导致从库复制线程报错。"></a>到此我们可以确定是因为服务器断电导致从库的relay log损坏，从而导致从库复制线程报错。</h3><p> relay log损坏，那么我们可以从复制停止的位置开始重新读取主库的binlog日志。有两点需要我们注意的1. 要确认要读取的binlog日志在主库还没有被删除；2. 确定正确的重新读取位置。</p>
-<pre><code>我们要怎么确定读取位置？1. 可以通过show slave status\G;输出中的Relay_Master_Log_File，Exec_Master_Log_Pos来确定；2. 如果show slave status\G;中的值你搞不清楚，也可以通过从库errorlog中的 报错来确定位置。</code></pre> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> &gt;stop slave;</span><br><span class="line"> &gt;reset slave;</span><br><span class="line"> &gt;change master to master_host=&apos;115.182.52.170&apos;, master_user=&apos;rexujingbinpl&apos;, master_password=&apos;rexujingbin#Ffs2&apos;, master_port=3306, master_log_file=&apos;mysql-bin.002512&apos;, master_log_pos=159596385;</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="mysql-slave-延时"><a href="#mysql-slave-延时" class="headerlink" title="mysql slave 延时"></a>mysql slave 延时</h3><p> <a href="https://www.jianshu.com/p/db58ac3304fa?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation" target="_blank" rel="noopener">https://www.jianshu.com/p/db58ac3304fa?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/db/mongodb/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/28/db/mongodb/" class="post-title-link" itemprop="url">mongodb</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-28 15:33:21" itemprop="dateCreated datePublished" datetime="2019-11-28T15:33:21+08:00">2019-11-28</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/mongodb/" itemprop="url" rel="index">
-                    <span itemprop="name">mongodb</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="安装配置http-www-cnblogs-com-kgdxpr-p-3519352-html"><a href="#安装配置http-www-cnblogs-com-kgdxpr-p-3519352-html" class="headerlink" title="安装配置http://www.cnblogs.com/kgdxpr/p/3519352.html"></a>安装配置<a href="http://www.cnblogs.com/kgdxpr/p/3519352.html" target="_blank" rel="noopener">http://www.cnblogs.com/kgdxpr/p/3519352.html</a></h1><p>“show dbs” 命令可以显示所有数据的列表。<br>执行 “db” 命令可以显示当前数据库对象或集合。<br>运行”use”命令，可以连接到一个指定的数据库。</p>
-<p>use DATABASE_NAME  如果数据库不存在，则创建数据库，否则切换到指定数据库。</p>
-<p>性能指标<a href="http://www.soso.io/article/73032.html" target="_blank" rel="noopener">http://www.soso.io/article/73032.html</a></p>
-<p>6.需要重点关注的 mongodb 性能指标<br>关注主要性能指标：<br>1）Faults：显示 mongodb 每秒页面故障的数量，这个是 mongodb 映射到虚拟地址空间，而不是物理内存。这个值如果飙高的话，可能意味着机器没有足够的内存来存储数据和索引。<br>2）Flushes：每秒做了多少次 fsync，显示多少次数据被刷新进了磁盘。<br>3）locked：写锁。<br>4）idx miss：索引未命中比例。<br>5）qr | qw：读写锁的请求队列长度。<br>6）conn： 当前已经建立的连接数。 </p>
-<p>7.严重的空间碎片问题<br>mongodb 如果数据修改很频繁，会出现比较严重的空间碎片问题，表现在磁盘文件扩张与实际数据量不相符，内存不够用，索引命中率低，查询效率降低。<br>碎片整理，目前我们采用的版本没有太有效的方法。<br>可以用 db.repaireDatabase() 来整理数据库，这个过程非常的慢。<br>如果是 master/slave 模式，则相当于执行一次主从切换，然后从新建立从库。<br>如果是 replSet 架构，可以停掉数据库，然后删除数据目录，从新从复制组中全同步数据，这个时候要考虑 oplog 的尺寸。<br>一个大体的步骤：<br>1）先调用rs.freeze(1200)，将每个不想让它成为 primary 的机器让它在 1200 秒内无法成为 primary(这步也可以不做)；<br>2）将 primary stepDown，不出意外新的 primary 会起来；<br>3）将原 primary kill 掉；<br>4）删掉所有 data 数据(调用 repair 很慢，真不如干掉重新来)；<br>5）再重启动原 primary 的进程；<br>6）以此循环完成整个复制组的全部重建。</p>
-<p><a href="http://www.runoob.com/mongodb/nosql.html" target="_blank" rel="noopener">http://www.runoob.com/mongodb/nosql.html</a></p>
-<p>设置下密码比较好吧 在mongodb主上创建角色管理员（需要在no auth下创建，配置文件auth=false 重启mongodb） - use admin - 创建管理员账号<br>db.createUser({user:”admin”,pwd:”XXXX”,roles:[{“role”:”userAdminAnyDatabase”,”db”:”admin”}]})</p>
-<ul>
-<li>db.getUser(‘admin’); - 授予超级管理员权限：db.grantRolesToUser( “admin” , [ { role: “root”, db: “admin” }]) - 添加监控账号<br>db.createUser({user:”zabbixuser”,pwd:”zabbixusermyxujingbin”,roles:[{role:”clusterMonitor”,db:”admin”}]}); <blockquote>
-<p>创建某个数据库普通用户（在 auth下创建,配置文件auth=true 重启mongodb） </p>
-</blockquote>
-</li>
-<li>use admin <ul>
-<li>db.auth(“admin”,”XXXX”); </li>
-<li>use dbname</li>
-</ul>
-</li>
-<li>db.createUser({user:”XXXUser”,pwd:”XXX”,roles:[{role:”dbOwner”,db:”dbname”}]}); <ul>
-<li>db.auth(“xyzcsUser”,”Cd_#edx4gg”); - db.users.find()</li>
-</ul>
-</li>
-</ul>
-<h3 id="登录"><a href="#登录" class="headerlink" title="登录"></a>登录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">bin/mongo 10.0.0.218:27017/admin -u personas1 -p personas1  认证登录</span><br><span class="line">bin/mongo --host 127.0.0.1 --port 27017 -u &apos;admin&apos; -p &apos;gprp218!!&apos; --authenticationDatabase &quot;admin&quot; 认证登录</span><br><span class="line">bin/mongod --shutdown --dbpath /share/mongodb/27017/data/  停止</span><br><span class="line">bin/mongod -f /etc/mongo/mongodb.conf 启动</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/jenkins/git/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/28/jenkins/git/" class="post-title-link" itemprop="url">git命令</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-28 15:32:53" itemprop="dateCreated datePublished" datetime="2019-11-28T15:32:53+08:00">2019-11-28</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/git/" itemprop="url" rel="index">
-                    <span itemprop="name">git</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>安装完成后，还需要最后一步设置，在命令行输入：<br>$ git config –global user.name “Your Name”<br>$ git config –global user.email “<a href="mailto:email@example.com" target="_blank" rel="noopener">email@example.com</a>“<br>git reset –hard 3628164 回退到历史版本<br>git add filename<br>git commit -m “comment”<br>git diff filename<br>git log 查看提交历史<br>git reflog 查看命令历史<br>git checkout – readme.txt意思就是，把readme.txt文件在工作区的修改全部撤销<br>场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令git checkout – file。<br>场景2：当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令git reset HEAD file，就回到了场景1，第二步按场景1操作。<br>场景3：已经提交了不合适的修改到版本库时，想要撤销本次提交，参考版本回退一节，不过前提是没有推送到远程库。<br>ian wyaoni3032.<br>Git global setup</p>
-<p>git config –global user.name “ian”<br>git config –global user.email “<a href="mailto:xujingbin@taqu.cn" target="_blank" rel="noopener">xujingbin@taqu.cn</a>“</p>
-<p>Create a new repository</p>
-<p>git clone <a href="http://node01.k8s.com/ian/ian_test.git" target="_blank" rel="noopener">http://node01.k8s.com/ian/ian_test.git</a><br>cd ian_test<br>touch README.md<br>git add README.md<br>git commit -m “add README”<br>git push -u origin master</p>
-<p>Existing folder or Git repository</p>
-<p>cd existing_folder<br>git init<br>git remote add origin <a href="http://node01.k8s.com/ian/ian_test.git" target="_blank" rel="noopener">http://node01.k8s.com/ian/ian_test.git</a><br>git add .<br>git commit<br>git push -u origin master<br>Git鼓励大量使用分支：<br>查看分支：git branch<br>创建分支：git branch <name><br>切换分支：git checkout <name><br>创建+切换分支：git checkout -b <name><br>合并某分支到当前分支：git merge <name><br>删除分支：git branch -d <name><br>合并分支时，加上–no-ff参数就可以用普通模式合并，合并后的历史有分支，能看出来曾经做过合并，而fast forward合并就看不出来曾经做过合并。</p>
-<h3 id="svn-迁移到git-主分支"><a href="#svn-迁移到git-主分支" class="headerlink" title="svn 迁移到git  主分支"></a>svn 迁移到git  主分支</h3><p>参考<a href="https://segmentfault.com/a/1190000007039598" target="_blank" rel="noopener">https://segmentfault.com/a/1190000007039598</a><br>checkout 到svn代码获得users.txt <code>svn log ^/ --xml | grep -P &quot;^&lt;author&quot; | sort -u |       perl -pe &#39;s/&lt;author&gt;(.*?)&lt;\/author&gt;/$1 = /&#39; &gt; users.txt</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install git-svn</span><br><span class="line">//似乎users.txt这个选项没什么用</span><br><span class="line">git svn clone  svn://192.168.50.144/OA      --authors-file=users.txt --no-metadata</span><br><span class="line">cd OA</span><br><span class="line">git branch -a     //查看分支</span><br><span class="line">git log   //查看日志</span><br><span class="line">git remote add origin git@gitlab.xujingbin.com:OA/OA.git</span><br><span class="line">git push -u origin --all</span><br><span class="line">git push -u origin --tags</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/jenkins/jenkins/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/28/jenkins/jenkins/" class="post-title-link" itemprop="url">jenkins/jenkins</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-28 15:32:39" itemprop="dateCreated datePublished" datetime="2019-11-28T15:32:39+08:00">2019-11-28</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>[toc]</p>
-<h3 id="搭建"><a href="#搭建" class="headerlink" title="搭建"></a>搭建</h3><p><a href="https://wiki.jenkins-ci.org/display/JENKINS/Starting+and+Accessing+Jenkins" target="_blank" rel="noopener">https://wiki.jenkins-ci.org/display/JENKINS/Starting+and+Accessing+Jenkins</a><br>jenkins:    <a href="http://www.cnblogs.com/yjmyzz/p/jenkins-tutorial-part-1.html" target="_blank" rel="noopener">http://www.cnblogs.com/yjmyzz/p/jenkins-tutorial-part-1.html</a></p>
-<h3 id="部署脚本"><a href="#部署脚本" class="headerlink" title="部署脚本"></a>部署脚本</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">projectDir=&quot;/workspace/gprp/adgame_filter&quot;</span><br><span class="line"></span><br><span class="line">onlineFile=&quot;$&#123;projectDir&#125;/webapps/adgame_filter.war&quot;</span><br><span class="line"></span><br><span class="line">suf_dir=`date &quot;+%s&quot;`</span><br><span class="line"></span><br><span class="line">bakFile=&quot;$&#123;projectDir&#125;/bak/$&#123;filename&#125;-$&#123;suf_dir&#125;&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">echo &quot;发布93&quot;</span><br><span class="line"></span><br><span class="line">node_name_list=&quot;gprp93&quot;</span><br><span class="line"></span><br><span class="line">sudo  salt -L $node_name_list cmd.run  &quot;if [[ ! -d $&#123;projectDir&#125;/bak ]];then mkdir  $&#123;projectDir&#125;/bak ; fi&quot;</span><br><span class="line"></span><br><span class="line">sudo  salt -L $node_name_list cmd.run  &quot;cp $&#123;onlineFile&#125; $&#123;bakFile&#125;&quot;</span><br><span class="line"></span><br><span class="line">sudo  salt -L $node_name_list cp.get_file  salt://$JOB_NAME/target/$filename  $&#123;onlineFile&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h4 id="检测服务是否启动完毕"><a href="#检测服务是否启动完毕" class="headerlink" title="检测服务是否启动完毕"></a>检测服务是否启动完毕</h4><p>curl -s 42.62.52.94:9086/adgame_filter/anticheat/ping</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"> * 方法1 </span><br><span class="line"></span><br><span class="line">function check_url() &#123;</span><br><span class="line"></span><br><span class="line">     signal=0</span><br><span class="line"></span><br><span class="line">     while [[ &quot;$signal&quot; -ne 1 ]];do</span><br><span class="line"></span><br><span class="line">       curl -s --connect-time 4 -I $1 |grep HTTP |grep 200 &gt; /dev/null &amp;&amp; signal=1 || echo &quot;wait for service starting&quot;</span><br><span class="line"></span><br><span class="line">     done</span><br><span class="line"></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">* 方法2</span><br><span class="line"></span><br><span class="line">while ((`curl -s 42.62.106.45:1852/feed/ping.do` != &quot;pong&quot;));do</span><br><span class="line"></span><br><span class="line">   sleep 1</span><br><span class="line"></span><br><span class="line">   echo &quot;服务还没起来，等待中...&quot;;</span><br><span class="line"></span><br><span class="line">done</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">curl -u admin:xXx-xXx  &apos;http://42.62.52.248:xujingbin/admin?stats/&apos; -d  &quot;action=enable&amp;b=#6&amp;s=adgame94&quot;</span><br><span class="line"></span><br><span class="line">curl -u admin:xXx-xXx  &apos;http://42.62.52.248:4398/admin?stats/&apos; -d  &quot;action=enable&amp;b=#6&amp;s=adgame94&quot;</span><br></pre></td></tr></table></figure>
-
-<h3 id="slave"><a href="#slave" class="headerlink" title="slave"></a>slave</h3><p><a href="https://www.cnblogs.com/derekchen/p/5892286.html" target="_blank" rel="noopener">https://www.cnblogs.com/derekchen/p/5892286.html</a><br>不需要在slave节点机器上跑jenkins服务，</p>
-<ol>
-<li>在主jenkins管理界面：系统管理-管理节点-新建节点<br>通过launch agent via java web start方式</li>
-<li>下载slave.jar包到在slave机器上，运行<br><code>java -jar slave.jar -jnlpUrl http://jenkins.xujingbindoc.com/computer/docker244/slave-agent.jnlp -secret asfsdf</code></li>
-<li>准备好jdk mvn git环境，环境变量，host 保证能连gitlab，拷贝主的jenkins账户密钥、mvn的setting到slave上</li>
-<li>如果是pipeline在jenkinsfile上指定slave，如node(‘gprp216’){}</li>
-<li>需要把jenkins_gprp_rw密钥的key放到slave机上才能git提交</li>
-<li>salt master需要修改/etc/salt/master<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">file_roots:</span><br><span class="line"></span><br><span class="line">   base:</span><br><span class="line"></span><br><span class="line">     - /workspace/workspace/</span><br><span class="line"></span><br><span class="line">interface: 192.168.62.216</span><br><span class="line"></span><br><span class="line">keep_jobs: 3</span><br><span class="line"></span><br><span class="line">key_logfile: /var/log/salt/key</span><br><span class="line"></span><br><span class="line">log_file: /var/log/salt/master</span><br><span class="line"></span><br><span class="line">state_events: True</span><br><span class="line"></span><br><span class="line">timeout: 600</span><br><span class="line"></span><br><span class="line">worker_threads: 10</span><br><span class="line">``</span><br><span class="line"></span><br><span class="line">### pipeline</span><br><span class="line">选择checkout: General SCM</span><br><span class="line"></span><br><span class="line">### rsync</span><br><span class="line"></span><br><span class="line">/etc/rsync_jenkins_gprp_solr.pass是jenkins上的密码，dest机器上也需要一个密码文件，开放873端口</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<p>/usr/bin/rsync  –delete   -avz  –exclude=.*     –password-file=/etc/rsync_jenkins_gprp_solr.pass   .  <a href="mailto:gprp@42.62.66.220" target="_blank" rel="noopener">gprp@42.62.66.220</a>::gprp_solr/  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">### pipeline语法</span><br><span class="line">https://www.jianshu.com/p/c8300d77cd71</span><br></pre></td></tr></table></figure>
-<pre><code>for ( String a : [&apos;aaa&apos;,&apos;vvv&apos;]){
-    echo &quot;${a}&quot;
-}
-b=[&apos;aaa&apos;,&apos;vvv&apos;]
-a=b.remove(b[-1])
-echo &quot;${b}&quot;</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 持续发布提交到仓库</span><br></pre></td></tr></table></figure>
-<p>git checkout master</p>
-<p>#git branch -D master</p>
-<p>#git checkout -b master origin/master</p>
-<p>git reset –hard origin/master</p>
-<p>#git pull</p>
-<p>git config user.name “jenkinsAgent174”</p>
-<p>git config  user.email “<a href="mailto:jenkinsAgent174@xujingbininc.com" target="_blank" rel="noopener">jenkinsAgent174@xujingbininc.com</a>“</p>
-<pre><code>
-### 联通gitlab账号
-http://vincent927.github.io/Jenkins%E4%BD%BF%E7%94%A8Gitlab%E8%B4%A6%E5%8F%B7%E5%81%9A%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86.html</code></pre>
       
     </div>
 
