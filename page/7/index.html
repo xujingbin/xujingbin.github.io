@@ -140,12 +140,12 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">56</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">57</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">46</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">47</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
@@ -175,87 +175,6 @@
             
 
   <div class="posts-expand">
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/k8s/kubeadm-k8s%E5%AE%89%E8%A3%85/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/16/k8s/kubeadm-k8s%E5%AE%89%E8%A3%85/" class="post-title-link" itemprop="url">k8s/kubeadm-k8s安装</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-27 16:42:20" itemprop="dateModified" datetime="2019-11-27T16:42:20+08:00">2019-11-27</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>dashboard 访问 <a href="https://www.cnblogs.com/linuxk/p/9783510.html" target="_blank" rel="noopener">https://www.cnblogs.com/linuxk/p/9783510.html</a></p>
-<p>教程 <a href="https://www.kubernetes.org.cn/5213.html" target="_blank" rel="noopener">https://www.kubernetes.org.cn/5213.html</a></p>
-<h3 id="升级内核"><a href="#升级内核" class="headerlink" title="升级内核"></a>升级内核</h3><p>rpm -Uvh *.rpm</p>
-<h3 id="查看当前内核"><a href="#查看当前内核" class="headerlink" title="查看当前内核"></a>查看当前内核</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">awk -F\&apos; &apos;$1==&quot;menuentry &quot; &#123;print i++ &quot; : &quot; $2&#125;&apos; /etc/grub2.cfg</span><br><span class="line">grub2-editenv list</span><br><span class="line"></span><br><span class="line">grub2-set-default 0</span><br><span class="line">grub2-set-default &apos;CentOS Linux (3.10.0-327.el7.x86_64) 7 (Core)&apos;</span><br></pre></td></tr></table></figure>
-
-<h3 id="加节点"><a href="#加节点" class="headerlink" title="加节点"></a>加节点</h3><ol>
-<li>添加从master到node的ssh免密码登录</li>
-<li>设置hostname，hostnamectl set-hostname，加下hosts</li>
-<li>拷贝k8s-v1.14.0/目录到node上，并执行init-node.sh</li>
-<li>在master上执行sh joib-node.sh ${nodeip}</li>
-<li>kubectl get pods -n kube-system</li>
-<li>命令<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl label node $&#123;node&#125; env=pro &amp;&amp; kubectl label node $&#123;node&#125; beta.kubernetes.io/fluentd-ds-ready=true &amp;&amp; kubectl label node $&#123;node&#125; cpu=high</span><br></pre></td></tr></table></figure>
-
-
-</li>
-</ol>
-<h3 id="其他文档"><a href="#其他文档" class="headerlink" title="其他文档"></a>其他文档</h3><p><a href="https://github.com/opsnull/follow-me-install-kubernetes-cluster" target="_blank" rel="noopener">https://github.com/opsnull/follow-me-install-kubernetes-cluster</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
         
   
   
@@ -324,6 +243,212 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">执行kubectl get pv pvc-bd0960f3-7881-11e9-a9d4-c81f66c0e5c3 -o yaml获得</span><br><span class="line">1. spec.glusterfs.path: vol_fef6bc590cb2a3c8c1df0d72e91a5146</span><br><span class="line">2. spec.glusterfs.endpoints: 10.105.94.239</span><br></pre></td></tr></table></figure>
 
 <h2 id="pv挂载"><a href="#pv挂载" class="headerlink" title="pv挂载"></a>pv挂载</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">volumes:</span><br><span class="line">- name: cache-volume</span><br><span class="line">  emptyDir: &#123;&#125;</span><br><span class="line">- name: test-volume</span><br><span class="line">  hostPath:</span><br><span class="line">    # directory location on host</span><br><span class="line">    path: /data</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/k8s/issues/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/16/k8s/issues/" class="post-title-link" itemprop="url">k8s/issues</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-27 16:46:35" itemprop="dateModified" datetime="2019-11-27T16:46:35+08:00">2019-11-27</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="kubernetes部署失败"><a href="#kubernetes部署失败" class="headerlink" title="kubernetes部署失败"></a>kubernetes部署失败</h3><ul>
+<li><p>重置etcd和kubernetes，然后再部署一边etcd和kubernetes</p>
+<p>kubeadm reset -f &amp;&amp; kubeadm init –config /var/tmp/wise2c/kubernetes/kubeadm.conf</p>
+</li>
+</ul>
+<p>然后把第一台的这个kubeadm.conf文件拷贝到master02和03，执行同样命</p>
+<p>查看证书 </p>
+<p>cfssl-certinfo /etc/kubernetes/pki/apiserver.crt</p>
+<ul>
+<li>可能系统原有的包冲突</li>
+</ul>
+<p>libsepol-devel-2.5-6.el7.x86_64<br>libselinux-devel-2.5-11.el7.x86_64</p>
+<ul>
+<li>双网卡导致安装初始化失败</li>
+</ul>
+<p>ifdown em1</p>
+<p>route add default gw 10.0.0.174</p>
+<p>两台work节点因为harbor的域名没有解析而加入集群失败，notReady</p>
+<h4 id="进入容器用root用户"><a href="#进入容器用root用户" class="headerlink" title="进入容器用root用户"></a>进入容器用root用户</h4><p> docker exec -ti -u root 848669a8722b bash</p>
+<h4 id="root-master02-harbor-kubectl-get-nodes"><a href="#root-master02-harbor-kubectl-get-nodes" class="headerlink" title="[root@master02 harbor]# kubectl get nodes"></a>[root@master02 harbor]# kubectl get nodes</h4><p>The connection to the server localhost:8080 was refused - did you specify the right host or port?<br>解决</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p $HOME/.kube</span><br><span class="line"></span><br><span class="line">  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config</span><br><span class="line"></span><br><span class="line">  sudo chown $(id -u):$(id -g) $HOME/.kube/config</span><br></pre></td></tr></table></figure>
+
+<h3 id="harbor"><a href="#harbor" class="headerlink" title="harbor"></a>harbor</h3><ul>
+<li>Error response from daemon: Get https:/ getsockopt: connection refused<br>新版本docker是在/etc/docker/daemon.json上修改insecure-registries参数，旧版本直接改动启动命令</li>
+</ul>
+<h3 id="集群内部域名"><a href="#集群内部域名" class="headerlink" title="集群内部域名"></a>集群内部域名</h3><p> kubernetes.default.svc.cluster.local </p>
+<h4 id="强制删除pod"><a href="#强制删除pod" class="headerlink" title="强制删除pod"></a>强制删除pod</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">方法1</span><br><span class="line"># 删除POD</span><br><span class="line">kubectl delete pod PODNAME --force --grace-period=0</span><br><span class="line"># 删除NAMESPACE</span><br><span class="line">kubectl delete namespace NAMESPACENAME --force --grace-period=0</span><br><span class="line">方法2</span><br><span class="line"># 删除default namespace下的pod名为pod-to-be-deleted-0</span><br><span class="line">ETCDCTL_API=3 etcdctl del /registry/pods/default/pod-to-be-deleted-0</span><br><span class="line"># 删除需要删除的NAMESPACE</span><br><span class="line">etcdctl del /registry/namespaces/NAMESPACENAME</span><br></pre></td></tr></table></figure>
+
+<h3 id="prometheus-k8s-0-alertmanager-main-0-两个pod启动问题"><a href="#prometheus-k8s-0-alertmanager-main-0-两个pod启动问题" class="headerlink" title="prometheus-k8s-0  alertmanager-main-0 两个pod启动问题"></a>prometheus-k8s-0  alertmanager-main-0 两个pod启动问题</h3><p><a href="https://github.com/coreos/prometheus-operator/issues/2409" target="_blank" rel="noopener">https://github.com/coreos/prometheus-operator/issues/2409</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">升级镜像版本到v0.29.0</span><br><span class="line">        image: quay.io/coreos/prometheus-operator:v0.29.0</span><br><span class="line">        - --prometheus-config-reloader=quay.io/coreos/prometheus-config-reloader:v0.29.0</span><br></pre></td></tr></table></figure>
+
+<h3 id="匿名授权"><a href="#匿名授权" class="headerlink" title="匿名授权"></a>匿名授权</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create clusterrolebinding system:anonymous   --clusterrole=cluster-admin   --user=system:anonymous</span><br></pre></td></tr></table></figure>
+
+<h3 id="删除了所有该Namespace资源之后使用kubectl-delete-namespace-test发现删除不掉，一直卡在Terminating状态，使用–force参数依然无法删除"><a href="#删除了所有该Namespace资源之后使用kubectl-delete-namespace-test发现删除不掉，一直卡在Terminating状态，使用–force参数依然无法删除" class="headerlink" title="删除了所有该Namespace资源之后使用kubectl delete namespace test发现删除不掉，一直卡在Terminating状态，使用–force参数依然无法删除"></a>删除了所有该Namespace资源之后使用kubectl delete namespace test发现删除不掉，一直卡在Terminating状态，使用–force参数依然无法删除</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">先运行kubectl get namespace test -o json &gt; tmp.json，拿到当前namespace描述，然后打开tmp.json，删除其中的spec字段。因为这边的K8s集群是带认证的，用非认证端口</span><br><span class="line">curl -k -H &quot;Content-Type: application/json&quot; -X PUT --data-binary @tmp.json http://127.0.0.1:8080/api/v1/namespaces/monitoring/finalize</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="pod启动时候-提示docker没有登录，而节点docker是用root登录成功，并可以手动拉取镜像的"><a href="#pod启动时候-提示docker没有登录，而节点docker是用root登录成功，并可以手动拉取镜像的" class="headerlink" title="pod启动时候 提示docker没有登录，而节点docker是用root登录成功，并可以手动拉取镜像的"></a>pod启动时候 提示docker没有登录，而节点docker是用root登录成功，并可以手动拉取镜像的</h3><p>Failed to pull image “hub.4399doc.com/adgame-snapshot/adplan-search:1.0.35-SNAPSHOT”: rpc error: code = Unknown desc = Error response from daemon: pull access denied for hub.4399doc.com/adgame-snapshot/adplan-search, repository does not exist or may require ‘docker login’</p>
+<p>可把登录的配置信息拷贝到/var/lib/kubelet/config.json，重启kubelet</p>
+<h3 id="kubectl-logs-dial-tcp-10250-connect-connection-timed-out"><a href="#kubectl-logs-dial-tcp-10250-connect-connection-timed-out" class="headerlink" title="kubectl logs dial tcp :10250: connect: connection timed out"></a>kubectl logs dial tcp :10250: connect: connection timed out</h3><p>无法kubectl exec log 到该节点的pod<br>查看kubectl get node -o wide 是否以主机名为节点名，主机名是否映射到内网ip，如果不是需要加hosts，并重启kubelet</p>
+<h3 id="213master节点重启后，kubeadm-reset导致calico注册不到etcd"><a href="#213master节点重启后，kubeadm-reset导致calico注册不到etcd" class="headerlink" title="213master节点重启后，kubeadm reset导致calico注册不到etcd"></a>213master节点重启后，kubeadm reset导致calico注册不到etcd</h3><p>需先在etcd集群删除原有的213节点</p>
+<h3 id="dashboard-登录"><a href="#dashboard-登录" class="headerlink" title="dashboard 登录"></a>dashboard 登录</h3><p><a href="https://github.com/kubernetes/dashboard/blob/master/README.md#getting-started" target="_blank" rel="noopener">https://github.com/kubernetes/dashboard/blob/master/README.md#getting-started</a>  安装文档<br>Incoming HTTP/1.1 POST /api/v1/login request from 10.244.0.0:42696: { contents hidden }<br><a href="https://github.com/kubernetes/dashboard/issues/3464" target="_blank" rel="noopener">https://github.com/kubernetes/dashboard/issues/3464</a><br>改用https登录即可<br><code>kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk &#39;{print $1}&#39;)</code></p>
+<h3 id="境外镜像拉取不到"><a href="#境外镜像拉取不到" class="headerlink" title="境外镜像拉取不到"></a>境外镜像拉取不到</h3><ul>
+<li>拉取镜像,从k8s.grc.io仓库中拉取所需镜像文件，但由于G-F-W导致无法正常拉取，本文将介绍如何绕过此问题，来完成业务的部署。docker.io仓库对google的容器做了镜像，可以通过下列命令下拉取相关镜像<br>k8s.gcr.io/elasticsearch:v6.2.5  改为下面<br>docker pull mirrorgooglecontainers/elasticsearch:v6.2.5</li>
+</ul>
+<h3 id="ipip换gpr，需清除缓存-var-lib-cni"><a href="#ipip换gpr，需清除缓存-var-lib-cni" class="headerlink" title="ipip换gpr，需清除缓存/var/lib/cni"></a>ipip换gpr，需清除缓存/var/lib/cni</h3><h3 id="pv-retain-恢复"><a href="#pv-retain-恢复" class="headerlink" title="pv retain 恢复"></a>pv retain 恢复</h3><p>删除pv的spec.claimRef，状态会变成available，再apply pvc即可<a href="https://blog.csdn.net/ygqygq2/article/details/83350983" target="_blank" rel="noopener">https://blog.csdn.net/ygqygq2/article/details/83350983</a></p>
+<h3 id="Can’t-open-dev-sdb-exclusively-Mounted-filesystem"><a href="#Can’t-open-dev-sdb-exclusively-Mounted-filesystem" class="headerlink" title="Can’t open /dev/sdb exclusively. Mounted filesystem?"></a>Can’t open /dev/sdb exclusively. Mounted filesystem?</h3><p>a: heketi只管理没有文件系统的裸盘，如果你的机器上的磁盘的文件系统是xfs或者是ext4，可以执行pvcreate –metadatasize=128M –dataalignment=256K /dev/sdb将磁盘格式化成LVM2形式，那么就没问题了，这个问题困扰了我好久</p>
+<h3 id="heketi-troubleshooting-https-github-com-heketi-heketi-blob-master-docs-troubleshooting-md"><a href="#heketi-troubleshooting-https-github-com-heketi-heketi-blob-master-docs-troubleshooting-md" class="headerlink" title="heketi troubleshooting https://github.com/heketi/heketi/blob/master/docs/troubleshooting.md"></a>heketi troubleshooting <a href="https://github.com/heketi/heketi/blob/master/docs/troubleshooting.md" target="_blank" rel="noopener">https://github.com/heketi/heketi/blob/master/docs/troubleshooting.md</a></h3><h3 id="helm-prometheus-operator"><a href="#helm-prometheus-operator" class="headerlink" title="helm prometheus-operator"></a>helm prometheus-operator</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f https://raw.githubusercontent.com/coreos/prometheus-operator/master/example/prometheus-operator-crd/alertmanager.crd.yaml</span><br><span class="line">kubectl apply -f https://raw.githubusercontent.com/coreos/prometheus-operator/master/example/prometheus-operator-crd/prometheus.crd.yaml</span><br><span class="line">kubectl apply -f https://raw.githubusercontent.com/coreos/prometheus-operator/master/example/prometheus-operator-crd/prometheusrule.crd.yaml</span><br><span class="line">kubectl apply -f https://raw.githubusercontent.com/coreos/prometheus-operator/master/example/prometheus-operator-crd/servicemonitor.crd.yaml</span><br></pre></td></tr></table></figure>
+
+<h3 id="内存设置"><a href="#内存设置" class="headerlink" title="内存设置"></a>内存设置</h3><p>所以猜测在设置jvm启动参数的时候 -Xmx的这个值一般要小于docker限制内存数，个人觉得  -Xmx:docker的比例为 4/5 - 3/4，</p>
+<h3 id="dns解析错误"><a href="#dns解析错误" class="headerlink" title="dns解析错误"></a>dns解析错误</h3><p>apt-get install dnsutils</p>
+<h2 id="v1-11"><a href="#v1-11" class="headerlink" title="v1.11"></a>v1.11</h2><h3 id="skipping-pod-synchronization-PLEG-is-not-healthy-pleg-was-last-seen-active-2562047h47m16-854775807s-ago-threshold-is-3m0s"><a href="#skipping-pod-synchronization-PLEG-is-not-healthy-pleg-was-last-seen-active-2562047h47m16-854775807s-ago-threshold-is-3m0s" class="headerlink" title="skipping pod synchronization - [PLEG is not healthy: pleg was last seen active 2562047h47m16.854775807s ago; threshold is 3m0s]"></a>skipping pod synchronization - [PLEG is not healthy: pleg was last seen active 2562047h47m16.854775807s ago; threshold is 3m0s]</h3><p><a href="https://github.com/kubernetes/kubernetes/issues/45419" target="_blank" rel="noopener">https://github.com/kubernetes/kubernetes/issues/45419</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">pleg is for kubelet to periodically list pods in the node to check healthy and update cache. If you see pleg timeout log, it may not be related to dns, but because kubelet&apos;s call to docker is timeout.</span><br><span class="line">pleg is the short for &quot;pod lifecycle event generator&quot;, it is an internal component of kubelet and i do not think you can directly check its status</span><br><span class="line">I don&apos;t think this is a K8s/OKD problem, I think this is a &quot;some resource on your node is being locked by something which is causing processes to pile up waiting for CPU time and that&apos;s breaking everything&quot; problem.</span><br><span class="line">https://chanjarster.github.io/post/kublet-pleg-not-healthy/</span><br><span class="line"></span><br><span class="line">执行docker ps ;systemctl status -l docker看看 更像是docker本身的问题</span><br></pre></td></tr></table></figure>
+
+<h3 id="7月-30-11-29-53-node1214-dockerd-8959-time-”2019-07-30T11-29-53-72335999-08-00”-level-error-msg-”containerd-start-container”-error-”oci-runtime-error-container-linux-go-262-starting-container-process-caused-quot-process-linux-go-339-container-init-caused-quot-quot-quot-n”-id-f39bdcbcd5b57c6fad86f625cfe5fa70740f095b5e49aa221cfb6c165034c43f"><a href="#7月-30-11-29-53-node1214-dockerd-8959-time-”2019-07-30T11-29-53-72335999-08-00”-level-error-msg-”containerd-start-container”-error-”oci-runtime-error-container-linux-go-262-starting-container-process-caused-quot-process-linux-go-339-container-init-caused-quot-quot-quot-n”-id-f39bdcbcd5b57c6fad86f625cfe5fa70740f095b5e49aa221cfb6c165034c43f" class="headerlink" title="7月 30 11:29:53 node1214 dockerd[8959]: time=”2019-07-30T11:29:53.72335999+08:00” level=error msg=”containerd: start container” error=”oci runtime error: container_linux.go:262: starting container process caused &quot;process_linux.go:339: container init caused \&quot;\&quot;&quot;\n” id=f39bdcbcd5b57c6fad86f625cfe5fa70740f095b5e49aa221cfb6c165034c43f"></a>7月 30 11:29:53 node1214 dockerd[8959]: time=”2019-07-30T11:29:53.72335999+08:00” level=error msg=”containerd: start container” error=”oci runtime error: container_linux.go:262: starting container process caused &quot;process_linux.go:339: container init caused \&quot;\&quot;&quot;\n” id=f39bdcbcd5b57c6fad86f625cfe5fa70740f095b5e49aa221cfb6c165034c43f</h3><p>重启机器</p>
+<p>imagename = ‘registry-vpc.cn-beijing.aliyuncs.com/{}/{}-{}:’.format(‘jiaxiang’, “@option.namespace@”, “@option.image_name@”)<br>/usr/local/src/k8s/buyu2/</p>
+<h3 id="docker-ps卡住"><a href="#docker-ps卡住" class="headerlink" title="docker ps卡住"></a>docker ps卡住</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">引用/proc/sys/vm/drop_caches (since Linux 2.6.16)</span><br><span class="line">Writing to this file causes the kernel to drop clean caches,dentries and inodes from memory, causing that memory to become free.</span><br><span class="line">To free pagecache, use</span><br><span class="line"> echo 1 &gt; /proc/sys/vm/drop_caches;</span><br><span class="line"> to free dentries and inodes, use</span><br><span class="line">echo 2 &gt; /proc/sys/vm/drop_caches;</span><br><span class="line">to free pagecache, dentries and inodes, use</span><br><span class="line"> echo 3 &gt;/proc/sys/vm/drop_caches.</span><br><span class="line"> 设置/proc/sys/vm/min_free_kbytes的值为4G bytes</span><br><span class="line">echo 4194304 &gt; /proc/sys/vm/min_free_kbytes</span><br><span class="line">cat /proc/buddyinfo</span><br></pre></td></tr></table></figure>
+
+<h2 id="镜像清理"><a href="#镜像清理" class="headerlink" title="镜像清理"></a>镜像清理</h2><p>docker system prune后可以加额外的参数，如：<br>docker system prune -a ： 一并清除所有未被使用的镜像和悬空镜像。<br>docker system prune -f ： 用以强制删除，不提示信息。</p>
+<h4 id="spring-cloud-gateway-and-zuul"><a href="#spring-cloud-gateway-and-zuul" class="headerlink" title="spring cloud gateway and zuul"></a>spring cloud gateway and zuul</h4><p><a href="http://www.springcloud.cn/" target="_blank" rel="noopener">http://www.springcloud.cn/</a></p>
+<p><a href="http://www.cnblogs.com/qnloft/p/qing-ning-kai-cheSpring-Cloud-liu--Spring-Cloud-Ga.html" target="_blank" rel="noopener">http://www.cnblogs.com/qnloft/p/qing-ning-kai-cheSpring-Cloud-liu--Spring-Cloud-Ga.html</a></p>
+<p><a href="https://blog.csdn.net/yalishadaa/article/details/79400916" target="_blank" rel="noopener">https://blog.csdn.net/yalishadaa/article/details/79400916</a><br><a href="https://springcloud.cc/" target="_blank" rel="noopener">https://springcloud.cc/</a><br>websocket 设置<a href="http://springcloud.cn/view/36" target="_blank" rel="noopener">http://springcloud.cn/view/36</a><br><a href="https://xujin.org/sc/gw/gw05/" target="_blank" rel="noopener">https://xujin.org/sc/gw/gw05/</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/k8s/kubeadm-k8s%E5%AE%89%E8%A3%85/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/16/k8s/kubeadm-k8s%E5%AE%89%E8%A3%85/" class="post-title-link" itemprop="url">k8s/kubeadm-k8s安装</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-27 16:42:20" itemprop="dateModified" datetime="2019-11-27T16:42:20+08:00">2019-11-27</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>dashboard 访问 <a href="https://www.cnblogs.com/linuxk/p/9783510.html" target="_blank" rel="noopener">https://www.cnblogs.com/linuxk/p/9783510.html</a></p>
+<p>教程 <a href="https://www.kubernetes.org.cn/5213.html" target="_blank" rel="noopener">https://www.kubernetes.org.cn/5213.html</a></p>
+<h3 id="升级内核"><a href="#升级内核" class="headerlink" title="升级内核"></a>升级内核</h3><p>rpm -Uvh *.rpm</p>
+<h3 id="查看当前内核"><a href="#查看当前内核" class="headerlink" title="查看当前内核"></a>查看当前内核</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">awk -F\&apos; &apos;$1==&quot;menuentry &quot; &#123;print i++ &quot; : &quot; $2&#125;&apos; /etc/grub2.cfg</span><br><span class="line">grub2-editenv list</span><br><span class="line"></span><br><span class="line">grub2-set-default 0</span><br><span class="line">grub2-set-default &apos;CentOS Linux (3.10.0-327.el7.x86_64) 7 (Core)&apos;</span><br></pre></td></tr></table></figure>
+
+<h3 id="加节点"><a href="#加节点" class="headerlink" title="加节点"></a>加节点</h3><ol>
+<li>添加从master到node的ssh免密码登录</li>
+<li>设置hostname，hostnamectl set-hostname，加下hosts</li>
+<li>拷贝k8s-v1.14.0/目录到node上，并执行init-node.sh</li>
+<li>在master上执行sh joib-node.sh ${nodeip}</li>
+<li>kubectl get pods -n kube-system</li>
+<li>命令<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl label node $&#123;node&#125; env=pro &amp;&amp; kubectl label node $&#123;node&#125; beta.kubernetes.io/fluentd-ds-ready=true &amp;&amp; kubectl label node $&#123;node&#125; cpu=high</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ol>
+<h3 id="其他文档"><a href="#其他文档" class="headerlink" title="其他文档"></a>其他文档</h3><p><a href="https://github.com/opsnull/follow-me-install-kubernetes-cluster" target="_blank" rel="noopener">https://github.com/opsnull/follow-me-install-kubernetes-cluster</a></p>
 
       
     </div>
@@ -754,6 +879,83 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/monitor/grafana/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/16/monitor/grafana/" class="post-title-link" itemprop="url">monitor/grafana</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-27 17:25:21" itemprop="dateModified" datetime="2019-11-27T17:25:21+08:00">2019-11-27</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>datasource prometheus</p>
+<p>根据变量复制面板Row：row options -&gt; repeat for</p>
+<p>根据变量复制面板panel：repeat pannel</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">io_util&#123;job=&quot;[[job]]&quot;, group=&quot;[[group]]&quot;,instance=~&quot;^[[hosts]]&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>升级新版本</p>
+<p>yum update /home/xujingbin/grafana-5.1.3-1.x86_64.rpm</p>
+<p>/etc/init.d/grafana-server restart</p>
+<p><a href="http://docs.grafana.org/reference/templating/" target="_blank" rel="noopener">http://docs.grafana.org/reference/templating/</a></p>
+<p>告警模板<br><a href="https://grafana.com/grafana/dashboards?dataSource=camptocamp-prometheus-alertmanager-datasource" target="_blank" rel="noopener">https://grafana.com/grafana/dashboards?dataSource=camptocamp-prometheus-alertmanager-datasource</a></p>
+<h1 id="grafana权限"><a href="#grafana权限" class="headerlink" title="grafana权限"></a>grafana权限</h1><p><a href="https://blog.csdn.net/liukuan73/article/details/78704395" target="_blank" rel="noopener">https://blog.csdn.net/liukuan73/article/details/78704395</a></p>
+<p>经过上面的操作，就将组织和用户进行了划分，然后在每个组织内新建数据源、DashBoard，这样，不同的用户属于不同的组织，不同的组织拥有独立的数据源以及DashBoard，就实现了多租户功能。</p>
+<p>由于数据源、 DashBoard是和组织关联的，因此没法做到一个组织内不同的用户，看到不同的DashBoard，不过Grafana新建组织，已经可以满足大部分需求了，比如有多个数据中心时，只要建立不同的数据中心组织，配上相应的数据源，就可以使用一套Grafana来展现了。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/monitor/prometheus/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -840,141 +1042,6 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/monitor/grafana/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/16/monitor/grafana/" class="post-title-link" itemprop="url">monitor/grafana</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-27 17:25:21" itemprop="dateModified" datetime="2019-11-27T17:25:21+08:00">2019-11-27</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>datasource prometheus</p>
-<p>根据变量复制面板Row：row options -&gt; repeat for</p>
-<p>根据变量复制面板panel：repeat pannel</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">io_util&#123;job=&quot;[[job]]&quot;, group=&quot;[[group]]&quot;,instance=~&quot;^[[hosts]]&quot;&#125;</span><br></pre></td></tr></table></figure>
-
-<p>升级新版本</p>
-<p>yum update /home/xujingbin/grafana-5.1.3-1.x86_64.rpm</p>
-<p>/etc/init.d/grafana-server restart</p>
-<p><a href="http://docs.grafana.org/reference/templating/" target="_blank" rel="noopener">http://docs.grafana.org/reference/templating/</a></p>
-<p>告警模板<br><a href="https://grafana.com/grafana/dashboards?dataSource=camptocamp-prometheus-alertmanager-datasource" target="_blank" rel="noopener">https://grafana.com/grafana/dashboards?dataSource=camptocamp-prometheus-alertmanager-datasource</a></p>
-<h1 id="grafana权限"><a href="#grafana权限" class="headerlink" title="grafana权限"></a>grafana权限</h1><p><a href="https://blog.csdn.net/liukuan73/article/details/78704395" target="_blank" rel="noopener">https://blog.csdn.net/liukuan73/article/details/78704395</a></p>
-<p>经过上面的操作，就将组织和用户进行了划分，然后在每个组织内新建数据源、DashBoard，这样，不同的用户属于不同的组织，不同的组织拥有独立的数据源以及DashBoard，就实现了多租户功能。</p>
-<p>由于数据源、 DashBoard是和组织关联的，因此没法做到一个组织内不同的用户，看到不同的DashBoard，不过Grafana新建组织，已经可以满足大部分需求了，比如有多个数据中心时，只要建立不同的数据中心组织，配上相应的数据源，就可以使用一套Grafana来展现了。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/logging/fluentd-issues/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/16/logging/fluentd-issues/" class="post-title-link" itemprop="url">logging/fluentd-issues</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="buffer-space-has-too-many-data"><a href="#buffer-space-has-too-many-data" class="headerlink" title="buffer space has too many data"></a>buffer space has too many data</h3><p>一个项目日志量太大导致，可关闭该项目</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1030,13 +1097,13 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-count">47</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-count">57</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
