@@ -140,17 +140,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">56</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">62</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">47</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">52</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">76</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">79</span></a>
 
   </li>
   </ul>
@@ -175,6 +175,180 @@
             
 
   <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/db/redis/command/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/28/db/redis/command/" class="post-title-link" itemprop="url">redis命令</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-28 11:11:11" itemprop="dateCreated datePublished" datetime="2019-11-28T11:11:11+08:00">2019-11-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/redis/" itemprop="url" rel="index">
+                    <span itemprop="name">redis</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>查看对象引用数(针对整数，且不设置maxmemory) <code>object refcount {key}</code></p>
+<p>查看编码类型 <code>object encoding {key}</code></p>
+<p>设置密码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6381&gt; config set masterauth fat211</span><br><span class="line"></span><br><span class="line">OK</span><br><span class="line"></span><br><span class="line">127.0.0.1:6381&gt; config set requirepass Fat211!@#</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="copy一个key到另一个实例"><a href="#copy一个key到另一个实例" class="headerlink" title="copy一个key到另一个实例"></a>copy一个key到另一个实例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">copy_key()</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">  redis-cli -h $1 -p $2 dump $3 |head -c-1 |redis-cli -h $$ -p $5 restore $3 0</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="忘记节点"><a href="#忘记节点" class="headerlink" title="忘记节点"></a>忘记节点</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">1. 60秒内在所有节点执行CLUSTER FORGET aeab4535c4b602b97c2873df3faec17d6c41971a(nodeId)</span><br><span class="line"></span><br><span class="line">2. redis-trib.rb del-node &#123;host:port&#125; &#123;nodeId&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="自动内存碎片清理"><a href="#自动内存碎片清理" class="headerlink" title="自动内存碎片清理"></a>自动内存碎片清理</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">config set activedefrag yes</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/db/redis/cluster/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/28/db/redis/cluster/" class="post-title-link" itemprop="url">redis cluster</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-28 11:11:02" itemprop="dateCreated datePublished" datetime="2019-11-28T11:11:02+08:00">2019-11-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/redis/" itemprop="url" rel="index">
+                    <span itemprop="name">redis</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/redis/cluster/" itemprop="url" rel="index">
+                    <span itemprop="name">cluster</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="集群配置文件和集群状态详解http-blog-csdn-net-foreverhot1019-article-details-72676217"><a href="#集群配置文件和集群状态详解http-blog-csdn-net-foreverhot1019-article-details-72676217" class="headerlink" title="集群配置文件和集群状态详解http://blog.csdn.net/foreverhot1019/article/details/72676217"></a>集群配置文件和集群状态详解<a href="http://blog.csdn.net/foreverhot1019/article/details/72676217" target="_blank" rel="noopener">http://blog.csdn.net/foreverhot1019/article/details/72676217</a></h3><h3 id="集群搭建步骤："><a href="#集群搭建步骤：" class="headerlink" title="集群搭建步骤："></a>集群搭建步骤：</h3><ol>
+<li><p>准备节点，比普通单例多了几行集群配置信息</p>
+</li>
+<li><p>节点握手 cluster meet</p>
+</li>
+<li><p>分配槽</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">redis-cli -p 6380 cluster addslots &#123;0..5461&#125;</span><br><span class="line"></span><br><span class="line">redis-cli -p 6381 cluster addslots &#123;5462..10922&#125;</span><br><span class="line"></span><br><span class="line">redis-cli -p 6382 cluster addslots &#123;10923..16383&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li><p>查看集群节点 <code>cluster nodes</code></p>
+</li>
+<li><p>查看集群信息 <code>cluster info</code></p>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
         
   
   
@@ -844,152 +1018,6 @@ echo &quot;deadline&quot; &gt; /sys/block/sda/queue/scheduler</code></pre></li>
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/db/solr/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/28/db/solr/" class="post-title-link" itemprop="url">solr</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-28 10:56:54" itemprop="dateCreated datePublished" datetime="2019-11-28T10:56:54+08:00">2019-11-28</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/solr/" itemprop="url" rel="index">
-                    <span itemprop="name">solr</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="http-lucene-apache-org-solr-guide-7-4-defining-fields-html-example-field-definition"><a href="#http-lucene-apache-org-solr-guide-7-4-defining-fields-html-example-field-definition" class="headerlink" title="http://lucene.apache.org/solr/guide/7_4/defining-fields.html#example-field-definition"></a><a href="http://lucene.apache.org/solr/guide/7_4/defining-fields.html#example-field-definition" target="_blank" rel="noopener">http://lucene.apache.org/solr/guide/7_4/defining-fields.html#example-field-definition</a></h1><p>索引？存储？<br>通过indexed=true可以使得一个field可以被搜索，如果你有一个字段title设置的是indexed=true，那么q=title:csdn就是在搜索标题中含有csdn的document。如果你设置indexed=false，就算你有符合的数据也无法搜索出来。<br>stored=true意味着你可以在结果中看到这个field，通过fl参数可以控制是否在结果中显示，如果你设置stored=false，就算你有符合的数据看不到该field。</p>
-<h3 id="导入mysql数据"><a href="#导入mysql数据" class="headerlink" title="导入mysql数据"></a>导入mysql数据</h3><p><a href="https://blog.csdn.net/weixin_39082031/article/details/79074078" target="_blank" rel="noopener">https://blog.csdn.net/weixin_39082031/article/details/79074078</a></p>
-<h3 id="solr-cloud"><a href="#solr-cloud" class="headerlink" title="solr cloud"></a>solr cloud</h3><h4 id="导入配置文件到zk"><a href="#导入配置文件到zk" class="headerlink" title="导入配置文件到zk"></a>导入配置文件到zk</h4><p>bin/solr zk upconfig -d collection6/conf -n collection6</p>
-<h3 id="API"><a href="#API" class="headerlink" title="API"></a>API</h3><p><a href="http://lucene.apache.org/solr/guide/7_4/collections-api.html#splitshard" target="_blank" rel="noopener">http://lucene.apache.org/solr/guide/7_4/collections-api.html#splitshard</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">split shard</span><br><span class="line"></span><br><span class="line">curl localhost:8983/solr/admin/collections?&apos;action=SPLITSHARD&amp;collection=collection6&amp;shard=shard1&apos;</span><br><span class="line"></span><br><span class="line">删除shard</span><br><span class="line"></span><br><span class="line">curl localhost:8983/solr/admin/collections?&apos;action=DELETESHARD&amp;collection=collection6&amp;shard=shard1&apos;</span><br></pre></td></tr></table></figure>
-
-
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/db/consul/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/28/db/consul/" class="post-title-link" itemprop="url">consul</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-28 10:56:24" itemprop="dateCreated datePublished" datetime="2019-11-28T10:56:24+08:00">2019-11-28</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/consul/" itemprop="url" rel="index">
-                    <span itemprop="name">consul</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="k8s部署consul集群"><a href="#k8s部署consul集群" class="headerlink" title="k8s部署consul集群"></a>k8s部署consul集群</h1><p><a href="https://www.cnblogs.com/tylerzhou/p/11161634.html" target="_blank" rel="noopener">https://www.cnblogs.com/tylerzhou/p/11161634.html</a></p>
-<h1 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h1><p><a href="https://www.jianshu.com/p/7d20dc58c9fc" target="_blank" rel="noopener">https://www.jianshu.com/p/7d20dc58c9fc</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1038,20 +1066,20 @@ echo &quot;deadline&quot; &gt; /sys/block/sda/queue/scheduler</code></pre></li>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">76</span>
+          <span class="site-state-item-count">79</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">47</span>
+        <span class="site-state-item-count">52</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-count">62</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

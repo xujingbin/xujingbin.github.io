@@ -48,13 +48,14 @@
 </script>
 
   <meta name="description" content="备份Kubernetes的备份主要是通过ETCD的备份完成的。而恢复时，主要考虑的是整个顺序：停止kube-apiserver，停止ETCD，恢复数据，启动ETCD，启动kube-apiserver。 etcd-backup.sh123456789#!&#x2F;bin&#x2F;bash# 该脚本放在192.168.67.119 &#x2F;crond&#x2F;etcd-backup.sh，每天执行两次IP=127.0.0.1BAC">
+<meta name="keywords" content="kubernetes k8s 备份还原">
 <meta property="og:type" content="article">
-<meta property="og:title" content="k8s&#x2F;备份和还原">
+<meta property="og:title" content="k8s备份还原">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;08&#x2F;13&#x2F;k8s&#x2F;%E5%A4%87%E4%BB%BD%E5%92%8C%E8%BF%98%E5%8E%9F&#x2F;index.html">
 <meta property="og:site_name" content="运维笔记">
 <meta property="og:description" content="备份Kubernetes的备份主要是通过ETCD的备份完成的。而恢复时，主要考虑的是整个顺序：停止kube-apiserver，停止ETCD，恢复数据，启动ETCD，启动kube-apiserver。 etcd-backup.sh123456789#!&#x2F;bin&#x2F;bash# 该脚本放在192.168.67.119 &#x2F;crond&#x2F;etcd-backup.sh，每天执行两次IP=127.0.0.1BAC">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-13T08:44:21.597Z">
+<meta property="og:updated_time" content="2019-12-04T07:01:41.277Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://yoursite.com/2019/08/13/k8s/%E5%A4%87%E4%BB%BD%E5%92%8C%E8%BF%98%E5%8E%9F/">
@@ -71,7 +72,7 @@
   };
 </script>
 
-  <title>k8s/备份和还原 | 运维笔记</title>
+  <title>k8s备份还原 | 运维笔记</title>
   
 
 
@@ -141,17 +142,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">56</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">62</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">47</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">52</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">76</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">79</span></a>
 
   </li>
   </ul>
@@ -193,7 +194,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          k8s/备份和还原
+          k8s备份还原
         </h1>
 
         <div class="post-meta">
@@ -202,9 +203,32 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2019-08-13 15:19:59 / 修改时间：16:44:21" itemprop="dateCreated datePublished" datetime="2019-08-13T15:19:59+08:00">2019-08-13</time>
+              <time title="创建时间：2019-08-13 15:19:59" itemprop="dateCreated datePublished" datetime="2019-08-13T15:19:59+08:00">2019-08-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-04 15:01:41" itemprop="dateModified" datetime="2019-12-04T15:01:41+08:00">2019-12-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/k8s/" itemprop="url" rel="index">
+                    <span itemprop="name">k8s</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/k8s/%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9F/" itemprop="url" rel="index">
+                    <span itemprop="name">备份还原</span>
+                  </a>
+                </span>
             </span>
 
           
@@ -234,6 +258,10 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/k8s/" rel="tag"># k8s</a>
+              <a href="/tags/%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9F/" rel="tag"># 备份还原</a>
+          </div>
 
         
 
@@ -241,8 +269,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2019/07/22/db/etcd/etcd-issue/" rel="prev" title="db/etcd/etcd-issue">
-      <i class="fa fa-chevron-left"></i> db/etcd/etcd-issue
+    <a href="/2019/08/01/k8s/ingress-nginx/" rel="prev" title="ingress-nginx">
+      <i class="fa fa-chevron-left"></i> ingress-nginx
     </a></div>
       <div class="post-nav-item">
     <a href="/2019/08/14/db/es/backup-restore/" rel="next" title="db/es/backup-restore">
@@ -299,20 +327,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">76</span>
+          <span class="site-state-item-count">79</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">47</span>
+        <span class="site-state-item-count">52</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-count">62</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
