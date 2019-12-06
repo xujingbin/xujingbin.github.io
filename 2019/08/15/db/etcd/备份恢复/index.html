@@ -48,13 +48,14 @@
 </script>
 
   <meta name="description" content="备份官方指出 etcd v2 和 v3 的数据不能混合存放，support backup of v2 and v3 stores 。 特别提醒：若使用 v3 备份数据时存在 v2 的数据则不影响恢复若使用 v2 备份数据时存在 v3 的数据则恢复失败etcd 集群都是至少 3 台机器，官方也说明了集群容错为 (N-1)&#x2F;2，所以备份数据一般都是用不到，但是鉴上次 gitlab 出现的问题，对于备份">
+<meta name="keywords" content="etcd备份恢复">
 <meta property="og:type" content="article">
-<meta property="og:title" content="db&#x2F;etcd&#x2F;备份恢复">
+<meta property="og:title" content="etcd备份恢复">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;08&#x2F;15&#x2F;db&#x2F;etcd&#x2F;%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D&#x2F;index.html">
 <meta property="og:site_name" content="运维笔记">
 <meta property="og:description" content="备份官方指出 etcd v2 和 v3 的数据不能混合存放，support backup of v2 and v3 stores 。 特别提醒：若使用 v3 备份数据时存在 v2 的数据则不影响恢复若使用 v2 备份数据时存在 v3 的数据则恢复失败etcd 集群都是至少 3 台机器，官方也说明了集群容错为 (N-1)&#x2F;2，所以备份数据一般都是用不到，但是鉴上次 gitlab 出现的问题，对于备份">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-11-12T11:27:12.844Z">
+<meta property="og:updated_time" content="2019-12-06T01:30:00.914Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://yoursite.com/2019/08/15/db/etcd/%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D/">
@@ -71,7 +72,7 @@
   };
 </script>
 
-  <title>db/etcd/备份恢复 | 运维笔记</title>
+  <title>etcd备份恢复 | 运维笔记</title>
   
 
 
@@ -141,17 +142,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">62</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">63</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">52</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">56</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">79</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">80</span></a>
 
   </li>
   </ul>
@@ -193,7 +194,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          db/etcd/备份恢复
+          etcd备份恢复
         </h1>
 
         <div class="post-meta">
@@ -210,8 +211,25 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-12 19:27:12" itemprop="dateModified" datetime="2019-11-12T19:27:12+08:00">2019-11-12</time>
+                <time title="修改时间：2019-12-06 09:30:00" itemprop="dateModified" datetime="2019-12-06T09:30:00+08:00">2019-12-06</time>
               </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/etcd/" itemprop="url" rel="index">
+                    <span itemprop="name">etcd</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/etcd/%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D/" itemprop="url" rel="index">
+                    <span itemprop="name">备份恢复</span>
+                  </a>
+                </span>
+            </span>
 
           
 
@@ -241,6 +259,10 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/etcd/" rel="tag"># etcd</a>
+              <a href="/tags/%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D/" rel="tag"># 备份恢复</a>
+          </div>
 
         
 
@@ -252,8 +274,8 @@
       <i class="fa fa-chevron-left"></i> fluented容器安装
     </a></div>
       <div class="post-nav-item">
-    <a href="/2019/08/20/db/etcd/confd+etcd+haproxy/" rel="next" title="db/etcd/confd+etcd+haproxy">
-      db/etcd/confd+etcd+haproxy <i class="fa fa-chevron-right"></i>
+    <a href="/2019/08/20/db/etcd/confd+etcd+haproxy/" rel="next" title="etcd confd配置管理">
+      etcd confd配置管理 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -306,20 +328,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">79</span>
+          <span class="site-state-item-count">80</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">52</span>
+        <span class="site-state-item-count">56</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">62</span>
+        <span class="site-state-item-count">63</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

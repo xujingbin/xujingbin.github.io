@@ -48,13 +48,14 @@
 </script>
 
   <meta name="description" content="confdhttps:&#x2F;&#x2F;github.com&#x2F;kelseyhightower&#x2F;confd templatehttps:&#x2F;&#x2F;github.com&#x2F;kelseyhightower&#x2F;confd&#x2F;blob&#x2F;master&#x2F;docs&#x2F;templates.md">
+<meta name="keywords" content="etcd confd 配置管理">
 <meta property="og:type" content="article">
-<meta property="og:title" content="db&#x2F;etcd&#x2F;confd+etcd+haproxy">
+<meta property="og:title" content="etcd confd配置管理">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;08&#x2F;20&#x2F;db&#x2F;etcd&#x2F;confd+etcd+haproxy&#x2F;index.html">
 <meta property="og:site_name" content="运维笔记">
 <meta property="og:description" content="confdhttps:&#x2F;&#x2F;github.com&#x2F;kelseyhightower&#x2F;confd templatehttps:&#x2F;&#x2F;github.com&#x2F;kelseyhightower&#x2F;confd&#x2F;blob&#x2F;master&#x2F;docs&#x2F;templates.md">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-20T06:52:40.034Z">
+<meta property="og:updated_time" content="2019-12-06T01:31:15.139Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://yoursite.com/2019/08/20/db/etcd/confd+etcd+haproxy/">
@@ -71,7 +72,7 @@
   };
 </script>
 
-  <title>db/etcd/confd+etcd+haproxy | 运维笔记</title>
+  <title>etcd confd配置管理 | 运维笔记</title>
   
 
 
@@ -141,17 +142,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">62</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">63</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">52</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">56</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">79</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">80</span></a>
 
   </li>
   </ul>
@@ -193,7 +194,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          db/etcd/confd+etcd+haproxy
+          etcd confd配置管理
         </h1>
 
         <div class="post-meta">
@@ -202,9 +203,32 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2019-08-20 14:52:13 / 修改时间：14:52:40" itemprop="dateCreated datePublished" datetime="2019-08-20T14:52:13+08:00">2019-08-20</time>
+              <time title="创建时间：2019-08-20 14:52:13" itemprop="dateCreated datePublished" datetime="2019-08-20T14:52:13+08:00">2019-08-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-06 09:31:15" itemprop="dateModified" datetime="2019-12-06T09:31:15+08:00">2019-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/etcd/" itemprop="url" rel="index">
+                    <span itemprop="name">etcd</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/etcd/%E8%87%AA%E5%8A%A8%E5%8F%91%E7%8E%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">自动发现</span>
+                  </a>
+                </span>
             </span>
 
           
@@ -228,6 +252,10 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/etcd/" rel="tag"># etcd</a>
+              <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8F%91%E7%8E%B0/" rel="tag"># 自动发现</a>
+          </div>
 
         
 
@@ -235,8 +263,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2019/08/15/db/etcd/%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D/" rel="prev" title="db/etcd/备份恢复">
-      <i class="fa fa-chevron-left"></i> db/etcd/备份恢复
+    <a href="/2019/08/15/db/etcd/%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D/" rel="prev" title="etcd备份恢复">
+      <i class="fa fa-chevron-left"></i> etcd备份恢复
     </a></div>
       <div class="post-nav-item">
     <a href="/2019/11/27/ansible/useradd/" rel="next" title="ansible添加用户">
@@ -293,20 +321,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">79</span>
+          <span class="site-state-item-count">80</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">52</span>
+        <span class="site-state-item-count">56</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">62</span>
+        <span class="site-state-item-count">63</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

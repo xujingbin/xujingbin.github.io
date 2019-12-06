@@ -140,17 +140,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">62</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">63</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">52</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">56</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">79</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">80</span></a>
 
   </li>
   </ul>
@@ -175,6 +175,81 @@
             
 
   <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/db/redis/redis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/28/db/redis/redis/" class="post-title-link" itemprop="url">redis主从同步测试</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-28 11:11:35" itemprop="dateCreated datePublished" datetime="2019-11-28T11:11:35+08:00">2019-11-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/redis/" itemprop="url" rel="index">
+                    <span itemprop="name">redis</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>###redis主从同步 超时(1分钟)后，重新同步</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">227-&gt;234 在234上执行&quot;systemctl restart network&quot;，同步不会断开，当网络断开时长超过1分钟后，日志报错“Timeout receiving bulk data from MASTER... If the problem persists try to set the &apos;repl-timeout&apos; parameter in redis.conf to a larger value.”，当网络正常后，“ Connecting to MASTER 10.10.60.227:6380。 MASTER &lt;-&gt; SLAVE sync started。……。…………Full resync from master: 80b4b20bae05”，</span><br><span class="line">结论：不适合在网络不保障的情况下进行</span><br></pre></td></tr></table></figure>
+<p>###redis-migrate-tool迁移工具单点测试：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">10.10.60.227,10.10.60.234，工具在227上，234开启rdb，227分几个情况：</span><br><span class="line">1、227只开启rdb：234 -&gt; 227 ，拔了227网线1.5小时，成功</span><br><span class="line">2、227开启rdb和aof：234－&gt;227,拔了227网线2分钟，成功</span><br><span class="line">3、227开启rdb和aof，227-&gt;234，拔了234网线2分钟，成功</span><br></pre></td></tr></table></figure>
+
+<p>redis命令<a href="https://redis.readthedocs.io/en/2.4/" target="_blank" rel="noopener">https://redis.readthedocs.io/en/2.4/</a></p>
+<h3 id="redis5"><a href="#redis5" class="headerlink" title="redis5"></a>redis5</h3><p>添加节点cluster meet ip port<br>给新节点分配slot：redis-cli –cluster reshard  10.0.0.217:6416</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
         
   
   
@@ -927,97 +1002,6 @@ echo &quot;deadline&quot; &gt; /sys/block/sda/queue/scheduler</code></pre></li>
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/db/redis/redis%E8%BF%81%E7%A7%BB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/28/db/redis/redis%E8%BF%81%E7%A7%BB/" class="post-title-link" itemprop="url">redis</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-28 10:59:21" itemprop="dateCreated datePublished" datetime="2019-11-28T10:59:21+08:00">2019-11-28</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/redis/" itemprop="url" rel="index">
-                    <span itemprop="name">redis</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/redis/%E8%BF%81%E7%A7%BB/" itemprop="url" rel="index">
-                    <span itemprop="name">迁移</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>redis 同步：<br>方案1）主从同步-专线接入（网络有保障）<br>方案2）主从同步-公网接入</p>
-<p>碰到的问题：<br>  a)   同步延迟有多大？是否接受？<br>  b）这么多实例，如果发生重传对当前机房的带宽要求，是否接受？<br>  c）同步以一主多从实现，或者主从从方式进行（后者需要对现有的从库分布重新规划）</p>
-<p>方法3）利用AOF直接做恢复</p>
-<p>====================================</p>
-<p>网易开源迁移工具：<br><a href="https://github.com/helifu/redis-migration" target="_blank" rel="noopener">https://github.com/helifu/redis-migration</a></p>
-<p>另外一个迁移工具：<br><a href="https://github.com/vipshop/redis-migrate-tool" target="_blank" rel="noopener">https://github.com/vipshop/redis-migrate-tool</a></p>
-<p>这个工具支持实例之间的迁移。<br>1 - 实时迁移（基于redis复制）<br>2 - 迁移过程中，源集群不影响对外提供服务<br>3 - 迁移状态显示。</p>
-<h2 id="42-62-66-220上亲测"><a href="#42-62-66-220上亲测" class="headerlink" title="42.62.66.220上亲测"></a>42.62.66.220上亲测</h2><p>1.rmt-20180305150245.conf配置文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[source]</span><br><span class="line">type: single</span><br><span class="line">servers:</span><br><span class="line"> - 10.0.0.218:6381</span><br><span class="line"></span><br><span class="line">[target]</span><br><span class="line">type: redis cluster</span><br><span class="line">servers:</span><br><span class="line"> - 10.0.0.218:6382</span><br><span class="line"> - 10.0.0.218:6383</span><br><span class="line"></span><br><span class="line">[common]</span><br><span class="line">listen: 0.0.0.0:8888</span><br><span class="line">dir: /opt/cachecloud/redis-migrate-tool/data/</span><br></pre></td></tr></table></figure>
-<ol start="2">
-<li>命令<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/opt/cachecloud/redis-migrate-tool/src/redis-migrate-tool -c /opt/cachecloud/redis-migrate-tool/data/rmt-20180305150245.conf -o /opt/cachecloud/redis-migrate-tool/data/rmt-20180305150245.log -d</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<p>一个利用Redis自身命令的离线迁移：<br>dump + restore<br>参照：<a href="http://stackoverflow.com/questions/16127682/how-to-use-redis-dump-and-restore-offline" target="_blank" rel="noopener">http://stackoverflow.com/questions/16127682/how-to-use-redis-dump-and-restore-offline</a></p>
-<p> redis合并实例工具 <a href="https://github.com/delano/redis-dump" target="_blank" rel="noopener">https://github.com/delano/redis-dump</a><br>ruby安装：<a href="https://rubygems.org/pages/download" target="_blank" rel="noopener">https://rubygems.org/pages/download</a><br>需要开启keys命令，才能导出  10个key左右的情况，测试结果是：相同key在导入时候会覆盖掉原有的key<br>#导出，密码前面要加一个冒号<br>redis-dump -u :<a href="mailto:password@xxx.xxx.xxx.xxx" target="_blank" rel="noopener">password@xxx.xxx.xxx.xxx</a>:6379 &gt; redis.json<br>#导入<br>cat redis.json | redis-load -u :password@localhost<br>生产环境禁用keys命令，合并可用redis-migrate-tool工具</p>
-<h3 id="redis5-移动slot"><a href="#redis5-移动slot" class="headerlink" title="redis5 移动slot"></a>redis5 移动slot</h3><p>redis-cli –cluster reshard 10.0.0.42:6408</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1066,20 +1050,20 @@ echo &quot;deadline&quot; &gt; /sys/block/sda/queue/scheduler</code></pre></li>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">79</span>
+          <span class="site-state-item-count">80</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">52</span>
+        <span class="site-state-item-count">56</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">62</span>
+        <span class="site-state-item-count">63</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
