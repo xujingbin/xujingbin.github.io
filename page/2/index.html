@@ -40,7 +40,7 @@
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
     path: '',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     sidebarPadding: 40
@@ -150,12 +150,37 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">80</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">81</span></a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
   </ul>
 
 </nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
 </div>
     </header>
 
@@ -175,6 +200,77 @@
             
 
   <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/hadoop/hadoop-hbase-issues/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/28/hadoop/hadoop-hbase-issues/" class="post-title-link" itemprop="url">hadoop/hadoop-hbase-issues</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-28 15:40:13" itemprop="dateCreated datePublished" datetime="2019-11-28T15:40:13+08:00">2019-11-28</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>节点挂掉后 重启日志报错，运行一段时间后就好了</p>
+<p>logs/hadoop-hadoop-datanode-QZ203.log</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">2018-04-19 21:36:09,961 ERROR org.apache.hadoop.hdfs.server.datanode.DataNode: QZ203:50010:DataXceiver error processing WRITE_BLOCK operation src: /172.16.1.203:55875 dst: /172.16.1.203:50010</span><br><span class="line"></span><br><span class="line">java.io.IOException: Not ready to serve the block pool, BP-609174145-172.16.1.50-1474455329926.</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><p>master.HMasterCommandLine: Master exiting </p>
+<p>Failed construction of Master: class org.apache.hadoop.hbase.master.HMasterCommandLine$LocalHMasterCannot assign requested address</p>
+</li>
+</ul>
+<blockquote>
+<p>Hosts没有配置映射<br>将最新设置的Hostname名称配置到 /etc/hosts 里面</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
         
   
   
@@ -892,89 +988,11 @@ es 优化https://blog.51cto.com/13527416/2132270?from=timeline
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/db/redis/%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/28/db/redis/%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87/" class="post-title-link" itemprop="url">redis性能指标及优化</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-28 11:11:47" itemprop="dateCreated datePublished" datetime="2019-11-28T11:11:47+08:00">2019-11-28</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/redis/" itemprop="url" rel="index">
-                    <span itemprop="name">redis</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="性能指标"><a href="#性能指标" class="headerlink" title="性能指标"></a>性能指标</h3><p><a href="http://www.cnblogs.com/mushroom/p/4738170.html" target="_blank" rel="noopener">http://www.cnblogs.com/mushroom/p/4738170.html</a></p>
-<ul>
-<li>内存过期策略<a href="https://www.cnblogs.com/xuliangxing/p/7151812.html" target="_blank" rel="noopener">https://www.cnblogs.com/xuliangxing/p/7151812.html</a> </li>
-<li>跟踪延迟性能 <code>Redis-cli --latency -h 127.0.0.1 -p 6379</code></li>
-<li>used_memory_rss：从操作系统上显示已经分配的内存总量。</li>
-<li>mem_fragmentation_ratio： 内存碎片率。</li>
-<li>used_memory_lua： Lua脚本引擎所使用的内存大小。</li>
-<li>mem_allocator： 在编译时指定的Redis使用的内存分配器，可以是libc、jemalloc、tcmalloc。</li>
-</ul>
-<h3 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">sudo echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled</span><br><span class="line"></span><br><span class="line">no-appendfsync-on-rewrite 重写期间不做fsync操作</span><br><span class="line"></span><br><span class="line">echo &quot;vm.swappiness=0&quot; &gt;&gt; /etc/sysctl.conf &amp;&amp; sysctl -p</span><br><span class="line">echo &quot;vm.overcommit_memory = 1&quot; &gt;&gt; /etc/sysctl.conf &amp;&amp; sysctl -p</span><br><span class="line">可选值：0、1、2。</span><br><span class="line">0， 表示内核将检查是否有足够的可用内存供应用进程使用；如果有足够的可用内存，内存申请允许；否则，内存申请失败，并把错误返回给应用进程。</span><br><span class="line">1， 表示内核允许分配所有的物理内存，而不管当前的内存状态如何。</span><br><span class="line">2， 表示内核允许分配超过所有物理内存和交换空间总和的内存</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1018,7 +1036,7 @@ es 优化https://blog.51cto.com/13527416/2132270?from=timeline
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">80</span>
+          <span class="site-state-item-count">81</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1101,6 +1119,8 @@ es 优化https://blog.51cto.com/13527416/2132270?from=timeline
 
 
 
+
+  <script src="/js/local-search.js"></script>
 
 
 

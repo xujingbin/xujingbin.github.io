@@ -40,7 +40,7 @@
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
     path: '',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     sidebarPadding: 40
@@ -150,12 +150,37 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">80</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">81</span></a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
   </ul>
 
 </nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
 </div>
     </header>
 
@@ -175,6 +200,90 @@
             
 
   <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/db/etcd/etcd/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/16/db/etcd/etcd/" class="post-title-link" itemprop="url">etcd</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-06 09:32:27" itemprop="dateModified" datetime="2019-12-06T09:32:27+08:00">2019-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/etcd/" itemprop="url" rel="index">
+                    <span itemprop="name">etcd</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>github下载二进制包<br>拷贝二进制etcd,etcdctl文件到/usr/local/bin下<br>分别3个创建配置文件/etc/etcd/etcd.yml<br>v3 v2区别<a href="https://blog.csdn.net/kozazyh/article/details/79586530" target="_blank" rel="noopener">https://blog.csdn.net/kozazyh/article/details/79586530</a><br>备份恢复参考<a href="https://blog.csdn.net/ygqygq2/article/details/82753840" target="_blank" rel="noopener">https://blog.csdn.net/ygqygq2/article/details/82753840</a></p>
+<h2 id="管理界面https-github-com-kopeio-etcd-manager"><a href="#管理界面https-github-com-kopeio-etcd-manager" class="headerlink" title="管理界面https://github.com/kopeio/etcd-manager"></a>管理界面<a href="https://github.com/kopeio/etcd-manager" target="_blank" rel="noopener">https://github.com/kopeio/etcd-manager</a></h2><p>要在在该管理界面显示目录需单独创建目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">name: etcd-3</span><br><span class="line">data-dir: /data/etcd</span><br><span class="line">listen-client-urls: http://192.168.62.140:2379,http://127.0.0.1:2379</span><br><span class="line">advertise-client-urls: http://192.168.62.140:2379,http://127.0.0.1:2379</span><br><span class="line">listen-peer-urls: http://192.168.62.140:2380</span><br><span class="line">initial-advertise-peer-urls: http://192.168.62.140:2380</span><br><span class="line">initial-cluster: etcd-1=http://192.168.62.210:2380,etcd-2=http://192.168.62.154:2380,etcd-3=http://192.168.62.140:2380</span><br><span class="line">initial-cluster-token: etcd-cluster-token</span><br><span class="line">initial-cluster-state: new</span><br></pre></td></tr></table></figure>
+<p>分别执行：etcd –config-file=/etc/etcd/etcd.yml &amp;</p>
+<h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">列出成员节点</span><br><span class="line">etcdctl member list</span><br><span class="line">检查集群健康状态</span><br><span class="line">etcdctl cluster-health</span><br><span class="line">./etcdctl \</span><br><span class="line">--ca-file=/etc/etcd/ssl/ca.pem \</span><br><span class="line">--cert-file=/etc/etcd/ssl/server.pem \</span><br><span class="line">--key-file=/etc/etcd/ssl/server-key.pem \</span><br><span class="line">--endpoints=&quot;https://172.16.8.100:2379,\</span><br><span class="line">https://172.16.8.101:2379,\</span><br><span class="line">https://172.16.8.102:2379&quot; cluster-health</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">etcdctl --endpoints=&apos;https://127.0.0.1:2379&apos; --ca-file=ca.crt --cert-file=server.crt --key-file=server.key ls /</span><br><span class="line"></span><br><span class="line">[root@node119 prometheus]# kubectl -n kube-system exec -it etcd-node119 -- sh</span><br><span class="line">/ # cd /etc/kubernetes/pki/etcd/</span><br><span class="line">export ETCDCTL_API=3; etcdctl --endpoints=&apos;https://127.0.0.1:23</span><br><span class="line">79&apos; --cacert=&quot;ca.crt&quot; --cert=&quot;server.crt&quot; --key=&quot;server.key&quot; get / --prefix --keys-only</span><br><span class="line"></span><br><span class="line">或者直接在节点运行,需拷贝etcdctl到节点上</span><br><span class="line">ETCDCTL_API=3 etcdctl --endpoints=&apos;https://127.0.0.1:2379&apos; --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key get / --prefix --keys-only</span><br><span class="line">创建目录：</span><br><span class="line">/usr/local/etcd-v3.2.26-linux-amd64/bin/etcdctl --endpoints=$ENDPOINTS put /test3 &apos;etcdv3_dir_$2H#%gRe3*t&apos;</span><br></pre></td></tr></table></figure>
+
+<h1 id="监控"><a href="#监控" class="headerlink" title="监控"></a>监控</h1><p><a href="https://github.com/etcd-io/etcd/blob/master/Documentation/metrics.md" target="_blank" rel="noopener">https://github.com/etcd-io/etcd/blob/master/Documentation/metrics.md</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
         
   
   
@@ -934,69 +1043,11 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/db/mysql/canal/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/16/db/mysql/canal/" class="post-title-link" itemprop="url">db/mysql/canal</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="my-cnf-binlog-format-ROW"><a href="#my-cnf-binlog-format-ROW" class="headerlink" title="my.cnf binlog-format=ROW"></a>my.cnf binlog-format=ROW</h2><p>这样可以规则统一的数据入库,实时更新业务方的数据缓存</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span>
+    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1040,7 +1091,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">80</span>
+          <span class="site-state-item-count">81</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1123,6 +1174,8 @@
 
 
 
+
+  <script src="/js/local-search.js"></script>
 
 
 

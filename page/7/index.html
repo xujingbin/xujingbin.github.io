@@ -40,7 +40,7 @@
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
     path: '',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     sidebarPadding: 40
@@ -150,12 +150,37 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">80</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">81</span></a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
   </ul>
 
 </nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
 </div>
     </header>
 
@@ -175,6 +200,108 @@
             
 
   <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/01/k8s/ingress-nginx/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/08/01/k8s/ingress-nginx/" class="post-title-link" itemprop="url">ingress-nginx</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-08-01 17:06:51" itemprop="dateCreated datePublished" datetime="2019-08-01T17:06:51+08:00">2019-08-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-04 15:01:41" itemprop="dateModified" datetime="2019-12-04T15:01:41+08:00">2019-12-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/k8s/" itemprop="url" rel="index">
+                    <span itemprop="name">k8s</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/k8s/nginx/" itemprop="url" rel="index">
+                    <span itemprop="name">nginx</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="ingress"><a href="#ingress" class="headerlink" title="ingress"></a>ingress</h2><h3 id="ingress组成"><a href="#ingress组成" class="headerlink" title="ingress组成"></a>ingress组成</h3><p>ingress controller<br>　　将新加入的Ingress转化成Nginx的配置文件并使之生效<br>ingress服务<br>　　将Nginx的配置抽象成一个Ingress对象，每添加一个新的服务只需写一个新的Ingress的yaml文件即可</p>
+<h3 id="Ingress-工作原理"><a href="#Ingress-工作原理" class="headerlink" title="Ingress 工作原理"></a>Ingress 工作原理</h3><ol>
+<li>ingress controller通过和kubernetes api交互，动态的去感知集群中ingress规则变化，</li>
+<li>然后读取它，按照自定义的规则，规则就是写明了哪个域名对应哪个service，生成一段nginx配置，</li>
+<li>再写到nginx-ingress-control的pod里，这个Ingress controller的pod里运行着一个Nginx服务，控制器会把生成的nginx配置写入/etc/nginx.conf文件中，</li>
+<li>然后reload一下使配置生效。以此达到域名分配置和动态更新的问题。</li>
+</ol>
+<h3 id="Ingress-可以解决什么问题"><a href="#Ingress-可以解决什么问题" class="headerlink" title="Ingress 可以解决什么问题"></a>Ingress 可以解决什么问题</h3><ol>
+<li>动态配置服务<br>　　如果按照传统方式, 当新增加一个服务时, 我们可能需要在流量入口加一个反向代理指向我们新的k8s服务. 而如果用了Ingress, 只需要配置好这个服务, 当服务启动时, 会自动注册到Ingress的中, 不需要而外的操作.</li>
+<li>减少不必要的端口暴露<br>　　配置过k8s的都清楚, 第一步是要关闭防火墙的, 主要原因是k8s的很多服务会以NodePort方式映射出去, 这样就相当于给宿主机打了很多孔, 既不安全也不优雅. 而Ingress可以避免这个问题, 除了Ingress自身服务可能需要映射出去, 其他服务都不要用NodePort方式</li>
+</ol>
+<h3 id="获取配置文件位置"><a href="#获取配置文件位置" class="headerlink" title="获取配置文件位置"></a>获取配置文件位置</h3><p><a href="https://github.com/kubernetes/ingress-nginx/tree/nginx-0.20.0/deploy" target="_blank" rel="noopener">https://github.com/kubernetes/ingress-nginx/tree/nginx-0.20.0/deploy</a></p>
+<h4 id="manatory-yaml"><a href="#manatory-yaml" class="headerlink" title="manatory.yaml"></a>manatory.yaml</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mkdir ingress-nginx</span><br><span class="line">wget  https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.20.0/deploy/mandatory.yaml</span><br><span class="line">sed -i &apos;s#k8s.gcr.io/defaultbackend-amd64#registry.cn-qingdao.aliyuncs.com/kubernetes_xingej/defaultbackend-amd64#g&apos; mandatory.yaml</span><br><span class="line">sed -i &apos;s#quay.io/kubernetes-ingress-controller/nginx-ingress-controller#registry.cn-qingdao.aliyuncs.com/kubernetes_xingej/nginx-ingress-controller#g&apos; mandatory.yaml</span><br><span class="line">kubectl apply -f manatory.yaml</span><br></pre></td></tr></table></figure>
+
+<h4 id="service-nodeport-yaml"><a href="#service-nodeport-yaml" class="headerlink" title="service-nodeport.yaml"></a>service-nodeport.yaml</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master ingress-nginx]# cat service-nodeport.yaml</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: ingress-nginx</span><br><span class="line">  namespace: ingress-nginx</span><br><span class="line">  labels:</span><br><span class="line">    app.kubernetes.io/name: ingress-nginx</span><br><span class="line">    app.kubernetes.io/part-of: ingress-nginx</span><br><span class="line">spec:</span><br><span class="line">  type: NodePort</span><br><span class="line">  ports:</span><br><span class="line">    - name: http</span><br><span class="line">      port: 80</span><br><span class="line">      targetPort: 80</span><br><span class="line">      protocol: TCP</span><br><span class="line">      nodePort: 32080  #http</span><br><span class="line">    - name: https</span><br><span class="line">      port: 443</span><br><span class="line">      targetPort: 443</span><br><span class="line">      protocol: TCP</span><br><span class="line">      nodePort: 32443  #https</span><br><span class="line">  selector:</span><br><span class="line">    app.kubernetes.io/name: ingress-nginx</span><br><span class="line">    app.kubernetes.io/part-of: ingress-nginx</span><br><span class="line"></span><br><span class="line">kubectl apply -f service-nodeport.yaml </span><br><span class="line">查看状态</span><br><span class="line">kubectl -n ingress-nginx get pods,svc -o wide </span><br><span class="line">都起来后，在浏览器访问ip:port试试</span><br><span class="line">192.168.67.119:32080  返回”default backend - 404“则正常</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="部署后端服务"><a href="#部署后端服务" class="headerlink" title="部署后端服务"></a>部署后端服务</h3><p>kubectl apply -f nginx-dsi.yaml,本地指定<a href="http://foo.bar.com到192.168.67.119，访问http://foo.bar.com:32080" target="_blank" rel="noopener">http://foo.bar.com到192.168.67.119，访问http://foo.bar.com:32080</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: apps/v1 </span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: nginx-deployment</span><br><span class="line">spec:</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: nginx</span><br><span class="line">  replicas: 2</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: nginx</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">      - name: nginx</span><br><span class="line">        image: nginx:1.7.9</span><br><span class="line">        ports:</span><br><span class="line">        - containerPort: 80</span><br><span class="line">---</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: nginx-svc</span><br><span class="line">  namespace: default</span><br><span class="line">spec:</span><br><span class="line">  selector:</span><br><span class="line">    app: nginx</span><br><span class="line">  ports:</span><br><span class="line">    - name: http</span><br><span class="line">      port: 80</span><br><span class="line">      targetPort: 80</span><br><span class="line">---</span><br><span class="line">apiVersion: extensions/v1beta1</span><br><span class="line">kind: Ingress</span><br><span class="line">metadata:</span><br><span class="line">  name: ingress-nginx</span><br><span class="line">  namespace: default</span><br><span class="line">  annotations:</span><br><span class="line">    kubernets.io/ingress.class: &quot;nginx&quot;</span><br><span class="line">spec:</span><br><span class="line">  rules:</span><br><span class="line">  - host: foo.bar.com</span><br><span class="line">    http:</span><br><span class="line">      paths:</span><br><span class="line">      - path:</span><br><span class="line">        backend:</span><br><span class="line">          serviceName: nginx-svc</span><br><span class="line">          servicePort: 80</span><br></pre></td></tr></table></figure>
+
+<h3 id="https访问"><a href="#https访问" class="headerlink" title="https访问"></a>https访问</h3><h4 id="证书创建"><a href="#证书创建" class="headerlink" title="证书创建"></a>证书创建</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">openssl genrsa -out tls.key 2048</span><br><span class="line">openssl req -new -x509 -key tls.key -out tls.crt -subj /C=CN/ST=Beijing/L=Beijing/O=DevOps/CN=tomcat.magedu.com #注意域名要和服务的域名一致</span><br><span class="line">kubectl create secret tls tomcat-ingress-secret --cert=tls.crt --key=tls.key #创建secret</span><br><span class="line">kubectl get secret</span><br></pre></td></tr></table></figure>
+<h4 id="模板ingress"><a href="#模板ingress" class="headerlink" title="模板ingress"></a>模板ingress</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master01 ingress]# cat ingress-tomcat-tls.yaml</span><br><span class="line">apiVersion: extensions/v1beta1</span><br><span class="line">kind: Ingress</span><br><span class="line">metadata:</span><br><span class="line">  name: ingress-tomcat-tls</span><br><span class="line">  namespace: default</span><br><span class="line">  annotations: </span><br><span class="line">    kubernets.io/ingress.class: &quot;nginx&quot;</span><br><span class="line">spec:</span><br><span class="line">  tls:</span><br><span class="line">  - hosts:</span><br><span class="line">    - tomcat.magedu.com        #与secret证书的域名需要保持一致</span><br><span class="line">    secretName: tomcat-ingress-secret   #secret证书的名称</span><br><span class="line">  rules:</span><br><span class="line">  - host: tomcat.magedu.com</span><br><span class="line">    http:</span><br><span class="line">      paths:</span><br><span class="line">      - path: </span><br><span class="line">        backend:</span><br><span class="line">          serviceName: tomcat</span><br><span class="line">          servicePort: 8080</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
         
   
   
@@ -509,6 +636,92 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/k8s/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AE%89%E8%A3%85/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/16/k8s/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AE%89%E8%A3%85/" class="post-title-link" itemprop="url">k8s/二进制安装</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ul>
+<li><p><a href="https://www.kubernetes.org.cn/5025.html" target="_blank" rel="noopener">https://www.kubernetes.org.cn/5025.html</a>  在测试机上部署了第二遍  完美</p>
+</li>
+<li><p>通讯加密和认证 <a href="https://mritd.me/2018/01/07/kubernetes-tls-bootstrapping-note/" target="_blank" rel="noopener">https://mritd.me/2018/01/07/kubernetes-tls-bootstrapping-note/</a></p>
+</li>
+<li><p>calico BGP边界网关协议 <a href="http://baijiahao.baidu.com/s?id=1603988891006483361&amp;wfr=spider&amp;for=pc" target="_blank" rel="noopener">http://baijiahao.baidu.com/s?id=1603988891006483361&amp;wfr=spider&amp;for=pc</a></p>
+<h3 id="kubernetes认证授权机制"><a href="#kubernetes认证授权机制" class="headerlink" title="kubernetes认证授权机制"></a>kubernetes认证授权机制</h3><p><a href="https://www.jianshu.com/p/bb973ab1029b" target="_blank" rel="noopener">https://www.jianshu.com/p/bb973ab1029b</a></p>
+</li>
+<li><p>coredns  <a href="https://my.oschina.net/u/2306127/blog/1788566" target="_blank" rel="noopener">https://my.oschina.net/u/2306127/blog/1788566</a></p>
+</li>
+<li><p>核心概念总结<a href="https://www.cnblogs.com/zhenyuyaodidiao/p/6500720.html" target="_blank" rel="noopener">https://www.cnblogs.com/zhenyuyaodidiao/p/6500720.html</a></p>
+</li>
+<li><p>ipvs <a href="https://www.kubernetes.org.cn/3025.html" target="_blank" rel="noopener">https://www.kubernetes.org.cn/3025.html</a></p>
+</li>
+<li><p>ingress <a href="https://www.kubernetes.org.cn/4291.html" target="_blank" rel="noopener">https://www.kubernetes.org.cn/4291.html</a></p>
+</li>
+<li><p>efk <a href="https://www.kubernetes.org.cn/4278.html" target="_blank" rel="noopener">https://www.kubernetes.org.cn/4278.html</a></p>
+</li>
+<li><p>iptables -t nat -A PREROUTING -i bond0 -p tcp -m tcp –dport 80 -j DNAT –to-destination 10.10.0.201:80</p>
+</li>
+</ul>
+<h2 id="安装前升级内核-参考第一二条链接"><a href="#安装前升级内核-参考第一二条链接" class="headerlink" title="安装前升级内核  参考第一二条链接"></a>安装前升级内核  参考第一二条链接</h2><ul>
+<li>先清除旧数据</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rm -f /etc/systemd/system/docker*</span><br><span class="line">rm -f /etc/yum.repos.d/wise2c.repo</span><br><span class="line">rm -f /etc/yum.repos.d/docker*</span><br><span class="line">rm -rf /etc/docker/</span><br></pre></td></tr></table></figure>
+<ul>
+<li>升级内核</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sed -i &apos;s/SELINUX=*/SELINUX=disabled/&apos; /etc/selinux/config</span><br><span class="line"></span><br><span class="line">systemctl disable firewalld &amp;&amp; systemctl stop firewalld</span><br><span class="line">swapoff -a &amp;&amp; echo &quot;vm.swappiness=0&quot; &gt;&gt; /etc/sysctl.conf &amp;&amp; sysctl -p &amp;&amp; free –h</span><br><span class="line">iptables -P FORWARD ACCEPT</span><br><span class="line">rpm -Uvh *.rpm</span><br><span class="line">grub2-set-default 0</span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
+<h1 id="vim-etc-sysctl-conf"><a href="#vim-etc-sysctl-conf" class="headerlink" title="vim /etc/sysctl.conf"></a>vim /etc/sysctl.conf</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">net.bridge.bridge-nf-call-iptables = 1</span><br><span class="line">net.bridge.bridge-nf-call-ip6tables = 1</span><br><span class="line">net.ipv4.ip_forward = 1</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/k8s/rbac/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -594,7 +807,7 @@ verbs:
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/k8s/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AE%89%E8%A3%85/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/k8s/gluster-k8s/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -608,7 +821,7 @@ verbs:
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2019/07/16/k8s/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AE%89%E8%A3%85/" class="post-title-link" itemprop="url">k8s/二进制安装</a>
+            <a href="/2019/07/16/k8s/gluster-k8s/" class="post-title-link" itemprop="url">k8s/gluster-k8s</a>
         </h1>
 
         <div class="post-meta">
@@ -620,6 +833,13 @@ verbs:
 
               <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-09-11 17:41:30" itemprop="dateModified" datetime="2019-09-11T17:41:30+08:00">2019-09-11</time>
+              </span>
 
           
 
@@ -632,36 +852,26 @@ verbs:
     <div class="post-body" itemprop="articleBody">
 
       
-          <ul>
-<li><p><a href="https://www.kubernetes.org.cn/5025.html" target="_blank" rel="noopener">https://www.kubernetes.org.cn/5025.html</a>  在测试机上部署了第二遍  完美</p>
+          <p><a href="https://www.cnblogs.com/yourarebest/p/9629521.html" target="_blank" rel="noopener">https://www.cnblogs.com/yourarebest/p/9629521.html</a></p>
+<h3 id="静态手动管理glusterfs"><a href="#静态手动管理glusterfs" class="headerlink" title="静态手动管理glusterfs"></a>静态手动管理glusterfs</h3><h4 id="手动创建pvc-这种方式提示手动创建storageclass，但是只有动态创建的storageclass"><a href="#手动创建pvc-这种方式提示手动创建storageclass，但是只有动态创建的storageclass" class="headerlink" title="手动创建pvc,这种方式提示手动创建storageclass，但是只有动态创建的storageclass"></a>手动创建pvc,这种方式提示手动创建storageclass，但是只有动态创建的storageclass</h4><ol>
+<li>创建GlusterFS卷</li>
+<li>Kubernetes创建PV等存储:gfs-svc gfs-ep gfs-pv </li>
+<li>Kubernetes创建应用 gfs-pvc pod<blockquote>
+<p>这种方式是手动管理volume。假设在k8s上部署一个使用gluster存储的应用，如果使用之前应用的volume，能看到其他应用的数据，多个应用之间的数据应该是隔离的，也就是权限问题，同时，大概率导致文件命名冲突问题。pv(c)中设置的容量capacity也无法控制。基本上处于不可用。 <a href="http://rdc.hundsun.com/portal/article/826.html" target="_blank" rel="noopener">http://rdc.hundsun.com/portal/article/826.html</a></p>
+</blockquote>
 </li>
-<li><p>通讯加密和认证 <a href="https://mritd.me/2018/01/07/kubernetes-tls-bootstrapping-note/" target="_blank" rel="noopener">https://mritd.me/2018/01/07/kubernetes-tls-bootstrapping-note/</a></p>
-</li>
-<li><p>calico BGP边界网关协议 <a href="http://baijiahao.baidu.com/s?id=1603988891006483361&amp;wfr=spider&amp;for=pc" target="_blank" rel="noopener">http://baijiahao.baidu.com/s?id=1603988891006483361&amp;wfr=spider&amp;for=pc</a></p>
-<h3 id="kubernetes认证授权机制"><a href="#kubernetes认证授权机制" class="headerlink" title="kubernetes认证授权机制"></a>kubernetes认证授权机制</h3><p><a href="https://www.jianshu.com/p/bb973ab1029b" target="_blank" rel="noopener">https://www.jianshu.com/p/bb973ab1029b</a></p>
-</li>
-<li><p>coredns  <a href="https://my.oschina.net/u/2306127/blog/1788566" target="_blank" rel="noopener">https://my.oschina.net/u/2306127/blog/1788566</a></p>
-</li>
-<li><p>核心概念总结<a href="https://www.cnblogs.com/zhenyuyaodidiao/p/6500720.html" target="_blank" rel="noopener">https://www.cnblogs.com/zhenyuyaodidiao/p/6500720.html</a></p>
-</li>
-<li><p>ipvs <a href="https://www.kubernetes.org.cn/3025.html" target="_blank" rel="noopener">https://www.kubernetes.org.cn/3025.html</a></p>
-</li>
-<li><p>ingress <a href="https://www.kubernetes.org.cn/4291.html" target="_blank" rel="noopener">https://www.kubernetes.org.cn/4291.html</a></p>
-</li>
-<li><p>efk <a href="https://www.kubernetes.org.cn/4278.html" target="_blank" rel="noopener">https://www.kubernetes.org.cn/4278.html</a></p>
-</li>
-<li><p>iptables -t nat -A PREROUTING -i bond0 -p tcp -m tcp –dport 80 -j DNAT –to-destination 10.10.0.201:80</p>
-</li>
-</ul>
-<h2 id="安装前升级内核-参考第一二条链接"><a href="#安装前升级内核-参考第一二条链接" class="headerlink" title="安装前升级内核  参考第一二条链接"></a>安装前升级内核  参考第一二条链接</h2><ul>
-<li>先清除旧数据</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rm -f /etc/systemd/system/docker*</span><br><span class="line">rm -f /etc/yum.repos.d/wise2c.repo</span><br><span class="line">rm -f /etc/yum.repos.d/docker*</span><br><span class="line">rm -rf /etc/docker/</span><br></pre></td></tr></table></figure>
-<ul>
-<li>升级内核</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sed -i &apos;s/SELINUX=*/SELINUX=disabled/&apos; /etc/selinux/config</span><br><span class="line"></span><br><span class="line">systemctl disable firewalld &amp;&amp; systemctl stop firewalld</span><br><span class="line">swapoff -a &amp;&amp; echo &quot;vm.swappiness=0&quot; &gt;&gt; /etc/sysctl.conf &amp;&amp; sysctl -p &amp;&amp; free –h</span><br><span class="line">iptables -P FORWARD ACCEPT</span><br><span class="line">rpm -Uvh *.rpm</span><br><span class="line">grub2-set-default 0</span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
-<h1 id="vim-etc-sysctl-conf"><a href="#vim-etc-sysctl-conf" class="headerlink" title="vim /etc/sysctl.conf"></a>vim /etc/sysctl.conf</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">net.bridge.bridge-nf-call-iptables = 1</span><br><span class="line">net.bridge.bridge-nf-call-ip6tables = 1</span><br><span class="line">net.ipv4.ip_forward = 1</span><br></pre></td></tr></table></figure>
+</ol>
+<h4 id="通过”endpoints”-“glusterfs-cluster”-path”-“gv0”"><a href="#通过”endpoints”-“glusterfs-cluster”-path”-“gv0”" class="headerlink" title="通过”endpoints”: “glusterfs-cluster”,path”: “gv0”,"></a>通过”endpoints”: “glusterfs-cluster”,path”: “gv0”,</h4><p><a href="https://github.com/kubernetes/examples/blob/master/staging/volumes/glusterfs/glusterfs-pod.json" target="_blank" rel="noopener">https://github.com/kubernetes/examples/blob/master/staging/volumes/glusterfs/glusterfs-pod.json</a></p>
+<h4 id="直接通过-brickrootPaths-“172-16-2-131-tmp-172-16-2-132-tmp”‘"><a href="#直接通过-brickrootPaths-“172-16-2-131-tmp-172-16-2-132-tmp”‘" class="headerlink" title="直接通过 brickrootPaths: “172.16.2.131:/tmp/,172.16.2.132:/tmp”‘"></a>直接通过 brickrootPaths: “172.16.2.131:/tmp/,172.16.2.132:/tmp”‘</h4><p><a href="https://github.com/kubernetes-incubator/external-storage/tree/master/gluster/glusterfs" target="_blank" rel="noopener">https://github.com/kubernetes-incubator/external-storage/tree/master/gluster/glusterfs</a></p>
+<h3 id="通过heketi来动态管理glusterfs"><a href="#通过heketi来动态管理glusterfs" class="headerlink" title="通过heketi来动态管理glusterfs"></a>通过heketi来动态管理glusterfs</h3><h3 id="gluster"><a href="#gluster" class="headerlink" title="gluster"></a>gluster</h3><p><a href="https://github.com/gluster/gluster-kubernetes/blob/master/docs/setup-guide.md" target="_blank" rel="noopener">https://github.com/gluster/gluster-kubernetes/blob/master/docs/setup-guide.md</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">modprobe dm_snapshot</span><br><span class="line">modprobe dm_mirror</span><br><span class="line">modprobe dm_thin_pool</span><br><span class="line"></span><br><span class="line">sudo wipefs -af /dev/sdb</span><br><span class="line">dmsetup ls</span><br><span class="line">dmsetup remove ddf1_44656c6c202020201000007910281f1747cd0dedccd25148</span><br><span class="line">dmsetup remove_all</span><br><span class="line">./gk-deploy -g --abort</span><br><span class="line"></span><br><span class="line">./gk-deploy -gv --single-node</span><br></pre></td></tr></table></figure>
+<h3 id="heketi"><a href="#heketi" class="headerlink" title="heketi"></a>heketi</h3><p>/bin/kubectl -n default exec -i heketi-85dbbbb55-78df9 – heketi-cli -s <a href="http://localhost:8080" target="_blank" rel="noopener">http://localhost:8080</a> –user admin –secret ‘’ volume list</p>
+<h3 id="pvc"><a href="#pvc" class="headerlink" title="pvc"></a>pvc</h3><p><a href="https://www.jianshu.com/p/99e610067bc8" target="_blank" rel="noopener">https://www.jianshu.com/p/99e610067bc8</a><br>storageclass <a href="https://kubernetes.io/docs/concepts/storage/storage-classes/" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/storage/storage-classes/</a></p>
+<h3 id="挂载"><a href="#挂载" class="headerlink" title="挂载"></a>挂载</h3><p>mount -t glusterfs 10.105.94.239:vol_fef6bc590cb2a3c8c1df0d72e91a5146 /gfs-promotion/</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">执行kubectl get pv pvc-bd0960f3-7881-11e9-a9d4-c81f66c0e5c3 -o yaml获得</span><br><span class="line">1. spec.glusterfs.path: vol_fef6bc590cb2a3c8c1df0d72e91a5146</span><br><span class="line">2. spec.glusterfs.endpoints: 10.105.94.239</span><br></pre></td></tr></table></figure>
+
+<h2 id="pv挂载"><a href="#pv挂载" class="headerlink" title="pv挂载"></a>pv挂载</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">volumes:</span><br><span class="line">- name: cache-volume</span><br><span class="line">  emptyDir: &#123;&#125;</span><br><span class="line">- name: test-volume</span><br><span class="line">  hostPath:</span><br><span class="line">    # directory location on host</span><br><span class="line">    path: /data</span><br></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -805,89 +1015,6 @@ verbs:
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/k8s/gluster-k8s/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/16/k8s/gluster-k8s/" class="post-title-link" itemprop="url">k8s/gluster-k8s</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-09-11 17:41:30" itemprop="dateModified" datetime="2019-09-11T17:41:30+08:00">2019-09-11</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><a href="https://www.cnblogs.com/yourarebest/p/9629521.html" target="_blank" rel="noopener">https://www.cnblogs.com/yourarebest/p/9629521.html</a></p>
-<h3 id="静态手动管理glusterfs"><a href="#静态手动管理glusterfs" class="headerlink" title="静态手动管理glusterfs"></a>静态手动管理glusterfs</h3><h4 id="手动创建pvc-这种方式提示手动创建storageclass，但是只有动态创建的storageclass"><a href="#手动创建pvc-这种方式提示手动创建storageclass，但是只有动态创建的storageclass" class="headerlink" title="手动创建pvc,这种方式提示手动创建storageclass，但是只有动态创建的storageclass"></a>手动创建pvc,这种方式提示手动创建storageclass，但是只有动态创建的storageclass</h4><ol>
-<li>创建GlusterFS卷</li>
-<li>Kubernetes创建PV等存储:gfs-svc gfs-ep gfs-pv </li>
-<li>Kubernetes创建应用 gfs-pvc pod<blockquote>
-<p>这种方式是手动管理volume。假设在k8s上部署一个使用gluster存储的应用，如果使用之前应用的volume，能看到其他应用的数据，多个应用之间的数据应该是隔离的，也就是权限问题，同时，大概率导致文件命名冲突问题。pv(c)中设置的容量capacity也无法控制。基本上处于不可用。 <a href="http://rdc.hundsun.com/portal/article/826.html" target="_blank" rel="noopener">http://rdc.hundsun.com/portal/article/826.html</a></p>
-</blockquote>
-</li>
-</ol>
-<h4 id="通过”endpoints”-“glusterfs-cluster”-path”-“gv0”"><a href="#通过”endpoints”-“glusterfs-cluster”-path”-“gv0”" class="headerlink" title="通过”endpoints”: “glusterfs-cluster”,path”: “gv0”,"></a>通过”endpoints”: “glusterfs-cluster”,path”: “gv0”,</h4><p><a href="https://github.com/kubernetes/examples/blob/master/staging/volumes/glusterfs/glusterfs-pod.json" target="_blank" rel="noopener">https://github.com/kubernetes/examples/blob/master/staging/volumes/glusterfs/glusterfs-pod.json</a></p>
-<h4 id="直接通过-brickrootPaths-“172-16-2-131-tmp-172-16-2-132-tmp”‘"><a href="#直接通过-brickrootPaths-“172-16-2-131-tmp-172-16-2-132-tmp”‘" class="headerlink" title="直接通过 brickrootPaths: “172.16.2.131:/tmp/,172.16.2.132:/tmp”‘"></a>直接通过 brickrootPaths: “172.16.2.131:/tmp/,172.16.2.132:/tmp”‘</h4><p><a href="https://github.com/kubernetes-incubator/external-storage/tree/master/gluster/glusterfs" target="_blank" rel="noopener">https://github.com/kubernetes-incubator/external-storage/tree/master/gluster/glusterfs</a></p>
-<h3 id="通过heketi来动态管理glusterfs"><a href="#通过heketi来动态管理glusterfs" class="headerlink" title="通过heketi来动态管理glusterfs"></a>通过heketi来动态管理glusterfs</h3><h3 id="gluster"><a href="#gluster" class="headerlink" title="gluster"></a>gluster</h3><p><a href="https://github.com/gluster/gluster-kubernetes/blob/master/docs/setup-guide.md" target="_blank" rel="noopener">https://github.com/gluster/gluster-kubernetes/blob/master/docs/setup-guide.md</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">modprobe dm_snapshot</span><br><span class="line">modprobe dm_mirror</span><br><span class="line">modprobe dm_thin_pool</span><br><span class="line"></span><br><span class="line">sudo wipefs -af /dev/sdb</span><br><span class="line">dmsetup ls</span><br><span class="line">dmsetup remove ddf1_44656c6c202020201000007910281f1747cd0dedccd25148</span><br><span class="line">dmsetup remove_all</span><br><span class="line">./gk-deploy -g --abort</span><br><span class="line"></span><br><span class="line">./gk-deploy -gv --single-node</span><br></pre></td></tr></table></figure>
-<h3 id="heketi"><a href="#heketi" class="headerlink" title="heketi"></a>heketi</h3><p>/bin/kubectl -n default exec -i heketi-85dbbbb55-78df9 – heketi-cli -s <a href="http://localhost:8080" target="_blank" rel="noopener">http://localhost:8080</a> –user admin –secret ‘’ volume list</p>
-<h3 id="pvc"><a href="#pvc" class="headerlink" title="pvc"></a>pvc</h3><p><a href="https://www.jianshu.com/p/99e610067bc8" target="_blank" rel="noopener">https://www.jianshu.com/p/99e610067bc8</a><br>storageclass <a href="https://kubernetes.io/docs/concepts/storage/storage-classes/" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/storage/storage-classes/</a></p>
-<h3 id="挂载"><a href="#挂载" class="headerlink" title="挂载"></a>挂载</h3><p>mount -t glusterfs 10.105.94.239:vol_fef6bc590cb2a3c8c1df0d72e91a5146 /gfs-promotion/</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">执行kubectl get pv pvc-bd0960f3-7881-11e9-a9d4-c81f66c0e5c3 -o yaml获得</span><br><span class="line">1. spec.glusterfs.path: vol_fef6bc590cb2a3c8c1df0d72e91a5146</span><br><span class="line">2. spec.glusterfs.endpoints: 10.105.94.239</span><br></pre></td></tr></table></figure>
-
-<h2 id="pv挂载"><a href="#pv挂载" class="headerlink" title="pv挂载"></a>pv挂载</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">volumes:</span><br><span class="line">- name: cache-volume</span><br><span class="line">  emptyDir: &#123;&#125;</span><br><span class="line">- name: test-volume</span><br><span class="line">  hostPath:</span><br><span class="line">    # directory location on host</span><br><span class="line">    path: /data</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/k8s/kubeadm-k8s%E5%AE%89%E8%A3%85/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -965,95 +1092,11 @@ verbs:
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/db/etcd/etcd/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/16/db/etcd/etcd/" class="post-title-link" itemprop="url">etcd</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-12-06 09:32:27" itemprop="dateModified" datetime="2019-12-06T09:32:27+08:00">2019-12-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/etcd/" itemprop="url" rel="index">
-                    <span itemprop="name">etcd</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>github下载二进制包<br>拷贝二进制etcd,etcdctl文件到/usr/local/bin下<br>分别3个创建配置文件/etc/etcd/etcd.yml<br>v3 v2区别<a href="https://blog.csdn.net/kozazyh/article/details/79586530" target="_blank" rel="noopener">https://blog.csdn.net/kozazyh/article/details/79586530</a><br>备份恢复参考<a href="https://blog.csdn.net/ygqygq2/article/details/82753840" target="_blank" rel="noopener">https://blog.csdn.net/ygqygq2/article/details/82753840</a></p>
-<h2 id="管理界面https-github-com-kopeio-etcd-manager"><a href="#管理界面https-github-com-kopeio-etcd-manager" class="headerlink" title="管理界面https://github.com/kopeio/etcd-manager"></a>管理界面<a href="https://github.com/kopeio/etcd-manager" target="_blank" rel="noopener">https://github.com/kopeio/etcd-manager</a></h2><p>要在在该管理界面显示目录需单独创建目录</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">name: etcd-3</span><br><span class="line">data-dir: /data/etcd</span><br><span class="line">listen-client-urls: http://192.168.62.140:2379,http://127.0.0.1:2379</span><br><span class="line">advertise-client-urls: http://192.168.62.140:2379,http://127.0.0.1:2379</span><br><span class="line">listen-peer-urls: http://192.168.62.140:2380</span><br><span class="line">initial-advertise-peer-urls: http://192.168.62.140:2380</span><br><span class="line">initial-cluster: etcd-1=http://192.168.62.210:2380,etcd-2=http://192.168.62.154:2380,etcd-3=http://192.168.62.140:2380</span><br><span class="line">initial-cluster-token: etcd-cluster-token</span><br><span class="line">initial-cluster-state: new</span><br></pre></td></tr></table></figure>
-<p>分别执行：etcd –config-file=/etc/etcd/etcd.yml &amp;</p>
-<h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">列出成员节点</span><br><span class="line">etcdctl member list</span><br><span class="line">检查集群健康状态</span><br><span class="line">etcdctl cluster-health</span><br><span class="line">./etcdctl \</span><br><span class="line">--ca-file=/etc/etcd/ssl/ca.pem \</span><br><span class="line">--cert-file=/etc/etcd/ssl/server.pem \</span><br><span class="line">--key-file=/etc/etcd/ssl/server-key.pem \</span><br><span class="line">--endpoints=&quot;https://172.16.8.100:2379,\</span><br><span class="line">https://172.16.8.101:2379,\</span><br><span class="line">https://172.16.8.102:2379&quot; cluster-health</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">etcdctl --endpoints=&apos;https://127.0.0.1:2379&apos; --ca-file=ca.crt --cert-file=server.crt --key-file=server.key ls /</span><br><span class="line"></span><br><span class="line">[root@node119 prometheus]# kubectl -n kube-system exec -it etcd-node119 -- sh</span><br><span class="line">/ # cd /etc/kubernetes/pki/etcd/</span><br><span class="line">export ETCDCTL_API=3; etcdctl --endpoints=&apos;https://127.0.0.1:23</span><br><span class="line">79&apos; --cacert=&quot;ca.crt&quot; --cert=&quot;server.crt&quot; --key=&quot;server.key&quot; get / --prefix --keys-only</span><br><span class="line"></span><br><span class="line">或者直接在节点运行,需拷贝etcdctl到节点上</span><br><span class="line">ETCDCTL_API=3 etcdctl --endpoints=&apos;https://127.0.0.1:2379&apos; --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key get / --prefix --keys-only</span><br><span class="line">创建目录：</span><br><span class="line">/usr/local/etcd-v3.2.26-linux-amd64/bin/etcdctl --endpoints=$ENDPOINTS put /test3 &apos;etcdv3_dir_$2H#%gRe3*t&apos;</span><br></pre></td></tr></table></figure>
-
-<h1 id="监控"><a href="#监控" class="headerlink" title="监控"></a>监控</h1><p><a href="https://github.com/etcd-io/etcd/blob/master/Documentation/metrics.md" target="_blank" rel="noopener">https://github.com/etcd-io/etcd/blob/master/Documentation/metrics.md</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1097,7 +1140,7 @@ verbs:
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">80</span>
+          <span class="site-state-item-count">81</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1180,6 +1223,8 @@ verbs:
 
 
 
+
+  <script src="/js/local-search.js"></script>
 
 
 

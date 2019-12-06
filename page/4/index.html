@@ -40,7 +40,7 @@
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
     path: '',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     sidebarPadding: 40
@@ -150,12 +150,37 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">80</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">81</span></a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
   </ul>
 
 </nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
 </div>
     </header>
 
@@ -175,6 +200,84 @@
             
 
   <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/db/tidb/tidb/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/28/db/tidb/tidb/" class="post-title-link" itemprop="url">tidb</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-28 11:00:10" itemprop="dateCreated datePublished" datetime="2019-11-28T11:00:10+08:00">2019-11-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tidb/" itemprop="url" rel="index">
+                    <span itemprop="name">tidb</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="faq"><a href="#faq" class="headerlink" title="faq"></a>faq</h3><p>9.1.6 ERROR 9006 (HY000) : GC life time is shorter than transaction duration<br>GC Life Time 间隔时间过短，长事务本应读到的数据可能被清理了，可使用如下命令增加 GC Life Time：</p>
+<p>update mysql.tidb set variable_value=’30m’ where variable_name=’tikv_gc_life_time’;<br>其中 30m 代表仅清理 30 分钟前的数据，这可能会额外占用一定的存储空间。</p>
+<p>gc 介绍 <a href="https://pingcap.com/docs-cn/op-guide/gc/#tidb-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6-gc" target="_blank" rel="noopener">https://pingcap.com/docs-cn/op-guide/gc/#tidb-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6-gc</a></p>
+<h3 id="停止写数据到-TIDB-后-Current-Storage-Usage不是停止增长-而是下降"><a href="#停止写数据到-TIDB-后-Current-Storage-Usage不是停止增长-而是下降" class="headerlink" title="停止写数据到 TIDB 后,Current Storage Usage不是停止增长,而是下降"></a>停止写数据到 TIDB 后,Current Storage Usage不是停止增长,而是下降</h3><p>TiDB 作为强一致的分布式数据库，存在一定的写放大，存储底层会不断进行 Compaction;<br>DELETE，TRUNCATE 和 DROP 都不会立即释放空间。对于 TRUNCATE 和 DROP 操作，在达到 TiDB 的 GC (garbage collection) 时间后（默认 10 分钟），TiDB 的 GC 机制会删除数据并释放空间。对于 DELETE 操作 TiDB 的 GC 机制会删除数据，但不会释放空间，而是当后续数据写入 RocksDB 且进行 compact 时对空间重新利用</p>
+<h3 id="命令工具"><a href="#命令工具" class="headerlink" title="命令工具"></a>命令工具</h3><p>请反馈 TiDB 版本信息，如果可以升级到 2.0 rc 系列或者通过 tikv-ctl 手工 compact 试一下，另 tikv 节点数据超过 80% 就需要考虑扩容事宜</p>
+<h3 id="升级配置"><a href="#升级配置" class="headerlink" title="升级配置"></a>升级配置</h3><p>$ ansible-playbook rolling_update.yml –tags=tikv</p>
+<p><a href="https://blog.csdn.net/vkingnew/article/details/81944287" target="_blank" rel="noopener">https://blog.csdn.net/vkingnew/article/details/81944287</a></p>
+<p><a href="https://www.pingcap.com/docs-cn/op-guide/ansible-deployment-rolling-update/#%E5%8D%87%E7%BA%A7%E7%BB%84%E4%BB%B6%E7%89%88%E6%9C%AC" target="_blank" rel="noopener">https://www.pingcap.com/docs-cn/op-guide/ansible-deployment-rolling-update/#%E5%8D%87%E7%BA%A7%E7%BB%84%E4%BB%B6%E7%89%88%E6%9C%AC</a></p>
+<h3 id="fio-randread-iops-of-tikv-data-dir-disk-is-too-low-25687-lt-40000"><a href="#fio-randread-iops-of-tikv-data-dir-disk-is-too-low-25687-lt-40000" class="headerlink" title="fio: randread iops of tikv_data_dir disk is too low: 25687 &lt; 40000"></a>fio: randread iops of tikv_data_dir disk is too low: 25687 &lt; 40000</h3><p>问题可能出在阵列卡 或者磁盘上<br>经验是出在阵列卡2次， 更换阵列卡，或者直接更换服务器</p>
+<h3 id="参数调优"><a href="#参数调优" class="headerlink" title="参数调优"></a>参数调优</h3><p><a href="https://pingcap.com/docs-cn/op-guide/tune-tikv/#tikv-%E6%80%A7%E8%83%BD%E5%8F%82%E6%95%B0%E8%B0%83%E4%BC%98" target="_blank" rel="noopener">https://pingcap.com/docs-cn/op-guide/tune-tikv/#tikv-%E6%80%A7%E8%83%BD%E5%8F%82%E6%95%B0%E8%B0%83%E4%BC%98</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
         
   
   
@@ -874,81 +977,11 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/jenkins/rundeck/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/28/jenkins/rundeck/" class="post-title-link" itemprop="url">rundeck配置</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-28 10:47:36" itemprop="dateCreated datePublished" datetime="2019-11-28T10:47:36+08:00">2019-11-28</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/rundeck/" itemprop="url" rel="index">
-                    <span itemprop="name">rundeck</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="option"><a href="#option" class="headerlink" title="option"></a>option</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">取该job的变量“ipaddr”值：http://$&#123;option.ipaddr.value&#125;:8081/api/servermanager/games/groups</span><br><span class="line">取用户名变量：file:/data/rundeck/$&#123;job.user.name&#125;.json</span><br></pre></td></tr></table></figure>
-<p>官网： <a href="https://docs.rundeck.com/3.0.11/manual/defining-job-options.html?utm_source=rundeckapp&amp;utm_medium=3.0.11-20181221%20Linux%20java%201.8.0_144&amp;utm_campaign=helplink&amp;utm_content=editOpts%2Fedit#option-model-provider" target="_blank" rel="noopener">https://docs.rundeck.com/3.0.11/manual/defining-job-options.html?utm_source=rundeckapp&amp;utm_medium=3.0.11-20181221%20Linux%20java%201.8.0_144&amp;utm_campaign=helplink&amp;utm_content=editOpts%2Fedit#option-model-provider</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -992,7 +1025,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">80</span>
+          <span class="site-state-item-count">81</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1075,6 +1108,8 @@
 
 
 
+
+  <script src="/js/local-search.js"></script>
 
 
 
