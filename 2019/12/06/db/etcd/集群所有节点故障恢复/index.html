@@ -50,15 +50,15 @@
   <meta name="description" content="节点1恢复123456789101112131415OLD1# scp -r &#x2F;usr&#x2F;local&#x2F;etcd-v3.2.26-linux-amd64&#x2F; NEW1:&#x2F;usr&#x2F;local&#x2F;OLD1# scp snap-201912050140.db NEW1:&#x2F;root&#x2F;NEW1# hostnamectl set-hostname new1NEW1# vi &#x2F;root&#x2F;s1.shETCDCTL_API">
 <meta name="keywords" content="etcd备份恢复">
 <meta property="og:type" content="article">
-<meta property="og:title" content="etcd备份恢复">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;06&#x2F;db&#x2F;etcd&#x2F;%E9%9B%86%E7%BE%A4%E6%81%A2%E5%A4%8D&#x2F;index.html">
+<meta property="og:title" content="集群所有节点故障恢复">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;06&#x2F;db&#x2F;etcd&#x2F;%E9%9B%86%E7%BE%A4%E6%89%80%E6%9C%89%E8%8A%82%E7%82%B9%E6%95%85%E9%9A%9C%E6%81%A2%E5%A4%8D&#x2F;index.html">
 <meta property="og:site_name" content="运维笔记">
 <meta property="og:description" content="节点1恢复123456789101112131415OLD1# scp -r &#x2F;usr&#x2F;local&#x2F;etcd-v3.2.26-linux-amd64&#x2F; NEW1:&#x2F;usr&#x2F;local&#x2F;OLD1# scp snap-201912050140.db NEW1:&#x2F;root&#x2F;NEW1# hostnamectl set-hostname new1NEW1# vi &#x2F;root&#x2F;s1.shETCDCTL_API">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-12-06T01:30:00.959Z">
+<meta property="og:updated_time" content="2019-12-09T01:33:19.060Z">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/2019/12/06/db/etcd/%E9%9B%86%E7%BE%A4%E6%81%A2%E5%A4%8D/">
+<link rel="canonical" href="http://yoursite.com/2019/12/06/db/etcd/%E9%9B%86%E7%BE%A4%E6%89%80%E6%9C%89%E8%8A%82%E7%82%B9%E6%95%85%E9%9A%9C%E6%81%A2%E5%A4%8D/">
 
 
 <script id="page-configurations">
@@ -72,7 +72,7 @@
   };
 </script>
 
-  <title>etcd备份恢复 | 运维笔记</title>
+  <title>集群所有节点故障恢复 | 运维笔记</title>
   
 
 
@@ -152,7 +152,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">81</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">82</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/06/db/etcd/%E9%9B%86%E7%BE%A4%E6%81%A2%E5%A4%8D/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/06/db/etcd/%E9%9B%86%E7%BE%A4%E6%89%80%E6%9C%89%E8%8A%82%E7%82%B9%E6%95%85%E9%9A%9C%E6%81%A2%E5%A4%8D/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -219,7 +219,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          etcd备份恢复
+          集群所有节点故障恢复
         </h1>
 
         <div class="post-meta">
@@ -228,10 +228,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2019-12-06 09:25:14 / 修改时间：09:30:00" itemprop="dateCreated datePublished" datetime="2019-12-06T09:25:14+08:00">2019-12-06</time>
+              <time title="创建时间：2019-12-06 09:25:14" itemprop="dateCreated datePublished" datetime="2019-12-06T09:25:14+08:00">2019-12-06</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-09 09:33:19" itemprop="dateModified" datetime="2019-12-09T09:33:19+08:00">2019-12-09</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -353,7 +359,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">81</span>
+          <span class="site-state-item-count">82</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

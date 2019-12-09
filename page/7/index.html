@@ -150,7 +150,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">81</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">82</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -200,6 +200,95 @@
             
 
   <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/13/k8s/%E5%A4%87%E4%BB%BD%E5%92%8C%E8%BF%98%E5%8E%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/08/13/k8s/%E5%A4%87%E4%BB%BD%E5%92%8C%E8%BF%98%E5%8E%9F/" class="post-title-link" itemprop="url">k8s备份还原</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-08-13 15:19:59" itemprop="dateCreated datePublished" datetime="2019-08-13T15:19:59+08:00">2019-08-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-04 15:01:41" itemprop="dateModified" datetime="2019-12-04T15:01:41+08:00">2019-12-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/k8s/" itemprop="url" rel="index">
+                    <span itemprop="name">k8s</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/k8s/%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9F/" itemprop="url" rel="index">
+                    <span itemprop="name">备份还原</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="备份"><a href="#备份" class="headerlink" title="备份"></a>备份</h1><p>Kubernetes的备份主要是通过ETCD的备份完成的。而恢复时，主要考虑的是整个顺序：停止kube-apiserver，停止ETCD，恢复数据，启动ETCD，启动kube-apiserver。</p>
+<h2 id="etcd-backup-sh"><a href="#etcd-backup-sh" class="headerlink" title="etcd-backup.sh"></a>etcd-backup.sh</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"># 该脚本放在192.168.67.119 /crond/etcd-backup.sh，每天执行两次</span><br><span class="line">IP=127.0.0.1</span><br><span class="line">BACKUP_DIR=/usr/local/backup/etcd</span><br><span class="line">mkdir -p $BACKUP_DIR</span><br><span class="line">export ETCDCTL_API=3</span><br><span class="line">etcdctl --endpoints=https://$IP:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key snapshot save $BACKUP_DIR/snap-$(date +%Y%m%d%H%M).db</span><br><span class="line">find $BACKUP_DIR -mtime +7 |xargs rm -f</span><br><span class="line">scp $BACKUP_DIR/snap-$(date +%Y%m%d%H%M).db 192.168.67.120:/usr/local/backup/etcd/</span><br></pre></td></tr></table></figure>
+<h2 id="捕鱼2应用yaml文件备份"><a href="#捕鱼2应用yaml文件备份" class="headerlink" title="捕鱼2应用yaml文件备份"></a>捕鱼2应用yaml文件备份</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"># 该脚本放在192.168.67.119 /crond/buyu2-backup.sh，每天执行两次</span><br><span class="line">cd /usr/local/backup/buyu2/</span><br><span class="line">for name in `kubectl get deploy -n game-buyu |awk &apos;$1!~/NAME/ &#123;print $1&#125;&apos;`;do</span><br><span class="line">  kubectl -n game-buyu get deploy $&#123;name&#125; -o yaml &gt; $&#123;name&#125;-ds.yaml</span><br><span class="line">done</span><br><span class="line">for name in `kubectl get service -n game-buyu |awk &apos;$1!~/NAME/ &#123;print $1&#125;&apos;`;do</span><br><span class="line">  kubectl -n game-buyu get service $name -o yaml &gt; $&#123;name&#125;-svc.yaml</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<h2 id="etc-kubernetes与-var-lib-kubelet-都备份到-usr-local-backup目录下"><a href="#etc-kubernetes与-var-lib-kubelet-都备份到-usr-local-backup目录下" class="headerlink" title="/etc/kubernetes与/var/lib/kubelet/都备份到/usr/local/backup目录下"></a>/etc/kubernetes与/var/lib/kubelet/都备份到/usr/local/backup目录下</h2><h1 id="还原"><a href="#还原" class="headerlink" title="还原"></a>还原</h1><h2 id="kubernetes还原"><a href="#kubernetes还原" class="headerlink" title="kubernetes还原"></a>kubernetes还原</h2><h3 id="首先需要停掉所有kube-apiserver，确保kube-apiserver已经停止了-执行下列命令返回值为0"><a href="#首先需要停掉所有kube-apiserver，确保kube-apiserver已经停止了-执行下列命令返回值为0" class="headerlink" title="首先需要停掉所有kube-apiserver，确保kube-apiserver已经停止了,执行下列命令返回值为0"></a>首先需要停掉所有kube-apiserver，确保kube-apiserver已经停止了,执行下列命令返回值为0</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /etc/kubernetes/manifests-backups</span><br><span class="line">mv /etc/kubernetes/manifests/kube-apiserver.yaml /etc/kubernetes/manifests-backups/</span><br><span class="line">ps -ef|grep kube-api|grep -v grep |wc -l</span><br><span class="line">0</span><br></pre></td></tr></table></figure>
+<h3 id="停掉所有etcd节点并且移除ETCD数据目录"><a href="#停掉所有etcd节点并且移除ETCD数据目录" class="headerlink" title="停掉所有etcd节点并且移除ETCD数据目录"></a>停掉所有etcd节点并且移除ETCD数据目录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv /var/lib/etcd /var/lib/etcd-bak</span><br></pre></td></tr></table></figure>
+<h3 id="分别在各个节点恢复数据-首先需要拷贝数据到每个master节点"><a href="#分别在各个节点恢复数据-首先需要拷贝数据到每个master节点" class="headerlink" title="分别在各个节点恢复数据,首先需要拷贝数据到每个master节点"></a>分别在各个节点恢复数据,首先需要拷贝数据到每个master节点</h3><h3 id="所有节点etcd数据恢复"><a href="#所有节点etcd数据恢复" class="headerlink" title="所有节点etcd数据恢复"></a>所有节点etcd数据恢复</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">set -x</span><br><span class="line">export ETCD_NAME=$(cat /etc/kubernetes/manifests/etcd.yaml |egrep  -o &apos;*--name=node[0-9]*&apos; |cut -d &apos;=&apos; -f 2)</span><br><span class="line">export ETCD_CLUSTER=$(cat /etc/kubernetes/manifests/etcd.yaml |egrep   &apos;*--initial-clustere*&apos; |awk -F &apos;--initial-cluster=&apos; &apos;&#123;print $2&#125;&apos;)</span><br><span class="line">export ETCD_INITIAL_ADVERTISE_PEER_URLS=$(cat /etc/kubernetes/manifests/etcd.yaml |egrep   &apos;*--initial-advertise-peer-urls*&apos; |awk -F &apos;--initial-advertise-peer-urls=&apos; &apos;&#123;print $2&#125;&apos;)</span><br><span class="line">ETCDCTL_API=3 etcdctl snapshot --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key  restore /var/lib/etcd_backup/backup_20180107172459.db \</span><br><span class="line">  --name $ETCD_NAME \</span><br><span class="line">  --data-dir /var/lib/etcd/ \</span><br><span class="line">  --initial-cluster $ETCD_CLUSTER \</span><br><span class="line">  --initial-advertise-peer-urls $ETCD_INITIAL_ADVERTISE_PEER_URLS</span><br></pre></td></tr></table></figure>
+<h3 id="启动所有ETCD，健康检查"><a href="#启动所有ETCD，健康检查" class="headerlink" title="启动所有ETCD，健康检查"></a>启动所有ETCD，健康检查</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ETCDCTL_API=3 etcdctl --endpoints=&apos;https://127.0.0.1:2379&apos; --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key endpoint health</span><br></pre></td></tr></table></figure>
+<h3 id="启动apiserver"><a href="#启动apiserver" class="headerlink" title="启动apiserver"></a>启动apiserver</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mv /etc/kubernetes/manifests-backups/kube-apiserver.yaml /etc/kubernetes/manifests/</span><br><span class="line">kubectl get cs,node</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
         
   
   
@@ -807,89 +896,6 @@ verbs:
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/k8s/gluster-k8s/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/16/k8s/gluster-k8s/" class="post-title-link" itemprop="url">k8s/gluster-k8s</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-09-11 17:41:30" itemprop="dateModified" datetime="2019-09-11T17:41:30+08:00">2019-09-11</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><a href="https://www.cnblogs.com/yourarebest/p/9629521.html" target="_blank" rel="noopener">https://www.cnblogs.com/yourarebest/p/9629521.html</a></p>
-<h3 id="静态手动管理glusterfs"><a href="#静态手动管理glusterfs" class="headerlink" title="静态手动管理glusterfs"></a>静态手动管理glusterfs</h3><h4 id="手动创建pvc-这种方式提示手动创建storageclass，但是只有动态创建的storageclass"><a href="#手动创建pvc-这种方式提示手动创建storageclass，但是只有动态创建的storageclass" class="headerlink" title="手动创建pvc,这种方式提示手动创建storageclass，但是只有动态创建的storageclass"></a>手动创建pvc,这种方式提示手动创建storageclass，但是只有动态创建的storageclass</h4><ol>
-<li>创建GlusterFS卷</li>
-<li>Kubernetes创建PV等存储:gfs-svc gfs-ep gfs-pv </li>
-<li>Kubernetes创建应用 gfs-pvc pod<blockquote>
-<p>这种方式是手动管理volume。假设在k8s上部署一个使用gluster存储的应用，如果使用之前应用的volume，能看到其他应用的数据，多个应用之间的数据应该是隔离的，也就是权限问题，同时，大概率导致文件命名冲突问题。pv(c)中设置的容量capacity也无法控制。基本上处于不可用。 <a href="http://rdc.hundsun.com/portal/article/826.html" target="_blank" rel="noopener">http://rdc.hundsun.com/portal/article/826.html</a></p>
-</blockquote>
-</li>
-</ol>
-<h4 id="通过”endpoints”-“glusterfs-cluster”-path”-“gv0”"><a href="#通过”endpoints”-“glusterfs-cluster”-path”-“gv0”" class="headerlink" title="通过”endpoints”: “glusterfs-cluster”,path”: “gv0”,"></a>通过”endpoints”: “glusterfs-cluster”,path”: “gv0”,</h4><p><a href="https://github.com/kubernetes/examples/blob/master/staging/volumes/glusterfs/glusterfs-pod.json" target="_blank" rel="noopener">https://github.com/kubernetes/examples/blob/master/staging/volumes/glusterfs/glusterfs-pod.json</a></p>
-<h4 id="直接通过-brickrootPaths-“172-16-2-131-tmp-172-16-2-132-tmp”‘"><a href="#直接通过-brickrootPaths-“172-16-2-131-tmp-172-16-2-132-tmp”‘" class="headerlink" title="直接通过 brickrootPaths: “172.16.2.131:/tmp/,172.16.2.132:/tmp”‘"></a>直接通过 brickrootPaths: “172.16.2.131:/tmp/,172.16.2.132:/tmp”‘</h4><p><a href="https://github.com/kubernetes-incubator/external-storage/tree/master/gluster/glusterfs" target="_blank" rel="noopener">https://github.com/kubernetes-incubator/external-storage/tree/master/gluster/glusterfs</a></p>
-<h3 id="通过heketi来动态管理glusterfs"><a href="#通过heketi来动态管理glusterfs" class="headerlink" title="通过heketi来动态管理glusterfs"></a>通过heketi来动态管理glusterfs</h3><h3 id="gluster"><a href="#gluster" class="headerlink" title="gluster"></a>gluster</h3><p><a href="https://github.com/gluster/gluster-kubernetes/blob/master/docs/setup-guide.md" target="_blank" rel="noopener">https://github.com/gluster/gluster-kubernetes/blob/master/docs/setup-guide.md</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">modprobe dm_snapshot</span><br><span class="line">modprobe dm_mirror</span><br><span class="line">modprobe dm_thin_pool</span><br><span class="line"></span><br><span class="line">sudo wipefs -af /dev/sdb</span><br><span class="line">dmsetup ls</span><br><span class="line">dmsetup remove ddf1_44656c6c202020201000007910281f1747cd0dedccd25148</span><br><span class="line">dmsetup remove_all</span><br><span class="line">./gk-deploy -g --abort</span><br><span class="line"></span><br><span class="line">./gk-deploy -gv --single-node</span><br></pre></td></tr></table></figure>
-<h3 id="heketi"><a href="#heketi" class="headerlink" title="heketi"></a>heketi</h3><p>/bin/kubectl -n default exec -i heketi-85dbbbb55-78df9 – heketi-cli -s <a href="http://localhost:8080" target="_blank" rel="noopener">http://localhost:8080</a> –user admin –secret ‘’ volume list</p>
-<h3 id="pvc"><a href="#pvc" class="headerlink" title="pvc"></a>pvc</h3><p><a href="https://www.jianshu.com/p/99e610067bc8" target="_blank" rel="noopener">https://www.jianshu.com/p/99e610067bc8</a><br>storageclass <a href="https://kubernetes.io/docs/concepts/storage/storage-classes/" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/storage/storage-classes/</a></p>
-<h3 id="挂载"><a href="#挂载" class="headerlink" title="挂载"></a>挂载</h3><p>mount -t glusterfs 10.105.94.239:vol_fef6bc590cb2a3c8c1df0d72e91a5146 /gfs-promotion/</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">执行kubectl get pv pvc-bd0960f3-7881-11e9-a9d4-c81f66c0e5c3 -o yaml获得</span><br><span class="line">1. spec.glusterfs.path: vol_fef6bc590cb2a3c8c1df0d72e91a5146</span><br><span class="line">2. spec.glusterfs.endpoints: 10.105.94.239</span><br></pre></td></tr></table></figure>
-
-<h2 id="pv挂载"><a href="#pv挂载" class="headerlink" title="pv挂载"></a>pv挂载</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">volumes:</span><br><span class="line">- name: cache-volume</span><br><span class="line">  emptyDir: &#123;&#125;</span><br><span class="line">- name: test-volume</span><br><span class="line">  hostPath:</span><br><span class="line">    # directory location on host</span><br><span class="line">    path: /data</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/k8s/issues/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1015,7 +1021,7 @@ verbs:
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/k8s/kubeadm-k8s%E5%AE%89%E8%A3%85/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/k8s/gluster-k8s/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1029,7 +1035,7 @@ verbs:
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2019/07/16/k8s/kubeadm-k8s%E5%AE%89%E8%A3%85/" class="post-title-link" itemprop="url">k8s/kubeadm-k8s安装</a>
+            <a href="/2019/07/16/k8s/gluster-k8s/" class="post-title-link" itemprop="url">k8s/gluster-k8s</a>
         </h1>
 
         <div class="post-meta">
@@ -1046,7 +1052,7 @@ verbs:
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-27 16:42:20" itemprop="dateModified" datetime="2019-11-27T16:42:20+08:00">2019-11-27</time>
+                <time title="修改时间：2019-09-11 17:41:30" itemprop="dateModified" datetime="2019-09-11T17:41:30+08:00">2019-09-11</time>
               </span>
 
           
@@ -1060,23 +1066,25 @@ verbs:
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>dashboard 访问 <a href="https://www.cnblogs.com/linuxk/p/9783510.html" target="_blank" rel="noopener">https://www.cnblogs.com/linuxk/p/9783510.html</a></p>
-<p>教程 <a href="https://www.kubernetes.org.cn/5213.html" target="_blank" rel="noopener">https://www.kubernetes.org.cn/5213.html</a></p>
-<h3 id="升级内核"><a href="#升级内核" class="headerlink" title="升级内核"></a>升级内核</h3><p>rpm -Uvh *.rpm</p>
-<h3 id="查看当前内核"><a href="#查看当前内核" class="headerlink" title="查看当前内核"></a>查看当前内核</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">awk -F\&apos; &apos;$1==&quot;menuentry &quot; &#123;print i++ &quot; : &quot; $2&#125;&apos; /etc/grub2.cfg</span><br><span class="line">grub2-editenv list</span><br><span class="line"></span><br><span class="line">grub2-set-default 0</span><br><span class="line">grub2-set-default &apos;CentOS Linux (3.10.0-327.el7.x86_64) 7 (Core)&apos;</span><br></pre></td></tr></table></figure>
-
-<h3 id="加节点"><a href="#加节点" class="headerlink" title="加节点"></a>加节点</h3><ol>
-<li>添加从master到node的ssh免密码登录</li>
-<li>设置hostname，hostnamectl set-hostname，加下hosts</li>
-<li>拷贝k8s-v1.14.0/目录到node上，并执行init-node.sh</li>
-<li>在master上执行sh joib-node.sh ${nodeip}</li>
-<li>kubectl get pods -n kube-system</li>
-<li>命令<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl label node $&#123;node&#125; env=pro &amp;&amp; kubectl label node $&#123;node&#125; beta.kubernetes.io/fluentd-ds-ready=true &amp;&amp; kubectl label node $&#123;node&#125; cpu=high</span><br></pre></td></tr></table></figure>
-
-
+          <p><a href="https://www.cnblogs.com/yourarebest/p/9629521.html" target="_blank" rel="noopener">https://www.cnblogs.com/yourarebest/p/9629521.html</a></p>
+<h3 id="静态手动管理glusterfs"><a href="#静态手动管理glusterfs" class="headerlink" title="静态手动管理glusterfs"></a>静态手动管理glusterfs</h3><h4 id="手动创建pvc-这种方式提示手动创建storageclass，但是只有动态创建的storageclass"><a href="#手动创建pvc-这种方式提示手动创建storageclass，但是只有动态创建的storageclass" class="headerlink" title="手动创建pvc,这种方式提示手动创建storageclass，但是只有动态创建的storageclass"></a>手动创建pvc,这种方式提示手动创建storageclass，但是只有动态创建的storageclass</h4><ol>
+<li>创建GlusterFS卷</li>
+<li>Kubernetes创建PV等存储:gfs-svc gfs-ep gfs-pv </li>
+<li>Kubernetes创建应用 gfs-pvc pod<blockquote>
+<p>这种方式是手动管理volume。假设在k8s上部署一个使用gluster存储的应用，如果使用之前应用的volume，能看到其他应用的数据，多个应用之间的数据应该是隔离的，也就是权限问题，同时，大概率导致文件命名冲突问题。pv(c)中设置的容量capacity也无法控制。基本上处于不可用。 <a href="http://rdc.hundsun.com/portal/article/826.html" target="_blank" rel="noopener">http://rdc.hundsun.com/portal/article/826.html</a></p>
+</blockquote>
 </li>
 </ol>
-<h3 id="其他文档"><a href="#其他文档" class="headerlink" title="其他文档"></a>其他文档</h3><p><a href="https://github.com/opsnull/follow-me-install-kubernetes-cluster" target="_blank" rel="noopener">https://github.com/opsnull/follow-me-install-kubernetes-cluster</a></p>
+<h4 id="通过”endpoints”-“glusterfs-cluster”-path”-“gv0”"><a href="#通过”endpoints”-“glusterfs-cluster”-path”-“gv0”" class="headerlink" title="通过”endpoints”: “glusterfs-cluster”,path”: “gv0”,"></a>通过”endpoints”: “glusterfs-cluster”,path”: “gv0”,</h4><p><a href="https://github.com/kubernetes/examples/blob/master/staging/volumes/glusterfs/glusterfs-pod.json" target="_blank" rel="noopener">https://github.com/kubernetes/examples/blob/master/staging/volumes/glusterfs/glusterfs-pod.json</a></p>
+<h4 id="直接通过-brickrootPaths-“172-16-2-131-tmp-172-16-2-132-tmp”‘"><a href="#直接通过-brickrootPaths-“172-16-2-131-tmp-172-16-2-132-tmp”‘" class="headerlink" title="直接通过 brickrootPaths: “172.16.2.131:/tmp/,172.16.2.132:/tmp”‘"></a>直接通过 brickrootPaths: “172.16.2.131:/tmp/,172.16.2.132:/tmp”‘</h4><p><a href="https://github.com/kubernetes-incubator/external-storage/tree/master/gluster/glusterfs" target="_blank" rel="noopener">https://github.com/kubernetes-incubator/external-storage/tree/master/gluster/glusterfs</a></p>
+<h3 id="通过heketi来动态管理glusterfs"><a href="#通过heketi来动态管理glusterfs" class="headerlink" title="通过heketi来动态管理glusterfs"></a>通过heketi来动态管理glusterfs</h3><h3 id="gluster"><a href="#gluster" class="headerlink" title="gluster"></a>gluster</h3><p><a href="https://github.com/gluster/gluster-kubernetes/blob/master/docs/setup-guide.md" target="_blank" rel="noopener">https://github.com/gluster/gluster-kubernetes/blob/master/docs/setup-guide.md</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">modprobe dm_snapshot</span><br><span class="line">modprobe dm_mirror</span><br><span class="line">modprobe dm_thin_pool</span><br><span class="line"></span><br><span class="line">sudo wipefs -af /dev/sdb</span><br><span class="line">dmsetup ls</span><br><span class="line">dmsetup remove ddf1_44656c6c202020201000007910281f1747cd0dedccd25148</span><br><span class="line">dmsetup remove_all</span><br><span class="line">./gk-deploy -g --abort</span><br><span class="line"></span><br><span class="line">./gk-deploy -gv --single-node</span><br></pre></td></tr></table></figure>
+<h3 id="heketi"><a href="#heketi" class="headerlink" title="heketi"></a>heketi</h3><p>/bin/kubectl -n default exec -i heketi-85dbbbb55-78df9 – heketi-cli -s <a href="http://localhost:8080" target="_blank" rel="noopener">http://localhost:8080</a> –user admin –secret ‘’ volume list</p>
+<h3 id="pvc"><a href="#pvc" class="headerlink" title="pvc"></a>pvc</h3><p><a href="https://www.jianshu.com/p/99e610067bc8" target="_blank" rel="noopener">https://www.jianshu.com/p/99e610067bc8</a><br>storageclass <a href="https://kubernetes.io/docs/concepts/storage/storage-classes/" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/storage/storage-classes/</a></p>
+<h3 id="挂载"><a href="#挂载" class="headerlink" title="挂载"></a>挂载</h3><p>mount -t glusterfs 10.105.94.239:vol_fef6bc590cb2a3c8c1df0d72e91a5146 /gfs-promotion/</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">执行kubectl get pv pvc-bd0960f3-7881-11e9-a9d4-c81f66c0e5c3 -o yaml获得</span><br><span class="line">1. spec.glusterfs.path: vol_fef6bc590cb2a3c8c1df0d72e91a5146</span><br><span class="line">2. spec.glusterfs.endpoints: 10.105.94.239</span><br></pre></td></tr></table></figure>
+
+<h2 id="pv挂载"><a href="#pv挂载" class="headerlink" title="pv挂载"></a>pv挂载</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">volumes:</span><br><span class="line">- name: cache-volume</span><br><span class="line">  emptyDir: &#123;&#125;</span><br><span class="line">- name: test-volume</span><br><span class="line">  hostPath:</span><br><span class="line">    # directory location on host</span><br><span class="line">    path: /data</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -1140,7 +1148,7 @@ verbs:
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">81</span>
+          <span class="site-state-item-count">82</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

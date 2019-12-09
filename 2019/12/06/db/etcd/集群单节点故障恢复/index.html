@@ -47,16 +47,18 @@
   };
 </script>
 
-  <meta name="description" content="个人运维笔记">
-<meta property="og:type" content="website">
-<meta property="og:title" content="运维笔记">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;archives&#x2F;2019&#x2F;page&#x2F;4&#x2F;index.html">
+  <meta name="description" content="单节点故障，无法启动在可用节点执行12345678910export ETCDCTL_API=3查看状态bin&#x2F;etcdctl --endpoints 172.16.21.195:2380,172.16.21.196:2380,172.16.21.197:2380 endpoint status  --write-out=&amp;quot;table&amp;quot;bin&#x2F;etcdctl --endpoin">
+<meta name="keywords" content="etcd备份恢复">
+<meta property="og:type" content="article">
+<meta property="og:title" content="集群单节点故障恢复">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;06&#x2F;db&#x2F;etcd&#x2F;%E9%9B%86%E7%BE%A4%E5%8D%95%E8%8A%82%E7%82%B9%E6%95%85%E9%9A%9C%E6%81%A2%E5%A4%8D&#x2F;index.html">
 <meta property="og:site_name" content="运维笔记">
-<meta property="og:description" content="个人运维笔记">
+<meta property="og:description" content="单节点故障，无法启动在可用节点执行12345678910export ETCDCTL_API=3查看状态bin&#x2F;etcdctl --endpoints 172.16.21.195:2380,172.16.21.196:2380,172.16.21.197:2380 endpoint status  --write-out=&amp;quot;table&amp;quot;bin&#x2F;etcdctl --endpoin">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-12-09T01:33:19.008Z">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/archives/2019/page/4/">
+<link rel="canonical" href="http://yoursite.com/2019/12/06/db/etcd/%E9%9B%86%E7%BE%A4%E5%8D%95%E8%8A%82%E7%82%B9%E6%95%85%E9%9A%9C%E6%81%A2%E5%A4%8D/">
 
 
 <script id="page-configurations">
@@ -64,13 +66,13 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: false,
+    isPost: true,
     isPage: false,
-    isArchive: true
+    isArchive: false
   };
 </script>
 
-  <title>归档 | 运维笔记</title>
+  <title>集群单节点故障恢复 | 运维笔记</title>
   
 
 
@@ -199,233 +201,104 @@
           <div class="content">
             
 
+  <div class="posts-expand">
+      
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        
-        <span class="collection-header">很好! 目前共计 82 篇日志。 继续努力。</span>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/06/db/etcd/%E9%9B%86%E7%BE%A4%E5%8D%95%E8%8A%82%E7%82%B9%E6%95%85%E9%9A%9C%E6%81%A2%E5%A4%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          集群单节点故障恢复
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-12-06 17:55:21" itemprop="dateCreated datePublished" datetime="2019-12-06T17:55:21+08:00">2019-12-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-09 09:33:19" itemprop="dateModified" datetime="2019-12-09T09:33:19+08:00">2019-12-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/etcd/" itemprop="url" rel="index">
+                    <span itemprop="name">etcd</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/etcd/%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D/" itemprop="url" rel="index">
+                    <span itemprop="name">备份恢复</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <h1 class="collection-header">2019</h1>
+        <h1 id="单节点故障，无法启动"><a href="#单节点故障，无法启动" class="headerlink" title="单节点故障，无法启动"></a>单节点故障，无法启动</h1><h2 id="在可用节点执行"><a href="#在可用节点执行" class="headerlink" title="在可用节点执行"></a>在可用节点执行</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">export ETCDCTL_API=3</span><br><span class="line">查看状态</span><br><span class="line">bin/etcdctl --endpoints 172.16.21.195:2380,172.16.21.196:2380,172.16.21.197:2380 endpoint status  --write-out=&quot;table&quot;</span><br><span class="line">bin/etcdctl --endpoints 172.16.21.195:2380,172.16.21.196:2380,172.16.21.197:2380 member list</span><br><span class="line">删除故障节点</span><br><span class="line">bin/etcdctl --endpoints 172.16.21.195:2380,172.16.21.196:2380,172.16.21.197:2380 member remove ee952e59281882a2</span><br><span class="line">重新添加节点</span><br><span class="line">bin/etcdctl --endpoints 172.16.21.195:2380,172.16.21.196:2380,172.16.21.197:2380 member add etcd-1 --peer-urls=&quot;http://172.16.21.195:2380&quot;</span><br><span class="line">启动该节点</span><br><span class="line">如节点无法启动，可删除data目录，再启动</span><br></pre></td></tr></table></figure>
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-11-28T11:05:26+08:00"
-              content="2019-11-28">
-          11-28
-        </time>
-      </div>
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/etcd/" rel="tag"># etcd</a>
+              <a href="/tags/%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D/" rel="tag"># 备份恢复</a>
+          </div>
 
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/11/28/hadoop/hbase/" itemprop="url">
-            <span itemprop="name">hbase</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-11-28T11:00:10+08:00"
-              content="2019-11-28">
-          11-28
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/11/28/db/tidb/tidb/" itemprop="url">
-            <span itemprop="name">tidb</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-11-28T10:59:21+08:00"
-              content="2019-11-28">
-          11-28
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/11/28/db/redis/redis%E8%BF%81%E7%A7%BB/" itemprop="url">
-            <span itemprop="name">redis</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-11-28T10:56:54+08:00"
-              content="2019-11-28">
-          11-28
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/11/28/db/solr/" itemprop="url">
-            <span itemprop="name">solr</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-11-28T10:56:24+08:00"
-              content="2019-11-28">
-          11-28
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/11/28/db/consul/" itemprop="url">
-            <span itemprop="name">consul</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-11-28T10:51:52+08:00"
-              content="2019-11-28">
-          11-28
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/11/28/logging/pinpoint/" itemprop="url">
-            <span itemprop="name">pinpoint</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-11-28T10:51:18+08:00"
-              content="2019-11-28">
-          11-28
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/11/28/logging/fluentd-%E4%BA%8C%E8%BF%9B%E5%88%B6/" itemprop="url">
-            <span itemprop="name">fluentd</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-11-28T10:50:39+08:00"
-              content="2019-11-28">
-          11-28
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/11/28/logging/kafka-issues/" itemprop="url">
-            <span itemprop="name">kafka</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-11-28T10:49:36+08:00"
-              content="2019-11-28">
-          11-28
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/11/28/logging/kafka/" itemprop="url">
-            <span itemprop="name">kafka</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-11-28T10:48:36+08:00"
-              content="2019-11-28">
-          11-28
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/11/28/logging/flume/" itemprop="url">
-            <span itemprop="name">flume</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
+        
 
 
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/12/06/%E5%85%B6%E4%BB%96/proxmox%E8%99%9A%E6%8B%9F%E6%9C%BA/" rel="prev" title="其他/proxmox虚拟机">
+      <i class="fa fa-chevron-left"></i> 其他/proxmox虚拟机
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
   </div>
-  
-  
-  
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/2019/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/archives/2019/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2019/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/archives/2019/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2019/page/9/">9</a><a class="extend next" rel="next" href="/archives/2019/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
-  </nav>
-
 
 
           </div>
@@ -454,6 +327,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#单节点故障，无法启动"><span class="nav-number">1.</span> <span class="nav-text">单节点故障，无法启动</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#在可用节点执行"><span class="nav-number">1.1.</span> <span class="nav-text">在可用节点执行</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

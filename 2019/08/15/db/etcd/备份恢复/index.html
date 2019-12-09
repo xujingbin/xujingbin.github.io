@@ -55,7 +55,7 @@
 <meta property="og:site_name" content="运维笔记">
 <meta property="og:description" content="备份官方指出 etcd v2 和 v3 的数据不能混合存放，support backup of v2 and v3 stores 。 特别提醒：若使用 v3 备份数据时存在 v2 的数据则不影响恢复若使用 v2 备份数据时存在 v3 的数据则恢复失败etcd 集群都是至少 3 台机器，官方也说明了集群容错为 (N-1)&#x2F;2，所以备份数据一般都是用不到，但是鉴上次 gitlab 出现的问题，对于备份">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-12-06T01:30:00.914Z">
+<meta property="og:updated_time" content="2019-12-09T01:33:19.074Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://yoursite.com/2019/08/15/db/etcd/%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D/">
@@ -152,7 +152,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">81</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">82</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -236,7 +236,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-12-06 09:30:00" itemprop="dateModified" datetime="2019-12-06T09:30:00+08:00">2019-12-06</time>
+                <time title="修改时间：2019-12-09 09:33:19" itemprop="dateModified" datetime="2019-12-09T09:33:19+08:00">2019-12-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -269,7 +269,7 @@
       
         <h1 id="备份"><a href="#备份" class="headerlink" title="备份"></a>备份</h1><p>官方指出 etcd v2 和 v3 的数据不能混合存放，<a href="https://github.com/etcd-io/etcd/issues/7002" target="_blank" rel="noopener">support backup of v2 and v3 stores</a> 。</p>
 <p>特别提醒：若使用 v3 备份数据时存在 v2 的数据则不影响恢复<br>若使用 v2 备份数据时存在 v3 的数据则恢复失败<br>etcd 集群都是至少 3 台机器，官方也说明了集群容错为 (N-1)/2，所以备份数据一般都是用不到，但是鉴上次 gitlab 出现的问题，对于备份数据也要非常重视。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"># 开发环境 备份脚本在/crond</span><br><span class="line"></span><br><span class="line">IP=192.168.67.201</span><br><span class="line">BACKUP_DIR=/usr/local/backup</span><br><span class="line">mkdir -p $BACKUP_DIR</span><br><span class="line">export ETCDCTL_API=3</span><br><span class="line">/usr/local/etcd-v3.2.26-linux-amd64/bin/etcdctl --endpoints=http://$IP:2379 snapshot save $BACKUP_DIR/snap-$(date +%Y%m%d%H%M).db</span><br><span class="line">find $BACKUP_DIR -mtime +7 |xargs rm -f</span><br><span class="line"></span><br><span class="line"># 备份一个节点的数据就可以恢复，实践中，为了防止定时任务配置的节点异常没有生成备份，建议多加几个</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"># 开发环境 备份脚本在/crond</span><br><span class="line">##endpoint指定哪台机器，就是备份哪台上的数据，虽然节点间是最终一致的，不加endpoints参数就是备份本机节点的数据</span><br><span class="line">IP=192.168.67.201</span><br><span class="line">BACKUP_DIR=/usr/local/backup</span><br><span class="line">mkdir -p $BACKUP_DIR</span><br><span class="line">export ETCDCTL_API=3</span><br><span class="line">/usr/local/etcd-v3.2.26-linux-amd64/bin/etcdctl --endpoints=http://$IP:2379 snapshot save $BACKUP_DIR/snap-$(date +%Y%m%d%H%M).db</span><br><span class="line">find $BACKUP_DIR -mtime +7 |xargs rm -f</span><br><span class="line">##为了防止存在节点出现问题，可以在 endpoints 中写多个ip：</span><br><span class="line">#etcdctl snapshot --endpoints=http://192.168.244.11:2379,http://192.168.244.12:2379，http://192.168.244.13:2379 save /tmp/etcd_backup/etcdback.db</span><br><span class="line"># 备份一个节点的数据就可以恢复，实践中，为了防止定时任务配置的节点异常没有生成备份，建议多加几个</span><br></pre></td></tr></table></figure>
 
 <h1 id="还原"><a href="#还原" class="headerlink" title="还原"></a>还原</h1><h2 id="集群单节点故障恢复"><a href="#集群单节点故障恢复" class="headerlink" title="集群单节点故障恢复"></a>集群单节点故障恢复</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">1. 查看故障节点</span><br><span class="line">etcdctl --endpoints=$ENDPOINTS endpoint health</span><br><span class="line">2. 查看节点id</span><br><span class="line">etcdctl --endpoints=$ENDPOINTS member list</span><br><span class="line">3. 删除故障节点</span><br><span class="line">etcdctl --endpoints=$ENDPOINTS member remove 81672b0117eb8ad9</span><br><span class="line">4. 下线故障节点，并删除data目录</span><br><span class="line">systemctl stop etcd</span><br><span class="line">5. 添加新节点</span><br><span class="line">etcdctl --endpoints=$ENDPOINTS member add etcd-2 --peer-urls=http://192.168.67.202:2380</span><br><span class="line">6. 修改新节点配置文件</span><br><span class="line">/usr/local/etcd-v3.2.26-linux-amd64/conf/cluster</span><br><span class="line">CLUSTER_STATE=existing</span><br><span class="line">7. 启动新节点systemctl start etcd</span><br></pre></td></tr></table></figure>
 <h2 id="单节点备份恢复"><a href="#单节点备份恢复" class="headerlink" title="单节点备份恢复"></a>单节点备份恢复</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">BACKUP_DIR=.</span><br><span class="line">#mkdir -p $BACKUP_DIR</span><br><span class="line">export ETCDCTL_API=3</span><br><span class="line">#etcdctl --endpoints=http://$IP:2379 snapshot save $BACKUP_DIR/snap.db</span><br><span class="line">##find $BACKUP_DIR -mtime +7 |xargs rm -f</span><br><span class="line">#etcdctl --endpoints=&apos;172.20.7.15:2379&apos; snapshot restore $BACKUP_DIR/snap.db --data-dir=&quot;/data2/etcd/&quot;</span><br><span class="line">#etcdctl --endpoints=&apos;172.20.7.15:2379&apos; snapshot status snap.db --write-out=table</span><br><span class="line">etcdctl --endpoints=&apos;172.20.6.123:2379&apos;  get / --prefix --keys-only</span><br><span class="line">echo &quot;---------&quot;</span><br><span class="line">etcdctl --endpoints=&apos;172.20.2.118:2379&apos;  get / --prefix --keys-only</span><br></pre></td></tr></table></figure>
@@ -353,7 +353,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">81</span>
+          <span class="site-state-item-count">82</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
