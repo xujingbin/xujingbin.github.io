@@ -140,17 +140,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">63</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">65</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">56</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">59</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">82</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">83</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -235,7 +235,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-12-04 15:01:41" itemprop="dateModified" datetime="2019-12-04T15:01:41+08:00">2019-12-04</time>
+                <time title="修改时间：2019-12-09 14:09:36" itemprop="dateModified" datetime="2019-12-09T14:09:36+08:00">2019-12-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -274,6 +274,8 @@
 <h3 id="分别在各个节点恢复数据-首先需要拷贝数据到每个master节点"><a href="#分别在各个节点恢复数据-首先需要拷贝数据到每个master节点" class="headerlink" title="分别在各个节点恢复数据,首先需要拷贝数据到每个master节点"></a>分别在各个节点恢复数据,首先需要拷贝数据到每个master节点</h3><h3 id="所有节点etcd数据恢复"><a href="#所有节点etcd数据恢复" class="headerlink" title="所有节点etcd数据恢复"></a>所有节点etcd数据恢复</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">set -x</span><br><span class="line">export ETCD_NAME=$(cat /etc/kubernetes/manifests/etcd.yaml |egrep  -o &apos;*--name=node[0-9]*&apos; |cut -d &apos;=&apos; -f 2)</span><br><span class="line">export ETCD_CLUSTER=$(cat /etc/kubernetes/manifests/etcd.yaml |egrep   &apos;*--initial-clustere*&apos; |awk -F &apos;--initial-cluster=&apos; &apos;&#123;print $2&#125;&apos;)</span><br><span class="line">export ETCD_INITIAL_ADVERTISE_PEER_URLS=$(cat /etc/kubernetes/manifests/etcd.yaml |egrep   &apos;*--initial-advertise-peer-urls*&apos; |awk -F &apos;--initial-advertise-peer-urls=&apos; &apos;&#123;print $2&#125;&apos;)</span><br><span class="line">ETCDCTL_API=3 etcdctl snapshot --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key  restore /var/lib/etcd_backup/backup_20180107172459.db \</span><br><span class="line">  --name $ETCD_NAME \</span><br><span class="line">  --data-dir /var/lib/etcd/ \</span><br><span class="line">  --initial-cluster $ETCD_CLUSTER \</span><br><span class="line">  --initial-advertise-peer-urls $ETCD_INITIAL_ADVERTISE_PEER_URLS</span><br></pre></td></tr></table></figure>
 <h3 id="启动所有ETCD，健康检查"><a href="#启动所有ETCD，健康检查" class="headerlink" title="启动所有ETCD，健康检查"></a>启动所有ETCD，健康检查</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ETCDCTL_API=3 etcdctl --endpoints=&apos;https://127.0.0.1:2379&apos; --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key endpoint health</span><br></pre></td></tr></table></figure>
 <h3 id="启动apiserver"><a href="#启动apiserver" class="headerlink" title="启动apiserver"></a>启动apiserver</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mv /etc/kubernetes/manifests-backups/kube-apiserver.yaml /etc/kubernetes/manifests/</span><br><span class="line">kubectl get cs,node</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://blog.csdn.net/dazuiba008/article/details/94596017" target="_blank" rel="noopener">https://blog.csdn.net/dazuiba008/article/details/94596017</a><br><a href="https://blog.csdn.net/dazuiba008/article/details/94595980" target="_blank" rel="noopener">https://blog.csdn.net/dazuiba008/article/details/94595980</a><br><a href="https://blog.csdn.net/dazuiba008/article/details/94595451" target="_blank" rel="noopener">https://blog.csdn.net/dazuiba008/article/details/94595451</a></p>
 
       
     </div>
@@ -377,6 +379,218 @@
 
 <h3 id="https访问"><a href="#https访问" class="headerlink" title="https访问"></a>https访问</h3><h4 id="证书创建"><a href="#证书创建" class="headerlink" title="证书创建"></a>证书创建</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">openssl genrsa -out tls.key 2048</span><br><span class="line">openssl req -new -x509 -key tls.key -out tls.crt -subj /C=CN/ST=Beijing/L=Beijing/O=DevOps/CN=tomcat.magedu.com #注意域名要和服务的域名一致</span><br><span class="line">kubectl create secret tls tomcat-ingress-secret --cert=tls.crt --key=tls.key #创建secret</span><br><span class="line">kubectl get secret</span><br></pre></td></tr></table></figure>
 <h4 id="模板ingress"><a href="#模板ingress" class="headerlink" title="模板ingress"></a>模板ingress</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master01 ingress]# cat ingress-tomcat-tls.yaml</span><br><span class="line">apiVersion: extensions/v1beta1</span><br><span class="line">kind: Ingress</span><br><span class="line">metadata:</span><br><span class="line">  name: ingress-tomcat-tls</span><br><span class="line">  namespace: default</span><br><span class="line">  annotations: </span><br><span class="line">    kubernets.io/ingress.class: &quot;nginx&quot;</span><br><span class="line">spec:</span><br><span class="line">  tls:</span><br><span class="line">  - hosts:</span><br><span class="line">    - tomcat.magedu.com        #与secret证书的域名需要保持一致</span><br><span class="line">    secretName: tomcat-ingress-secret   #secret证书的名称</span><br><span class="line">  rules:</span><br><span class="line">  - host: tomcat.magedu.com</span><br><span class="line">    http:</span><br><span class="line">      paths:</span><br><span class="line">      - path: </span><br><span class="line">        backend:</span><br><span class="line">          serviceName: tomcat</span><br><span class="line">          servicePort: 8080</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/26/k8s/%E5%88%9B%E5%BB%BA%E5%8F%AA%E8%AF%BB%E8%B4%A6%E6%88%B7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/26/k8s/%E5%88%9B%E5%BB%BA%E5%8F%AA%E8%AF%BB%E8%B4%A6%E6%88%B7/" class="post-title-link" itemprop="url">k8s创建只读rbac账户</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-26 18:41:48" itemprop="dateCreated datePublished" datetime="2019-07-26T18:41:48+08:00">2019-07-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-11 09:24:27" itemprop="dateModified" datetime="2019-12-11T09:24:27+08:00">2019-12-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/k8s/" itemprop="url" rel="index">
+                    <span itemprop="name">k8s</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/k8s/rbac/" itemprop="url" rel="index">
+                    <span itemprop="name">rbac</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="创建只读rbac账户"><a href="#创建只读rbac账户" class="headerlink" title="创建只读rbac账户"></a>创建只读rbac账户</h1><h3 id="readonly-json"><a href="#readonly-json" class="headerlink" title="readonly.json"></a>readonly.json</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;CN&quot;: &quot;readonly&quot;,</span><br><span class="line">  &quot;hosts&quot;: [],</span><br><span class="line">  &quot;key&quot;: &#123;</span><br><span class="line">    &quot;algo&quot;: &quot;rsa&quot;,</span><br><span class="line">    &quot;size&quot;: 2048</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;names&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;C&quot;: &quot;CN&quot;,</span><br><span class="line">      &quot;ST&quot;: &quot;HangZhou&quot;,</span><br><span class="line">      &quot;L&quot;: &quot;HangZhou&quot;,</span><br><span class="line">      &quot;O&quot;: &quot;develop:readonly&quot;,</span><br><span class="line">      &quot;OU&quot;: &quot;develop&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="ca-config-readonly-json"><a href="#ca-config-readonly-json" class="headerlink" title="ca-config-readonly.json"></a>ca-config-readonly.json</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;signing&quot;: &#123;</span><br><span class="line">        &quot;default&quot;: &#123;</span><br><span class="line">            &quot;expiry&quot;: &quot;87600h&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;profiles&quot;: &#123;</span><br><span class="line">            &quot;kubernetes&quot;: &#123;</span><br><span class="line">                &quot;usages&quot;: [</span><br><span class="line">                    &quot;signing&quot;,</span><br><span class="line">                    &quot;key encipherment&quot;,</span><br><span class="line">                    &quot;server auth&quot;,</span><br><span class="line">                    &quot;client auth&quot;</span><br><span class="line">                ],</span><br><span class="line">                &quot;expiry&quot;: &quot;87600h&quot;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="下载证书制作工具"><a href="#下载证书制作工具" class="headerlink" title="下载证书制作工具"></a>下载证书制作工具</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">curl -s -L -o /bin/cfssl https://pkg.cfssl.org/R1.2/cfssl_linux-amd64</span><br><span class="line">curl -s -L -o /bin/cfssljson https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64</span><br><span class="line">curl -s -L -o /bin/cfssl-certinfo https://pkg.cfssl.org/R1.2/cfssl-certinfo_linux-amd64</span><br><span class="line">chmod +x /bin/cfssl*</span><br></pre></td></tr></table></figure>
+
+<h3 id="基于以Kubernetes-CA证书创建只读用户的证书-生成readonly-key-pem、readonly-pem、readonly-csr"><a href="#基于以Kubernetes-CA证书创建只读用户的证书-生成readonly-key-pem、readonly-pem、readonly-csr" class="headerlink" title="基于以Kubernetes CA证书创建只读用户的证书 生成readonly-key.pem、readonly.pem、readonly.csr"></a>基于以Kubernetes CA证书创建只读用户的证书 生成readonly-key.pem、readonly.pem、readonly.csr</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cfssl gencert --ca /etc/kubernetes/pki/ca.crt --ca-key /etc/kubernetes/pki/ca.key --config ca-config-readonly.json --profile=kubernetes readonly.json |cfssljson --bare readonly</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建kubeconfig"><a href="#创建kubeconfig" class="headerlink" title="创建kubeconfig"></a>创建kubeconfig</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">KUBE_API_SERVER=&quot;https://192.168.67.119:6443&quot;</span><br><span class="line">kubectl config set-cluster kubernetes --server=$&#123;KUBE_API_SERVER&#125; \</span><br><span class="line">    --certificate-authority=/etc/kubernetes/pki/ca.crt \</span><br><span class="line">    --embed-certs=true \</span><br><span class="line">    --kubeconfig=readonly.kubeconfig</span><br><span class="line">kubectl config set-credentials develop-readonly \</span><br><span class="line">    --certificate-authority=/etc/kubernetes/pki/ca.crt \</span><br><span class="line">    --embed-certs=true \</span><br><span class="line">    --client-key=readonly-key.pem \</span><br><span class="line">    --client-certificate=readonly.pem \</span><br><span class="line">    --kubeconfig=readonly.kubeconfig</span><br><span class="line">kubectl config set-context default-system --cluster=kubernetes \</span><br><span class="line">    --user=develop-readonly \</span><br><span class="line">    --kubeconfig=readonly.kubeconfig</span><br><span class="line">kubectl config use-context default-system --kubeconfig=readonly.kubeconfig</span><br></pre></td></tr></table></figure>
+
+<h3 id="增加用于dashboard的kubeconfig方式登陆（可选）"><a href="#增加用于dashboard的kubeconfig方式登陆（可选）" class="headerlink" title="增加用于dashboard的kubeconfig方式登陆（可选）"></a>增加用于dashboard的kubeconfig方式登陆（可选）</h3><ol>
+<li><p>cluster-readonly-sc.yaml，在生成的kubeconfig文件最后添加token: ${token}即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: ServiceAccount</span><br><span class="line">metadata:</span><br><span class="line">  name: cluster-readonly</span><br><span class="line">  namespace: kube-system</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取token</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl -n kube-system describe secret cluster-readonly |awk &apos;$1~/token:/ &#123;print $2&#125;&apos;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="kubectl-apply-f-readonly-clusterrole-yaml-clusterrolebinding-yaml"><a href="#kubectl-apply-f-readonly-clusterrole-yaml-clusterrolebinding-yaml" class="headerlink" title="kubectl apply -f readonly-clusterrole.yaml,clusterrolebinding.yaml"></a>kubectl apply -f readonly-clusterrole.yaml,clusterrolebinding.yaml</h3><pre><code>apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  name: cluster-readonly
+rules:
+- apiGroups:
+  - &quot;&quot;
+  resources:
+  - pods
+  - pods/attach
+  - pods/exec
+  - pods/portforward
+  - pods/proxy
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - &quot;&quot;
+  resources:
+  - configmaps
+  - endpoints
+  - persistentvolumeclaims
+  - replicationcontrollers
+  - replicationcontrollers/scale
+  - serviceaccounts
+  - services
+  - services/proxy
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - &quot;&quot;
+  resources:
+  - bindings
+  - events
+  - limitranges
+  - namespaces/status
+  - pods/log
+  - pods/status
+  - replicationcontrollers/status
+  - resourcequotas
+  - resourcequotas/status
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - &quot;&quot;
+  resources:
+  - namespaces
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  - deployments/rollback
+  - deployments/scale
+  - statefulsets
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - autoscaling
+  resources:
+  - horizontalpodautoscalers
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - batch
+  resources:
+  - cronjobs
+  - jobs
+  - scheduledjobs
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - extensions
+  resources:
+  - daemonsets
+  - deployments
+  - ingresses
+  - replicasets
+  verbs:
+  - get
+  - list
+  - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: cluster-readonly
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-readonly
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: develop:readonly
+- kind: ServiceAccount
+  name: cluster-readonly
+  namespace: kube-system
+</code></pre>
       
     </div>
 
@@ -653,7 +867,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2019/07/16/k8s/k8s%E7%BB%84%E4%BB%B6/" class="post-title-link" itemprop="url">k8s/k8s组件</a>
+            <a href="/2019/07/16/k8s/k8s%E7%BB%84%E4%BB%B6/" class="post-title-link" itemprop="url">k8s相关组件</a>
         </h1>
 
         <div class="post-meta">
@@ -670,8 +884,25 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-07 09:10:06" itemprop="dateModified" datetime="2019-11-07T09:10:06+08:00">2019-11-07</time>
+                <time title="修改时间：2019-12-11 09:24:27" itemprop="dateModified" datetime="2019-12-11T09:24:27+08:00">2019-12-11</time>
               </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/k8s/" itemprop="url" rel="index">
+                    <span itemprop="name">k8s</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/k8s/%E7%BB%84%E4%BB%B6/" itemprop="url" rel="index">
+                    <span itemprop="name">组件</span>
+                  </a>
+                </span>
+            </span>
 
           
 
@@ -706,6 +937,97 @@
 <h2 id="tab命令不全"><a href="#tab命令不全" class="headerlink" title="tab命令不全"></a>tab命令不全</h2><p>添加命令自动补全：<br>yum install -y bash-completion<br>vim ~/.bashrc<br>添加<br>source &lt;(kubectl completion bash)</p>
 <h2 id="kubelet"><a href="#kubelet" class="headerlink" title="kubelet"></a>kubelet</h2><p>curl -LO <a href="https://storage.googleapis.com/kubernetes-release/release/`curl" target="_blank" rel="noopener">https://storage.googleapis.com/kubernetes-release/release/`curl</a> -s <a href="https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl" target="_blank" rel="noopener">https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl</a> &amp;&amp; \</p>
 <h2 id="kuboard"><a href="#kuboard" class="headerlink" title="kuboard"></a>kuboard</h2><p><a href="https://kuboard.cn/guide/example/import.html" target="_blank" rel="noopener">https://kuboard.cn/guide/example/import.html</a><br><a href="http://192.168.67.119:32567/#/namespace/game-buyu" target="_blank" rel="noopener">http://192.168.67.119:32567/#/namespace/game-buyu</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/k8s/rbac/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/16/k8s/rbac/" class="post-title-link" itemprop="url">k8s权限认证</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-11 09:23:51" itemprop="dateModified" datetime="2019-12-11T09:23:51+08:00">2019-12-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/k8s/" itemprop="url" rel="index">
+                    <span itemprop="name">k8s</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/k8s/rbac/" itemprop="url" rel="index">
+                    <span itemprop="name">rbac</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="相关文档"><a href="#相关文档" class="headerlink" title="相关文档"></a>相关文档</h2><ol>
+<li>kubectl的用户认证授权 <a href="https://www.colabug.com/1183751.html" target="_blank" rel="noopener">https://www.colabug.com/1183751.html</a></li>
+<li>kubeconfig <a href="https://jimmysong.io/kubernetes-handbook/guide/authenticate-across-clusters-kubeconfig.html" target="_blank" rel="noopener">https://jimmysong.io/kubernetes-handbook/guide/authenticate-across-clusters-kubeconfig.html</a></li>
+<li>calico <a href="https://docs.projectcalico.org/v3.6/getting-started/kubernetes/" target="_blank" rel="noopener">https://docs.projectcalico.org/v3.6/getting-started/kubernetes/</a></li>
+<li>Kubernetes-基于RBAC的授权 <a href="https://www.kubernetes.org.cn/4062.html" target="_blank" rel="noopener">https://www.kubernetes.org.cn/4062.html</a></li>
+<li>tls <a href="https://mritd.me/2018/01/07/kubernetes-tls-bootstrapping-note/" target="_blank" rel="noopener">https://mritd.me/2018/01/07/kubernetes-tls-bootstrapping-note/</a></li>
+<li>dashboard 最小权限<a href="https://www.cnblogs.com/fuyuteng/p/9501079.html" target="_blank" rel="noopener">https://www.cnblogs.com/fuyuteng/p/9501079.html</a></li>
+<li>官方文档<a href="https://kubernetes.io/docs/reference/access-authn-authz/rbac/" target="_blank" rel="noopener">https://kubernetes.io/docs/reference/access-authn-authz/rbac/</a></li>
+</ol>
+<h3 id="创建持续部署权限"><a href="#创建持续部署权限" class="headerlink" title="创建持续部署权限"></a>创建持续部署权限</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: rbac.authorization.k8s.io/v1beta1</span><br><span class="line">kind: ClusterRoleBinding</span><br><span class="line">metadata:</span><br><span class="line">  name: deploy</span><br><span class="line">roleRef:</span><br><span class="line">  apiGroup: rbac.authorization.k8s.io</span><br><span class="line">  kind: ClusterRole</span><br><span class="line">  name: deploy</span><br><span class="line">subjects:</span><br><span class="line">- apiGroup: rbac.authorization.k8s.io</span><br><span class="line">  kind: Group</span><br><span class="line">  name: develop:deploy</span><br><span class="line">- kind: ServiceAccount</span><br><span class="line">  name: deploy</span><br><span class="line">  namespace: kube-system</span><br><span class="line">---</span><br><span class="line">apiVersion: rbac.authorization.k8s.io/v1beta1</span><br><span class="line">kind: ClusterRole</span><br><span class="line">metadata:</span><br><span class="line">  name: deploy</span><br><span class="line">rules:</span><br><span class="line">- apiGroups: [&quot;&quot;, &quot;extensions&quot;, &quot;apps&quot;]</span><br><span class="line">  resources: [&quot;deployments&quot;, &quot;replicasets&quot;, &quot;pods&quot;, &quot;pods/log&quot;, &quot;deployments/rollback&quot;]</span><br><span class="line">  verbs: [&quot;get&quot;, &quot;list&quot;, &quot;watch&quot;, &quot;create&quot;, &quot;update&quot;, &quot;patch&quot;, &quot;delete&quot;]</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -811,216 +1133,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/k8s/rbac/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/16/k8s/rbac/" class="post-title-link" itemprop="url">k8s/rbac</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-08-02 17:36:49" itemprop="dateModified" datetime="2019-08-02T17:36:49+08:00">2019-08-02</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="相关文档"><a href="#相关文档" class="headerlink" title="相关文档"></a>相关文档</h2><ol>
-<li>kubectl的用户认证授权 <a href="https://www.colabug.com/1183751.html" target="_blank" rel="noopener">https://www.colabug.com/1183751.html</a></li>
-<li>kubeconfig <a href="https://jimmysong.io/kubernetes-handbook/guide/authenticate-across-clusters-kubeconfig.html" target="_blank" rel="noopener">https://jimmysong.io/kubernetes-handbook/guide/authenticate-across-clusters-kubeconfig.html</a></li>
-<li>calico <a href="https://docs.projectcalico.org/v3.6/getting-started/kubernetes/" target="_blank" rel="noopener">https://docs.projectcalico.org/v3.6/getting-started/kubernetes/</a></li>
-<li>Kubernetes-基于RBAC的授权 <a href="https://www.kubernetes.org.cn/4062.html" target="_blank" rel="noopener">https://www.kubernetes.org.cn/4062.html</a></li>
-<li>tls <a href="https://mritd.me/2018/01/07/kubernetes-tls-bootstrapping-note/" target="_blank" rel="noopener">https://mritd.me/2018/01/07/kubernetes-tls-bootstrapping-note/</a></li>
-<li>dashboard 最小权限<a href="https://www.cnblogs.com/fuyuteng/p/9501079.html" target="_blank" rel="noopener">https://www.cnblogs.com/fuyuteng/p/9501079.html</a></li>
-</ol>
-<p>参考 <a href="https://kubernetes.io/docs/reference/access-authn-authz/rbac/" target="_blank" rel="noopener">https://kubernetes.io/docs/reference/access-authn-authz/rbac/</a><br>对资源的权限</p>
-<pre><code>- apiGroups:
-  - extensions
-对应deployment的apiVersion: extensions/v1beta1
-resources:
-- pods
-- pods/attach
-- pods/exec
-对应各种资源
-verbs:
-- get
-- list
-- watch
-对应操作权限 还有其他如  verbs: [&quot;get&quot;, &quot;list&quot;, &quot;watch&quot;, &quot;create&quot;, &quot;update&quot;, &quot;patch&quot;, &quot;delete&quot;]</code></pre>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/k8s/issues/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/16/k8s/issues/" class="post-title-link" itemprop="url">k8s/issues</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-16 10:31:09" itemprop="dateCreated datePublished" datetime="2019-07-16T10:31:09+08:00">2019-07-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-27 16:46:35" itemprop="dateModified" datetime="2019-11-27T16:46:35+08:00">2019-11-27</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="kubernetes部署失败"><a href="#kubernetes部署失败" class="headerlink" title="kubernetes部署失败"></a>kubernetes部署失败</h3><ul>
-<li><p>重置etcd和kubernetes，然后再部署一边etcd和kubernetes</p>
-<p>kubeadm reset -f &amp;&amp; kubeadm init –config /var/tmp/wise2c/kubernetes/kubeadm.conf</p>
-</li>
-</ul>
-<p>然后把第一台的这个kubeadm.conf文件拷贝到master02和03，执行同样命</p>
-<p>查看证书 </p>
-<p>cfssl-certinfo /etc/kubernetes/pki/apiserver.crt</p>
-<ul>
-<li>可能系统原有的包冲突</li>
-</ul>
-<p>libsepol-devel-2.5-6.el7.x86_64<br>libselinux-devel-2.5-11.el7.x86_64</p>
-<ul>
-<li>双网卡导致安装初始化失败</li>
-</ul>
-<p>ifdown em1</p>
-<p>route add default gw 10.0.0.174</p>
-<p>两台work节点因为harbor的域名没有解析而加入集群失败，notReady</p>
-<h4 id="进入容器用root用户"><a href="#进入容器用root用户" class="headerlink" title="进入容器用root用户"></a>进入容器用root用户</h4><p> docker exec -ti -u root 848669a8722b bash</p>
-<h4 id="root-master02-harbor-kubectl-get-nodes"><a href="#root-master02-harbor-kubectl-get-nodes" class="headerlink" title="[root@master02 harbor]# kubectl get nodes"></a>[root@master02 harbor]# kubectl get nodes</h4><p>The connection to the server localhost:8080 was refused - did you specify the right host or port?<br>解决</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p $HOME/.kube</span><br><span class="line"></span><br><span class="line">  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config</span><br><span class="line"></span><br><span class="line">  sudo chown $(id -u):$(id -g) $HOME/.kube/config</span><br></pre></td></tr></table></figure>
-
-<h3 id="harbor"><a href="#harbor" class="headerlink" title="harbor"></a>harbor</h3><ul>
-<li>Error response from daemon: Get https:/ getsockopt: connection refused<br>新版本docker是在/etc/docker/daemon.json上修改insecure-registries参数，旧版本直接改动启动命令</li>
-</ul>
-<h3 id="集群内部域名"><a href="#集群内部域名" class="headerlink" title="集群内部域名"></a>集群内部域名</h3><p> kubernetes.default.svc.cluster.local </p>
-<h4 id="强制删除pod"><a href="#强制删除pod" class="headerlink" title="强制删除pod"></a>强制删除pod</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">方法1</span><br><span class="line"># 删除POD</span><br><span class="line">kubectl delete pod PODNAME --force --grace-period=0</span><br><span class="line"># 删除NAMESPACE</span><br><span class="line">kubectl delete namespace NAMESPACENAME --force --grace-period=0</span><br><span class="line">方法2</span><br><span class="line"># 删除default namespace下的pod名为pod-to-be-deleted-0</span><br><span class="line">ETCDCTL_API=3 etcdctl del /registry/pods/default/pod-to-be-deleted-0</span><br><span class="line"># 删除需要删除的NAMESPACE</span><br><span class="line">etcdctl del /registry/namespaces/NAMESPACENAME</span><br></pre></td></tr></table></figure>
-
-<h3 id="prometheus-k8s-0-alertmanager-main-0-两个pod启动问题"><a href="#prometheus-k8s-0-alertmanager-main-0-两个pod启动问题" class="headerlink" title="prometheus-k8s-0  alertmanager-main-0 两个pod启动问题"></a>prometheus-k8s-0  alertmanager-main-0 两个pod启动问题</h3><p><a href="https://github.com/coreos/prometheus-operator/issues/2409" target="_blank" rel="noopener">https://github.com/coreos/prometheus-operator/issues/2409</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">升级镜像版本到v0.29.0</span><br><span class="line">        image: quay.io/coreos/prometheus-operator:v0.29.0</span><br><span class="line">        - --prometheus-config-reloader=quay.io/coreos/prometheus-config-reloader:v0.29.0</span><br></pre></td></tr></table></figure>
-
-<h3 id="匿名授权"><a href="#匿名授权" class="headerlink" title="匿名授权"></a>匿名授权</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create clusterrolebinding system:anonymous   --clusterrole=cluster-admin   --user=system:anonymous</span><br></pre></td></tr></table></figure>
-
-<h3 id="删除了所有该Namespace资源之后使用kubectl-delete-namespace-test发现删除不掉，一直卡在Terminating状态，使用–force参数依然无法删除"><a href="#删除了所有该Namespace资源之后使用kubectl-delete-namespace-test发现删除不掉，一直卡在Terminating状态，使用–force参数依然无法删除" class="headerlink" title="删除了所有该Namespace资源之后使用kubectl delete namespace test发现删除不掉，一直卡在Terminating状态，使用–force参数依然无法删除"></a>删除了所有该Namespace资源之后使用kubectl delete namespace test发现删除不掉，一直卡在Terminating状态，使用–force参数依然无法删除</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">先运行kubectl get namespace test -o json &gt; tmp.json，拿到当前namespace描述，然后打开tmp.json，删除其中的spec字段。因为这边的K8s集群是带认证的，用非认证端口</span><br><span class="line">curl -k -H &quot;Content-Type: application/json&quot; -X PUT --data-binary @tmp.json http://127.0.0.1:8080/api/v1/namespaces/monitoring/finalize</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="pod启动时候-提示docker没有登录，而节点docker是用root登录成功，并可以手动拉取镜像的"><a href="#pod启动时候-提示docker没有登录，而节点docker是用root登录成功，并可以手动拉取镜像的" class="headerlink" title="pod启动时候 提示docker没有登录，而节点docker是用root登录成功，并可以手动拉取镜像的"></a>pod启动时候 提示docker没有登录，而节点docker是用root登录成功，并可以手动拉取镜像的</h3><p>Failed to pull image “hub.4399doc.com/adgame-snapshot/adplan-search:1.0.35-SNAPSHOT”: rpc error: code = Unknown desc = Error response from daemon: pull access denied for hub.4399doc.com/adgame-snapshot/adplan-search, repository does not exist or may require ‘docker login’</p>
-<p>可把登录的配置信息拷贝到/var/lib/kubelet/config.json，重启kubelet</p>
-<h3 id="kubectl-logs-dial-tcp-10250-connect-connection-timed-out"><a href="#kubectl-logs-dial-tcp-10250-connect-connection-timed-out" class="headerlink" title="kubectl logs dial tcp :10250: connect: connection timed out"></a>kubectl logs dial tcp :10250: connect: connection timed out</h3><p>无法kubectl exec log 到该节点的pod<br>查看kubectl get node -o wide 是否以主机名为节点名，主机名是否映射到内网ip，如果不是需要加hosts，并重启kubelet</p>
-<h3 id="213master节点重启后，kubeadm-reset导致calico注册不到etcd"><a href="#213master节点重启后，kubeadm-reset导致calico注册不到etcd" class="headerlink" title="213master节点重启后，kubeadm reset导致calico注册不到etcd"></a>213master节点重启后，kubeadm reset导致calico注册不到etcd</h3><p>需先在etcd集群删除原有的213节点</p>
-<h3 id="dashboard-登录"><a href="#dashboard-登录" class="headerlink" title="dashboard 登录"></a>dashboard 登录</h3><p><a href="https://github.com/kubernetes/dashboard/blob/master/README.md#getting-started" target="_blank" rel="noopener">https://github.com/kubernetes/dashboard/blob/master/README.md#getting-started</a>  安装文档<br>Incoming HTTP/1.1 POST /api/v1/login request from 10.244.0.0:42696: { contents hidden }<br><a href="https://github.com/kubernetes/dashboard/issues/3464" target="_blank" rel="noopener">https://github.com/kubernetes/dashboard/issues/3464</a><br>改用https登录即可<br><code>kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk &#39;{print $1}&#39;)</code></p>
-<h3 id="境外镜像拉取不到"><a href="#境外镜像拉取不到" class="headerlink" title="境外镜像拉取不到"></a>境外镜像拉取不到</h3><ul>
-<li>拉取镜像,从k8s.grc.io仓库中拉取所需镜像文件，但由于G-F-W导致无法正常拉取，本文将介绍如何绕过此问题，来完成业务的部署。docker.io仓库对google的容器做了镜像，可以通过下列命令下拉取相关镜像<br>k8s.gcr.io/elasticsearch:v6.2.5  改为下面<br>docker pull mirrorgooglecontainers/elasticsearch:v6.2.5</li>
-</ul>
-<h3 id="ipip换gpr，需清除缓存-var-lib-cni"><a href="#ipip换gpr，需清除缓存-var-lib-cni" class="headerlink" title="ipip换gpr，需清除缓存/var/lib/cni"></a>ipip换gpr，需清除缓存/var/lib/cni</h3><h3 id="pv-retain-恢复"><a href="#pv-retain-恢复" class="headerlink" title="pv retain 恢复"></a>pv retain 恢复</h3><p>删除pv的spec.claimRef，状态会变成available，再apply pvc即可<a href="https://blog.csdn.net/ygqygq2/article/details/83350983" target="_blank" rel="noopener">https://blog.csdn.net/ygqygq2/article/details/83350983</a></p>
-<h3 id="Can’t-open-dev-sdb-exclusively-Mounted-filesystem"><a href="#Can’t-open-dev-sdb-exclusively-Mounted-filesystem" class="headerlink" title="Can’t open /dev/sdb exclusively. Mounted filesystem?"></a>Can’t open /dev/sdb exclusively. Mounted filesystem?</h3><p>a: heketi只管理没有文件系统的裸盘，如果你的机器上的磁盘的文件系统是xfs或者是ext4，可以执行pvcreate –metadatasize=128M –dataalignment=256K /dev/sdb将磁盘格式化成LVM2形式，那么就没问题了，这个问题困扰了我好久</p>
-<h3 id="heketi-troubleshooting-https-github-com-heketi-heketi-blob-master-docs-troubleshooting-md"><a href="#heketi-troubleshooting-https-github-com-heketi-heketi-blob-master-docs-troubleshooting-md" class="headerlink" title="heketi troubleshooting https://github.com/heketi/heketi/blob/master/docs/troubleshooting.md"></a>heketi troubleshooting <a href="https://github.com/heketi/heketi/blob/master/docs/troubleshooting.md" target="_blank" rel="noopener">https://github.com/heketi/heketi/blob/master/docs/troubleshooting.md</a></h3><h3 id="helm-prometheus-operator"><a href="#helm-prometheus-operator" class="headerlink" title="helm prometheus-operator"></a>helm prometheus-operator</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f https://raw.githubusercontent.com/coreos/prometheus-operator/master/example/prometheus-operator-crd/alertmanager.crd.yaml</span><br><span class="line">kubectl apply -f https://raw.githubusercontent.com/coreos/prometheus-operator/master/example/prometheus-operator-crd/prometheus.crd.yaml</span><br><span class="line">kubectl apply -f https://raw.githubusercontent.com/coreos/prometheus-operator/master/example/prometheus-operator-crd/prometheusrule.crd.yaml</span><br><span class="line">kubectl apply -f https://raw.githubusercontent.com/coreos/prometheus-operator/master/example/prometheus-operator-crd/servicemonitor.crd.yaml</span><br></pre></td></tr></table></figure>
-
-<h3 id="内存设置"><a href="#内存设置" class="headerlink" title="内存设置"></a>内存设置</h3><p>所以猜测在设置jvm启动参数的时候 -Xmx的这个值一般要小于docker限制内存数，个人觉得  -Xmx:docker的比例为 4/5 - 3/4，</p>
-<h3 id="dns解析错误"><a href="#dns解析错误" class="headerlink" title="dns解析错误"></a>dns解析错误</h3><p>apt-get install dnsutils</p>
-<h2 id="v1-11"><a href="#v1-11" class="headerlink" title="v1.11"></a>v1.11</h2><h3 id="skipping-pod-synchronization-PLEG-is-not-healthy-pleg-was-last-seen-active-2562047h47m16-854775807s-ago-threshold-is-3m0s"><a href="#skipping-pod-synchronization-PLEG-is-not-healthy-pleg-was-last-seen-active-2562047h47m16-854775807s-ago-threshold-is-3m0s" class="headerlink" title="skipping pod synchronization - [PLEG is not healthy: pleg was last seen active 2562047h47m16.854775807s ago; threshold is 3m0s]"></a>skipping pod synchronization - [PLEG is not healthy: pleg was last seen active 2562047h47m16.854775807s ago; threshold is 3m0s]</h3><p><a href="https://github.com/kubernetes/kubernetes/issues/45419" target="_blank" rel="noopener">https://github.com/kubernetes/kubernetes/issues/45419</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">pleg is for kubelet to periodically list pods in the node to check healthy and update cache. If you see pleg timeout log, it may not be related to dns, but because kubelet&apos;s call to docker is timeout.</span><br><span class="line">pleg is the short for &quot;pod lifecycle event generator&quot;, it is an internal component of kubelet and i do not think you can directly check its status</span><br><span class="line">I don&apos;t think this is a K8s/OKD problem, I think this is a &quot;some resource on your node is being locked by something which is causing processes to pile up waiting for CPU time and that&apos;s breaking everything&quot; problem.</span><br><span class="line">https://chanjarster.github.io/post/kublet-pleg-not-healthy/</span><br><span class="line"></span><br><span class="line">执行docker ps ;systemctl status -l docker看看 更像是docker本身的问题</span><br></pre></td></tr></table></figure>
-
-<h3 id="7月-30-11-29-53-node1214-dockerd-8959-time-”2019-07-30T11-29-53-72335999-08-00”-level-error-msg-”containerd-start-container”-error-”oci-runtime-error-container-linux-go-262-starting-container-process-caused-quot-process-linux-go-339-container-init-caused-quot-quot-quot-n”-id-f39bdcbcd5b57c6fad86f625cfe5fa70740f095b5e49aa221cfb6c165034c43f"><a href="#7月-30-11-29-53-node1214-dockerd-8959-time-”2019-07-30T11-29-53-72335999-08-00”-level-error-msg-”containerd-start-container”-error-”oci-runtime-error-container-linux-go-262-starting-container-process-caused-quot-process-linux-go-339-container-init-caused-quot-quot-quot-n”-id-f39bdcbcd5b57c6fad86f625cfe5fa70740f095b5e49aa221cfb6c165034c43f" class="headerlink" title="7月 30 11:29:53 node1214 dockerd[8959]: time=”2019-07-30T11:29:53.72335999+08:00” level=error msg=”containerd: start container” error=”oci runtime error: container_linux.go:262: starting container process caused &quot;process_linux.go:339: container init caused \&quot;\&quot;&quot;\n” id=f39bdcbcd5b57c6fad86f625cfe5fa70740f095b5e49aa221cfb6c165034c43f"></a>7月 30 11:29:53 node1214 dockerd[8959]: time=”2019-07-30T11:29:53.72335999+08:00” level=error msg=”containerd: start container” error=”oci runtime error: container_linux.go:262: starting container process caused &quot;process_linux.go:339: container init caused \&quot;\&quot;&quot;\n” id=f39bdcbcd5b57c6fad86f625cfe5fa70740f095b5e49aa221cfb6c165034c43f</h3><p>重启机器</p>
-<p>imagename = ‘registry-vpc.cn-beijing.aliyuncs.com/{}/{}-{}:’.format(‘jiaxiang’, “@option.namespace@”, “@option.image_name@”)<br>/usr/local/src/k8s/buyu2/</p>
-<h3 id="docker-ps卡住"><a href="#docker-ps卡住" class="headerlink" title="docker ps卡住"></a>docker ps卡住</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">引用/proc/sys/vm/drop_caches (since Linux 2.6.16)</span><br><span class="line">Writing to this file causes the kernel to drop clean caches,dentries and inodes from memory, causing that memory to become free.</span><br><span class="line">To free pagecache, use</span><br><span class="line"> echo 1 &gt; /proc/sys/vm/drop_caches;</span><br><span class="line"> to free dentries and inodes, use</span><br><span class="line">echo 2 &gt; /proc/sys/vm/drop_caches;</span><br><span class="line">to free pagecache, dentries and inodes, use</span><br><span class="line"> echo 3 &gt;/proc/sys/vm/drop_caches.</span><br><span class="line"> 设置/proc/sys/vm/min_free_kbytes的值为4G bytes</span><br><span class="line">echo 4194304 &gt; /proc/sys/vm/min_free_kbytes</span><br><span class="line">cat /proc/buddyinfo</span><br></pre></td></tr></table></figure>
-
-<h2 id="镜像清理"><a href="#镜像清理" class="headerlink" title="镜像清理"></a>镜像清理</h2><p>docker system prune后可以加额外的参数，如：<br>docker system prune -a ： 一并清除所有未被使用的镜像和悬空镜像。<br>docker system prune -f ： 用以强制删除，不提示信息。</p>
-<h4 id="spring-cloud-gateway-and-zuul"><a href="#spring-cloud-gateway-and-zuul" class="headerlink" title="spring cloud gateway and zuul"></a>spring cloud gateway and zuul</h4><p><a href="http://www.springcloud.cn/" target="_blank" rel="noopener">http://www.springcloud.cn/</a></p>
-<p><a href="http://www.cnblogs.com/qnloft/p/qing-ning-kai-cheSpring-Cloud-liu--Spring-Cloud-Ga.html" target="_blank" rel="noopener">http://www.cnblogs.com/qnloft/p/qing-ning-kai-cheSpring-Cloud-liu--Spring-Cloud-Ga.html</a></p>
-<p><a href="https://blog.csdn.net/yalishadaa/article/details/79400916" target="_blank" rel="noopener">https://blog.csdn.net/yalishadaa/article/details/79400916</a><br><a href="https://springcloud.cc/" target="_blank" rel="noopener">https://springcloud.cc/</a><br>websocket 设置<a href="http://springcloud.cn/view/36" target="_blank" rel="noopener">http://springcloud.cn/view/36</a><br><a href="https://xujin.org/sc/gw/gw05/" target="_blank" rel="noopener">https://xujin.org/sc/gw/gw05/</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/k8s/gluster-k8s/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1035,7 +1147,7 @@ verbs:
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2019/07/16/k8s/gluster-k8s/" class="post-title-link" itemprop="url">k8s/gluster-k8s</a>
+            <a href="/2019/07/16/k8s/gluster-k8s/" class="post-title-link" itemprop="url">k8s glusterfs</a>
         </h1>
 
         <div class="post-meta">
@@ -1052,8 +1164,25 @@ verbs:
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-09-11 17:41:30" itemprop="dateModified" datetime="2019-09-11T17:41:30+08:00">2019-09-11</time>
+                <time title="修改时间：2019-12-11 09:24:27" itemprop="dateModified" datetime="2019-12-11T09:24:27+08:00">2019-12-11</time>
               </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/k8s/" itemprop="url" rel="index">
+                    <span itemprop="name">k8s</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/k8s/glusterfs/" itemprop="url" rel="index">
+                    <span itemprop="name">glusterfs</span>
+                  </a>
+                </span>
+            </span>
 
           
 
@@ -1148,20 +1277,20 @@ verbs:
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">82</span>
+          <span class="site-state-item-count">83</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-count">59</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">63</span>
+        <span class="site-state-item-count">65</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
