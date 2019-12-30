@@ -140,7 +140,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">65</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">66</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -150,7 +150,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">83</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">84</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -200,6 +200,97 @@
             
 
   <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/db/mongodb/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/28/db/mongodb/" class="post-title-link" itemprop="url">mongodb</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-28 15:45:48" itemprop="dateCreated datePublished" datetime="2019-11-28T15:45:48+08:00">2019-11-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mongodb/" itemprop="url" rel="index">
+                    <span itemprop="name">mongodb</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="安装配置http-www-cnblogs-com-kgdxpr-p-3519352-html"><a href="#安装配置http-www-cnblogs-com-kgdxpr-p-3519352-html" class="headerlink" title="安装配置http://www.cnblogs.com/kgdxpr/p/3519352.html"></a>安装配置<a href="http://www.cnblogs.com/kgdxpr/p/3519352.html" target="_blank" rel="noopener">http://www.cnblogs.com/kgdxpr/p/3519352.html</a></h1><p>“show dbs” 命令可以显示所有数据的列表。<br>执行 “db” 命令可以显示当前数据库对象或集合。<br>运行”use”命令，可以连接到一个指定的数据库。</p>
+<p>use DATABASE_NAME  如果数据库不存在，则创建数据库，否则切换到指定数据库。</p>
+<p>性能指标<a href="http://www.soso.io/article/73032.html" target="_blank" rel="noopener">http://www.soso.io/article/73032.html</a></p>
+<p>6.需要重点关注的 mongodb 性能指标<br>关注主要性能指标：<br>1）Faults：显示 mongodb 每秒页面故障的数量，这个是 mongodb 映射到虚拟地址空间，而不是物理内存。这个值如果飙高的话，可能意味着机器没有足够的内存来存储数据和索引。<br>2）Flushes：每秒做了多少次 fsync，显示多少次数据被刷新进了磁盘。<br>3）locked：写锁。<br>4）idx miss：索引未命中比例。<br>5）qr | qw：读写锁的请求队列长度。<br>6）conn： 当前已经建立的连接数。 </p>
+<p>7.严重的空间碎片问题<br>mongodb 如果数据修改很频繁，会出现比较严重的空间碎片问题，表现在磁盘文件扩张与实际数据量不相符，内存不够用，索引命中率低，查询效率降低。<br>碎片整理，目前我们采用的版本没有太有效的方法。<br>可以用 db.repaireDatabase() 来整理数据库，这个过程非常的慢。<br>如果是 master/slave 模式，则相当于执行一次主从切换，然后从新建立从库。<br>如果是 replSet 架构，可以停掉数据库，然后删除数据目录，从新从复制组中全同步数据，这个时候要考虑 oplog 的尺寸。<br>一个大体的步骤：<br>1）先调用rs.freeze(1200)，将每个不想让它成为 primary 的机器让它在 1200 秒内无法成为 primary(这步也可以不做)；<br>2）将 primary stepDown，不出意外新的 primary 会起来；<br>3）将原 primary kill 掉；<br>4）删掉所有 data 数据(调用 repair 很慢，真不如干掉重新来)；<br>5）再重启动原 primary 的进程；<br>6）以此循环完成整个复制组的全部重建。</p>
+<p><a href="http://www.runoob.com/mongodb/nosql.html" target="_blank" rel="noopener">http://www.runoob.com/mongodb/nosql.html</a></p>
+<p>设置下密码比较好吧 在mongodb主上创建角色管理员（需要在no auth下创建，配置文件auth=false 重启mongodb） - use admin - 创建管理员账号<br>db.createUser({user:”admin”,pwd:”XXXX”,roles:[{“role”:”userAdminAnyDatabase”,”db”:”admin”}]})</p>
+<ul>
+<li>db.getUser(‘admin’); - 授予超级管理员权限：db.grantRolesToUser( “admin” , [ { role: “root”, db: “admin” }]) - 添加监控账号<br>db.createUser({user:”zabbixuser”,pwd:”zabbixusermyxujingbin”,roles:[{role:”clusterMonitor”,db:”admin”}]}); <blockquote>
+<p>创建某个数据库普通用户（在 auth下创建,配置文件auth=true 重启mongodb） </p>
+</blockquote>
+</li>
+<li>use admin <ul>
+<li>db.auth(“admin”,”XXXX”); </li>
+<li>use dbname</li>
+</ul>
+</li>
+<li>db.createUser({user:”XXXUser”,pwd:”XXX”,roles:[{role:”dbOwner”,db:”dbname”}]}); <ul>
+<li>db.auth(“xyzcsUser”,”Cd_#edx4gg”); - db.users.find()</li>
+</ul>
+</li>
+</ul>
+<h3 id="登录"><a href="#登录" class="headerlink" title="登录"></a>登录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">bin/mongo 172.16.1.218:27017/admin -u personas1 -p personas1  认证登录</span><br><span class="line">bin/mongo --host 127.0.0.1 --port 27017 -u &apos;admin&apos; -p &apos;gprp218!!a&apos; --authenticationDatabase &quot;admin&quot; 认证登录</span><br><span class="line">bin/mongod --shutdown --dbpath /share/mongodb/27017/data/  停止</span><br><span class="line">bin/mongod -f /etc/mongo/mongodb.conf 启动</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
         
   
   
@@ -918,77 +1009,6 @@ es 优化https://blog.51cto.com/13527416/2132270?from=timeline
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/jenkins/jenkins-issues/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/28/jenkins/jenkins-issues/" class="post-title-link" itemprop="url">jenkins/jenkins-issues</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-28 15:32:03" itemprop="dateCreated datePublished" datetime="2019-11-28T15:32:03+08:00">2019-11-28</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="Groovy-RejectedAccessException"><a href="#Groovy-RejectedAccessException" class="headerlink" title="Groovy RejectedAccessException"></a>Groovy RejectedAccessException</h3><p><a href="https://blog.johnwu.cc/article/jenkins-groovy-rejected-access-exception.html" target="_blank" rel="noopener">https://blog.johnwu.cc/article/jenkins-groovy-rejected-access-exception.html</a></p>
-<ul>
-<li>找到系统设置-in-process Script Approval-Approve 每发生一次就授权执行一次</li>
-</ul>
-<h3 id="ERROR-Failed-to-execute-goal-org-apache-maven-plugins-maven-release-plugin-2-5-3-prepare-default-cli-on-project-adgame-statistic-query-Unable-to-commit-files"><a href="#ERROR-Failed-to-execute-goal-org-apache-maven-plugins-maven-release-plugin-2-5-3-prepare-default-cli-on-project-adgame-statistic-query-Unable-to-commit-files" class="headerlink" title="[ERROR] Failed to execute goal org.apache.maven.plugins:maven-release-plugin:2.5.3:prepare (default-cli) on project adgame_statistic_query: Unable to commit files"></a>[ERROR] Failed to execute goal org.apache.maven.plugins:maven-release-plugin:2.5.3:prepare (default-cli) on project adgame_statistic_query: Unable to commit files</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[ERROR] Provider message:</span><br><span class="line">[ERROR] The git-push command failed.</span><br><span class="line">[ERROR] Command output:</span><br><span class="line">[ERROR] ssh: Could not resolve hostname gitlab.xujingbin.com:adgame: Name or service not known</span><br><span class="line">[ERROR] fatal: The remote end hung up unexpectedly</span><br></pre></td></tr></table></figure>
-<ul>
-<li>地址写错了 xujingbin.com: 改成xujingbin.com/</li>
-</ul>
-<h3 id="ERROR-Failed-to-execute-goal-org-apache-maven-plugins-maven-release-plugin-2-5-3-prepare-default-cli-on-project-gprp-cloud-api-Unable-to-tag-SCM"><a href="#ERROR-Failed-to-execute-goal-org-apache-maven-plugins-maven-release-plugin-2-5-3-prepare-default-cli-on-project-gprp-cloud-api-Unable-to-tag-SCM" class="headerlink" title="[ERROR] Failed to execute goal org.apache.maven.plugins:maven-release-plugin:2.5.3:prepare (default-cli) on project gprp_cloud_api: Unable to tag SCM"></a>[ERROR] Failed to execute goal org.apache.maven.plugins:maven-release-plugin:2.5.3:prepare (default-cli) on project gprp_cloud_api: Unable to tag SCM</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[ERROR] Provider message:</span><br><span class="line">[ERROR] The git-push command failed.</span><br><span class="line">[ERROR] Command output:</span><br><span class="line">[ERROR] ssh_exchange_identification: Connection closed by remote host</span><br><span class="line">[ERROR] fatal: The remote end hung up unexpectedly</span><br><span class="line">[ERROR] -&gt; [Help 1]</span><br><span class="line">[ERROR] </span><br><span class="line">[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.</span><br><span class="line">[ERROR] Re-run Maven using the -X switch to enable full debug logging.</span><br><span class="line">[ERROR] </span><br><span class="line">[ERROR] For more information about the errors and possible solutions, please read the following articles:</span><br><span class="line">[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException</span><br></pre></td></tr></table></figure>
-<ul>
-<li>可能因为提交的文件太大导致或者本身出现的网络问题  或者是更改/etc/ssh/sshd_config,MaxSessions 30</li>
-</ul>
-<h3 id="ERROR-Failed-to-execute-goal-org-apache-maven-plugins-maven-release-plugin-2-5-3-prepare-default-cli-on-project-gprp-cg-app-Unable-to-commit-files"><a href="#ERROR-Failed-to-execute-goal-org-apache-maven-plugins-maven-release-plugin-2-5-3-prepare-default-cli-on-project-gprp-cg-app-Unable-to-commit-files" class="headerlink" title="[ERROR] Failed to execute goal org.apache.maven.plugins:maven-release-plugin:2.5.3:prepare (default-cli) on project gprp_cg_app: Unable to commit files"></a>[ERROR] Failed to execute goal org.apache.maven.plugins:maven-release-plugin:2.5.3:prepare (default-cli) on project gprp_cg_app: Unable to commit files</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[ERROR] Provider message:</span><br><span class="line">[ERROR] The git-push command failed.</span><br><span class="line">[ERROR] Command output:</span><br><span class="line">[ERROR] GitLab: The project you were looking for could not be found.</span><br><span class="line">[ERROR] fatal: Could not read from remote repository.</span><br><span class="line">[ERROR] </span><br><span class="line">[ERROR] Please make sure you have the correct access rights</span><br><span class="line">[ERROR] and the repository exists.</span><br></pre></td></tr></table></figure>
-<p>nexus仓库没有配置会导致此报错</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1037,7 +1057,7 @@ es 优化https://blog.51cto.com/13527416/2132270?from=timeline
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-count">84</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1050,7 +1070,7 @@ es 优化https://blog.51cto.com/13527416/2132270?from=timeline
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">65</span>
+        <span class="site-state-item-count">66</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

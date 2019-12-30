@@ -54,7 +54,7 @@
 <meta property="og:site_name" content="运维笔记">
 <meta property="og:description" content="Prometheus的架构及持久化Prometheus githubkubernetes监控告警详解https:&#x2F;&#x2F;www.robustperception.io&#x2F;relabel_configs-vs-metric_relabel_configsPrometheus 和 Grafana 监控系统指南 Prometheus 的查询系统  这些信息分两种，一种是状态信息  另外一种是累加值信息，比如">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-11-27T09:24:42.782Z">
+<meta property="og:updated_time" content="2019-12-13T09:41:36.200Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://yoursite.com/2019/07/16/monitor/prometheus/">
@@ -141,7 +141,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">65</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">66</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -151,7 +151,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">83</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">84</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -235,7 +235,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-27 17:24:42" itemprop="dateModified" datetime="2019-11-27T17:24:42+08:00">2019-11-27</time>
+                <time title="修改时间：2019-12-13 17:41:36" itemprop="dateModified" datetime="2019-12-13T17:41:36+08:00">2019-12-13</time>
               </span>
 
           
@@ -269,10 +269,8 @@
 <h2 id="删除指标"><a href="#删除指标" class="headerlink" title="删除指标"></a>删除指标</h2><p><a href="https://blog.51cto.com/lee90/2394989" target="_blank" rel="noopener">https://blog.51cto.com/lee90/2394989</a></p>
 <ol>
 <li>确保 prometheus 启动的时候， 加了参数  –web.enable-admin-api<br><code>./prometheus --storage.tsdb.retention=180d --web.enable-admin-api</code></li>
-<li>清理这个key的全部的数据<br><code>curl -X POST \
--g &#39;http://192.168.2.100:9090/api/v1/admin/tsdb/delete_series?match[]=up&amp;match[]=mysql_global_status_threads_running{instance=&quot;test-db13:9104&quot;,job=&quot;mysql&quot;}&#39;</code></li>
-<li>清理这个key指定时间段的数据 （清理的时间戳区间：1557903714 到 155790395 ）<br><code>curl -X POST \
--g &#39;http://192.168.2.100:9090/api/v1/admin/tsdb/delete_series?start=1557903714&amp;end=1557903954&amp;match[]=mysql_global_status_threads_running{instance=&quot;test-db13:9104&quot;,job=&quot;mysql&quot;}&#39;</code></li>
+<li>清理这个key的全部的数据<br><code>curl -X POST -g &#39;http://127.0.0.1:9090/api/v1/admin/tsdb/delete_series?match[]=up&amp;match[]=mysql_global_status_threads_running{instance=&quot;test-db13:9104&quot;,job=&quot;mysql&quot;}&#39;</code></li>
+<li>清理这个key指定时间段的数据 （清理的时间戳区间：1557903714 到 155790395 ）<br><code>curl -X POST -g &#39;http://127.0.0.1:9090/api/v1/admin/tsdb/delete_series?start=1557903714&amp;end=1557903954&amp;match[]=mysql_global_status_threads_running{instance=&quot;test-db13:9104&quot;,job=&quot;mysql&quot;}&#39;</code></li>
 </ol>
 <h2 id="百分位"><a href="#百分位" class="headerlink" title="百分位"></a>百分位</h2><p>Prometheus中称为quantile，其实叫percentile更准确。百分位数是指小于某个特定数值的采样点达到一定的百分比。例如，假设0.9-quantile的值为120，意思就是所有的采样值中，小于120的采样值的数量占总体采样值的90%。相应的，假设0.5-quantile的值为x，那么意思就是指小于x的采样值占总体的50%，所以0.5-quantile也指中值（median）。</p>
 <h2 id="阿里云prometheus修改配置规则"><a href="#阿里云prometheus修改配置规则" class="headerlink" title="阿里云prometheus修改配置规则"></a>阿里云prometheus修改配置规则</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">kubectl -n monitoring get prometheusrule</span><br><span class="line">更改prometheus到alermanager的地址在，阿里云控制台的容器服务-应用-发布-更新</span><br><span class="line">1340行:</span><br><span class="line">additionalAlertManagerConfigs:</span><br><span class="line">- static_configs:</span><br><span class="line"> - targets: [&quot;10.28.74.182:9093&quot;]</span><br></pre></td></tr></table></figure>
@@ -348,7 +346,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-count">84</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -361,7 +359,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">65</span>
+        <span class="site-state-item-count">66</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

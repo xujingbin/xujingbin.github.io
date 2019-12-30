@@ -140,7 +140,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">65</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">66</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -150,7 +150,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">83</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">84</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -200,6 +200,84 @@
             
 
   <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/17/k8s/kubernetes%E8%AF%81%E4%B9%A6%E8%BF%87%E6%9C%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/12/17/k8s/kubernetes%E8%AF%81%E4%B9%A6%E8%BF%87%E6%9C%9F/" class="post-title-link" itemprop="url">kubernetes证书过期</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2019-12-17 14:36:32 / 修改时间：15:29:53" itemprop="dateCreated datePublished" datetime="2019-12-17T14:36:32+08:00">2019-12-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/k8s/" itemprop="url" rel="index">
+                    <span itemprop="name">k8s</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="v1-14-8重置证书"><a href="#v1-14-8重置证书" class="headerlink" title="v1.14.8重置证书"></a>v1.14.8重置证书</h1><h3 id="过期前执行"><a href="#过期前执行" class="headerlink" title="过期前执行"></a>过期前执行</h3><p>kubeadm config view &gt;cluster.yaml</p>
+<h3 id="证书及配置备份"><a href="#证书及配置备份" class="headerlink" title="证书及配置备份"></a>证书及配置备份</h3><p>cp -r /etc/kubernetes /data/backup/<br>cp -r /var/lib/kubelet /data/backup/<br>cp -r /root/.kube/config /data/backup/</p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>cp -r /var/lib/etcd /data/backup  etcd备份<br>cp -r /var/lib/kubelet /data/backup/</p>
+<h3 id="查看renew证书帮助"><a href="#查看renew证书帮助" class="headerlink" title="查看renew证书帮助"></a>查看renew证书帮助</h3><p>kubeadm alpha certs renew -h</p>
+<h3 id="查看证书有效期"><a href="#查看证书有效期" class="headerlink" title="查看证书有效期"></a>查看证书有效期</h3><p>openssl x509 -in /etc/kubernetes/pki/etcd/ -noout -text |grep ‘ Not ‘</p>
+<h3 id="查看所有证书有效期"><a href="#查看所有证书有效期" class="headerlink" title="查看所有证书有效期"></a>查看所有证书有效期</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">for crt in $(find /etc/kubernetes/pki/ -name &quot;*.crt&quot;); do openssl x509 -in $crt -noout -dates |grep &apos;notAfter&apos;; done</span><br></pre></td></tr></table></figure>
+
+<h3 id="更新证书后再查看一次"><a href="#更新证书后再查看一次" class="headerlink" title="更新证书后再查看一次"></a>更新证书后再查看一次</h3><p>kubeadm alpha certs renew apiserver –config cluster.yaml</p>
+<h3 id="更新所有证书"><a href="#更新所有证书" class="headerlink" title="更新所有证书"></a>更新所有证书</h3><p>kubeadm alpha certs renew all –config cluster.yaml</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
         
   
   
@@ -540,10 +618,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2019-11-29 09:58:42 / 修改时间：10:58:34" itemprop="dateCreated datePublished" datetime="2019-11-29T09:58:42+08:00">2019-11-29</time>
+              <time title="创建时间：2019-11-29 09:58:42" itemprop="dateCreated datePublished" datetime="2019-11-29T09:58:42+08:00">2019-11-29</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-25 17:01:48" itemprop="dateModified" datetime="2019-12-25T17:01:48+08:00">2019-12-25</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -568,8 +652,8 @@
 
       
           <h1 id="备份与恢复"><a href="#备份与恢复" class="headerlink" title="备份与恢复"></a>备份与恢复</h1><h2 id="备份"><a href="#备份" class="headerlink" title="备份"></a>备份</h2><ol>
-<li><p>备份，需备份project为xml文件，备份data数据文件，备份配置文件config和启动命令<code>java -Drundeck.jaaslogin=true -jar rundeck-3.0.11-20181221.war</code><br><a href="https://docs.rundeck.com/docs/administration/maintenance/backup.html#backup" target="_blank" rel="noopener">https://docs.rundeck.com/docs/administration/maintenance/backup.html#backup</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">. /etc/profile</span><br><span class="line">bak_time=`date +%Y%m%d-%H%M%S`</span><br><span class="line">backup_dir=&quot;/data/backup/rundeck&quot;</span><br><span class="line">server_dir=&quot;/usr/local/rundeck&quot;</span><br><span class="line">/opt/rd-1.1.7/bin/rd jobs list -f $backup_dir/chess-$bak_time.xml -p chess</span><br><span class="line">/opt/rd-1.1.7/bin/rd jobs list -f $backup_dir/fish-$bak_time.xml -p fish</span><br><span class="line">/opt/rd-1.1.7/bin/rd jobs list -f $backup_dir/k8s-$bak_time.xml -p k8s</span><br><span class="line">### 备份配置文件</span><br><span class="line">tar zcvf $backup_dir/rundeck_config_$(date +%F).tgz $server_dir/server/config</span><br><span class="line">### 备份数据文件</span><br><span class="line">tar zcvf $backup_dir/rundeck_data_$(date +%F).tgz $server_dir/server/data</span><br><span class="line">find $backup_dir -mtime +7 |xargs rm -f</span><br></pre></td></tr></table></figure>
+<li><p>备份，需备份project为xml文件，备份data数据文件，备份配置文件config和启动命令<code>java -Drundeck.jaaslogin=true -jar rundeck-3.0.11-20181221.war</code><br><a href="https://docs.rundeck.com/docs/administration/maintenance/backup.html#backup" target="_blank" rel="noopener">https://docs.rundeck.com/docs/administration/maintenance/backup.html#backup</a><br><a href="https://rundeck.github.io/rundeck-cli/configuration/" target="_blank" rel="noopener">https://rundeck.github.io/rundeck-cli/configuration/</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">. /etc/profile</span><br><span class="line">export RD_URL=http://127.0.0.1:4440/api/14</span><br><span class="line">#export RD_USER=xujingbin</span><br><span class="line">export RD_TOKEN=v8tcee9c1yQEs7qIRAOj2YyKkB5ROhXi1</span><br><span class="line">#export RD_AUTH_PROMPT=true</span><br><span class="line">#export RD_PASSWORD=11</span><br><span class="line">#export RD_AUTH_PROMPT=true</span><br><span class="line">#export RD_API_DOWNGRADE=true</span><br><span class="line">bak_time=`date +%Y%m%d-%H%M%S`</span><br><span class="line">backup_dir=&quot;/data/backup/rundeck&quot;</span><br><span class="line">server_dir=&quot;/var/lib/rundeck&quot;</span><br><span class="line">/opt/rd-1.1.7/bin/rd jobs list -f $backup_dir/ops-$bak_time.xml -p ops</span><br><span class="line">### 备份配置文件</span><br><span class="line">tar zcvf $backup_dir/rundeck_config_$(date +%F).tgz /etc/rundeck</span><br><span class="line">### 备份数据文件</span><br><span class="line">tar zcvf $backup_dir/rundeck_data_$(date +%F).tgz $server_dir/data</span><br><span class="line">find $backup_dir -mtime +7 |xargs rm -f</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>通过管理界面的’project setting’-‘Export Archive’来逐个导出project</p>
 <h2 id="恢复"><a href="#恢复" class="headerlink" title="恢复"></a>恢复</h2></li>
@@ -1002,97 +1086,6 @@ http://vincent927.github.io/Jenkins%E4%BD%BF%E7%94%A8Gitlab%E8%B4%A6%E5%8F%B7%E5
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/28/db/mongodb/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/28/db/mongodb/" class="post-title-link" itemprop="url">mongodb</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-28 15:45:48" itemprop="dateCreated datePublished" datetime="2019-11-28T15:45:48+08:00">2019-11-28</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/mongodb/" itemprop="url" rel="index">
-                    <span itemprop="name">mongodb</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="安装配置http-www-cnblogs-com-kgdxpr-p-3519352-html"><a href="#安装配置http-www-cnblogs-com-kgdxpr-p-3519352-html" class="headerlink" title="安装配置http://www.cnblogs.com/kgdxpr/p/3519352.html"></a>安装配置<a href="http://www.cnblogs.com/kgdxpr/p/3519352.html" target="_blank" rel="noopener">http://www.cnblogs.com/kgdxpr/p/3519352.html</a></h1><p>“show dbs” 命令可以显示所有数据的列表。<br>执行 “db” 命令可以显示当前数据库对象或集合。<br>运行”use”命令，可以连接到一个指定的数据库。</p>
-<p>use DATABASE_NAME  如果数据库不存在，则创建数据库，否则切换到指定数据库。</p>
-<p>性能指标<a href="http://www.soso.io/article/73032.html" target="_blank" rel="noopener">http://www.soso.io/article/73032.html</a></p>
-<p>6.需要重点关注的 mongodb 性能指标<br>关注主要性能指标：<br>1）Faults：显示 mongodb 每秒页面故障的数量，这个是 mongodb 映射到虚拟地址空间，而不是物理内存。这个值如果飙高的话，可能意味着机器没有足够的内存来存储数据和索引。<br>2）Flushes：每秒做了多少次 fsync，显示多少次数据被刷新进了磁盘。<br>3）locked：写锁。<br>4）idx miss：索引未命中比例。<br>5）qr | qw：读写锁的请求队列长度。<br>6）conn： 当前已经建立的连接数。 </p>
-<p>7.严重的空间碎片问题<br>mongodb 如果数据修改很频繁，会出现比较严重的空间碎片问题，表现在磁盘文件扩张与实际数据量不相符，内存不够用，索引命中率低，查询效率降低。<br>碎片整理，目前我们采用的版本没有太有效的方法。<br>可以用 db.repaireDatabase() 来整理数据库，这个过程非常的慢。<br>如果是 master/slave 模式，则相当于执行一次主从切换，然后从新建立从库。<br>如果是 replSet 架构，可以停掉数据库，然后删除数据目录，从新从复制组中全同步数据，这个时候要考虑 oplog 的尺寸。<br>一个大体的步骤：<br>1）先调用rs.freeze(1200)，将每个不想让它成为 primary 的机器让它在 1200 秒内无法成为 primary(这步也可以不做)；<br>2）将 primary stepDown，不出意外新的 primary 会起来；<br>3）将原 primary kill 掉；<br>4）删掉所有 data 数据(调用 repair 很慢，真不如干掉重新来)；<br>5）再重启动原 primary 的进程；<br>6）以此循环完成整个复制组的全部重建。</p>
-<p><a href="http://www.runoob.com/mongodb/nosql.html" target="_blank" rel="noopener">http://www.runoob.com/mongodb/nosql.html</a></p>
-<p>设置下密码比较好吧 在mongodb主上创建角色管理员（需要在no auth下创建，配置文件auth=false 重启mongodb） - use admin - 创建管理员账号<br>db.createUser({user:”admin”,pwd:”XXXX”,roles:[{“role”:”userAdminAnyDatabase”,”db”:”admin”}]})</p>
-<ul>
-<li>db.getUser(‘admin’); - 授予超级管理员权限：db.grantRolesToUser( “admin” , [ { role: “root”, db: “admin” }]) - 添加监控账号<br>db.createUser({user:”zabbixuser”,pwd:”zabbixusermyxujingbin”,roles:[{role:”clusterMonitor”,db:”admin”}]}); <blockquote>
-<p>创建某个数据库普通用户（在 auth下创建,配置文件auth=true 重启mongodb） </p>
-</blockquote>
-</li>
-<li>use admin <ul>
-<li>db.auth(“admin”,”XXXX”); </li>
-<li>use dbname</li>
-</ul>
-</li>
-<li>db.createUser({user:”XXXUser”,pwd:”XXX”,roles:[{role:”dbOwner”,db:”dbname”}]}); <ul>
-<li>db.auth(“xyzcsUser”,”Cd_#edx4gg”); - db.users.find()</li>
-</ul>
-</li>
-</ul>
-<h3 id="登录"><a href="#登录" class="headerlink" title="登录"></a>登录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">bin/mongo 172.16.1.218:27017/admin -u personas1 -p personas1  认证登录</span><br><span class="line">bin/mongo --host 127.0.0.1 --port 27017 -u &apos;admin&apos; -p &apos;gprp218!!a&apos; --authenticationDatabase &quot;admin&quot; 认证登录</span><br><span class="line">bin/mongod --shutdown --dbpath /share/mongodb/27017/data/  停止</span><br><span class="line">bin/mongod -f /etc/mongo/mongodb.conf 启动</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1141,7 +1134,7 @@ http://vincent927.github.io/Jenkins%E4%BD%BF%E7%94%A8Gitlab%E8%B4%A6%E5%8F%B7%E5
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-count">84</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1154,7 +1147,7 @@ http://vincent927.github.io/Jenkins%E4%BD%BF%E7%94%A8Gitlab%E8%B4%A6%E5%8F%B7%E5
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">65</span>
+        <span class="site-state-item-count">66</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

@@ -54,7 +54,7 @@
 <meta property="og:site_name" content="运维笔记">
 <meta property="og:description" content="kubernetes部署失败 重置etcd和kubernetes，然后再部署一边etcd和kubernetes kubeadm reset -f &amp;amp;&amp;amp; kubeadm init –config &#x2F;var&#x2F;tmp&#x2F;wise2c&#x2F;kubernetes&#x2F;kubeadm.conf   然后把第一台的这个kubeadm.conf文件拷贝到master02和03，执行同样命 查看证书  cfs">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-11-27T08:46:35.045Z">
+<meta property="og:updated_time" content="2019-12-30T08:47:39.707Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://yoursite.com/2019/07/16/k8s/issues/">
@@ -141,7 +141,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">65</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">66</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -151,7 +151,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">83</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">84</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -235,7 +235,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-27 16:46:35" itemprop="dateModified" datetime="2019-11-27T16:46:35+08:00">2019-11-27</time>
+                <time title="修改时间：2019-12-30 16:47:39" itemprop="dateModified" datetime="2019-12-30T16:47:39+08:00">2019-12-30</time>
               </span>
 
           
@@ -310,6 +310,7 @@
 <h4 id="spring-cloud-gateway-and-zuul"><a href="#spring-cloud-gateway-and-zuul" class="headerlink" title="spring cloud gateway and zuul"></a>spring cloud gateway and zuul</h4><p><a href="http://www.springcloud.cn/" target="_blank" rel="noopener">http://www.springcloud.cn/</a></p>
 <p><a href="http://www.cnblogs.com/qnloft/p/qing-ning-kai-cheSpring-Cloud-liu--Spring-Cloud-Ga.html" target="_blank" rel="noopener">http://www.cnblogs.com/qnloft/p/qing-ning-kai-cheSpring-Cloud-liu--Spring-Cloud-Ga.html</a></p>
 <p><a href="https://blog.csdn.net/yalishadaa/article/details/79400916" target="_blank" rel="noopener">https://blog.csdn.net/yalishadaa/article/details/79400916</a><br><a href="https://springcloud.cc/" target="_blank" rel="noopener">https://springcloud.cc/</a><br>websocket 设置<a href="http://springcloud.cn/view/36" target="_blank" rel="noopener">http://springcloud.cn/view/36</a><br><a href="https://xujin.org/sc/gw/gw05/" target="_blank" rel="noopener">https://xujin.org/sc/gw/gw05/</a></p>
+<h3 id="kubernetes-python-api"><a href="#kubernetes-python-api" class="headerlink" title="kubernetes python api"></a>kubernetes python api</h3><p><a href="https://github.com/kubernetes-client/python/blob/master/kubernetes/README.md" target="_blank" rel="noopener">https://github.com/kubernetes-client/python/blob/master/kubernetes/README.md</a></p>
 
     </div>
 
@@ -325,12 +326,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2019/07/16/k8s/kubeadm-k8s%E5%AE%89%E8%A3%85/" rel="prev" title="k8s/kubeadm-k8s安装">
-      <i class="fa fa-chevron-left"></i> k8s/kubeadm-k8s安装
+    <a href="/2019/07/16/k8s/gluster-k8s/" rel="prev" title="k8s glusterfs">
+      <i class="fa fa-chevron-left"></i> k8s glusterfs
     </a></div>
       <div class="post-nav-item">
-    <a href="/2019/07/16/k8s/gluster-k8s/" rel="next" title="k8s glusterfs">
-      k8s glusterfs <i class="fa fa-chevron-right"></i>
+    <a href="/2019/07/16/k8s/rbac/" rel="next" title="k8s权限认证">
+      k8s权限认证 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -369,7 +370,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#kubernetes部署失败"><span class="nav-number">1.</span> <span class="nav-text">kubernetes部署失败</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#进入容器用root用户"><span class="nav-number">1.1.</span> <span class="nav-text">进入容器用root用户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#root-master02-harbor-kubectl-get-nodes"><span class="nav-number">1.2.</span> <span class="nav-text">[root@master02 harbor]# kubectl get nodes</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#harbor"><span class="nav-number">2.</span> <span class="nav-text">harbor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#集群内部域名"><span class="nav-number">3.</span> <span class="nav-text">集群内部域名</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#强制删除pod"><span class="nav-number">3.1.</span> <span class="nav-text">强制删除pod</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#prometheus-k8s-0-alertmanager-main-0-两个pod启动问题"><span class="nav-number">4.</span> <span class="nav-text">prometheus-k8s-0  alertmanager-main-0 两个pod启动问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#匿名授权"><span class="nav-number">5.</span> <span class="nav-text">匿名授权</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除了所有该Namespace资源之后使用kubectl-delete-namespace-test发现删除不掉，一直卡在Terminating状态，使用–force参数依然无法删除"><span class="nav-number">6.</span> <span class="nav-text">删除了所有该Namespace资源之后使用kubectl delete namespace test发现删除不掉，一直卡在Terminating状态，使用–force参数依然无法删除</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pod启动时候-提示docker没有登录，而节点docker是用root登录成功，并可以手动拉取镜像的"><span class="nav-number">7.</span> <span class="nav-text">pod启动时候 提示docker没有登录，而节点docker是用root登录成功，并可以手动拉取镜像的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#kubectl-logs-dial-tcp-10250-connect-connection-timed-out"><span class="nav-number">8.</span> <span class="nav-text">kubectl logs dial tcp :10250: connect: connection timed out</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#213master节点重启后，kubeadm-reset导致calico注册不到etcd"><span class="nav-number">9.</span> <span class="nav-text">213master节点重启后，kubeadm reset导致calico注册不到etcd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dashboard-登录"><span class="nav-number">10.</span> <span class="nav-text">dashboard 登录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#境外镜像拉取不到"><span class="nav-number">11.</span> <span class="nav-text">境外镜像拉取不到</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ipip换gpr，需清除缓存-var-lib-cni"><span class="nav-number">12.</span> <span class="nav-text">ipip换gpr，需清除缓存/var/lib/cni</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pv-retain-恢复"><span class="nav-number">13.</span> <span class="nav-text">pv retain 恢复</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Can’t-open-dev-sdb-exclusively-Mounted-filesystem"><span class="nav-number">14.</span> <span class="nav-text">Can’t open /dev/sdb exclusively. Mounted filesystem?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#heketi-troubleshooting-https-github-com-heketi-heketi-blob-master-docs-troubleshooting-md"><span class="nav-number">15.</span> <span class="nav-text">heketi troubleshooting https://github.com/heketi/heketi/blob/master/docs/troubleshooting.md</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#helm-prometheus-operator"><span class="nav-number">16.</span> <span class="nav-text">helm prometheus-operator</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内存设置"><span class="nav-number">17.</span> <span class="nav-text">内存设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dns解析错误"><span class="nav-number">18.</span> <span class="nav-text">dns解析错误</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#v1-11"><span class="nav-number"></span> <span class="nav-text">v1.11</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#skipping-pod-synchronization-PLEG-is-not-healthy-pleg-was-last-seen-active-2562047h47m16-854775807s-ago-threshold-is-3m0s"><span class="nav-number">1.</span> <span class="nav-text">skipping pod synchronization - [PLEG is not healthy: pleg was last seen active 2562047h47m16.854775807s ago; threshold is 3m0s]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7月-30-11-29-53-node1214-dockerd-8959-time-”2019-07-30T11-29-53-72335999-08-00”-level-error-msg-”containerd-start-container”-error-”oci-runtime-error-container-linux-go-262-starting-container-process-caused-quot-process-linux-go-339-container-init-caused-quot-quot-quot-n”-id-f39bdcbcd5b57c6fad86f625cfe5fa70740f095b5e49aa221cfb6c165034c43f"><span class="nav-number">2.</span> <span class="nav-text">7月 30 11:29:53 node1214 dockerd[8959]: time=”2019-07-30T11:29:53.72335999+08:00” level=error msg=”containerd: start container” error=”oci runtime error: container_linux.go:262: starting container process caused &quot;process_linux.go:339: container init caused \&quot;\&quot;&quot;\n” id=f39bdcbcd5b57c6fad86f625cfe5fa70740f095b5e49aa221cfb6c165034c43f</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-ps卡住"><span class="nav-number">3.</span> <span class="nav-text">docker ps卡住</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#镜像清理"><span class="nav-number"></span> <span class="nav-text">镜像清理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#spring-cloud-gateway-and-zuul"><span class="nav-number">0.1.</span> <span class="nav-text">spring cloud gateway and zuul</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#kubernetes部署失败"><span class="nav-number">1.</span> <span class="nav-text">kubernetes部署失败</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#进入容器用root用户"><span class="nav-number">1.1.</span> <span class="nav-text">进入容器用root用户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#root-master02-harbor-kubectl-get-nodes"><span class="nav-number">1.2.</span> <span class="nav-text">[root@master02 harbor]# kubectl get nodes</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#harbor"><span class="nav-number">2.</span> <span class="nav-text">harbor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#集群内部域名"><span class="nav-number">3.</span> <span class="nav-text">集群内部域名</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#强制删除pod"><span class="nav-number">3.1.</span> <span class="nav-text">强制删除pod</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#prometheus-k8s-0-alertmanager-main-0-两个pod启动问题"><span class="nav-number">4.</span> <span class="nav-text">prometheus-k8s-0  alertmanager-main-0 两个pod启动问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#匿名授权"><span class="nav-number">5.</span> <span class="nav-text">匿名授权</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除了所有该Namespace资源之后使用kubectl-delete-namespace-test发现删除不掉，一直卡在Terminating状态，使用–force参数依然无法删除"><span class="nav-number">6.</span> <span class="nav-text">删除了所有该Namespace资源之后使用kubectl delete namespace test发现删除不掉，一直卡在Terminating状态，使用–force参数依然无法删除</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pod启动时候-提示docker没有登录，而节点docker是用root登录成功，并可以手动拉取镜像的"><span class="nav-number">7.</span> <span class="nav-text">pod启动时候 提示docker没有登录，而节点docker是用root登录成功，并可以手动拉取镜像的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#kubectl-logs-dial-tcp-10250-connect-connection-timed-out"><span class="nav-number">8.</span> <span class="nav-text">kubectl logs dial tcp :10250: connect: connection timed out</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#213master节点重启后，kubeadm-reset导致calico注册不到etcd"><span class="nav-number">9.</span> <span class="nav-text">213master节点重启后，kubeadm reset导致calico注册不到etcd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dashboard-登录"><span class="nav-number">10.</span> <span class="nav-text">dashboard 登录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#境外镜像拉取不到"><span class="nav-number">11.</span> <span class="nav-text">境外镜像拉取不到</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ipip换gpr，需清除缓存-var-lib-cni"><span class="nav-number">12.</span> <span class="nav-text">ipip换gpr，需清除缓存/var/lib/cni</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pv-retain-恢复"><span class="nav-number">13.</span> <span class="nav-text">pv retain 恢复</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Can’t-open-dev-sdb-exclusively-Mounted-filesystem"><span class="nav-number">14.</span> <span class="nav-text">Can’t open /dev/sdb exclusively. Mounted filesystem?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#heketi-troubleshooting-https-github-com-heketi-heketi-blob-master-docs-troubleshooting-md"><span class="nav-number">15.</span> <span class="nav-text">heketi troubleshooting https://github.com/heketi/heketi/blob/master/docs/troubleshooting.md</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#helm-prometheus-operator"><span class="nav-number">16.</span> <span class="nav-text">helm prometheus-operator</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内存设置"><span class="nav-number">17.</span> <span class="nav-text">内存设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dns解析错误"><span class="nav-number">18.</span> <span class="nav-text">dns解析错误</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#v1-11"><span class="nav-number"></span> <span class="nav-text">v1.11</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#skipping-pod-synchronization-PLEG-is-not-healthy-pleg-was-last-seen-active-2562047h47m16-854775807s-ago-threshold-is-3m0s"><span class="nav-number">1.</span> <span class="nav-text">skipping pod synchronization - [PLEG is not healthy: pleg was last seen active 2562047h47m16.854775807s ago; threshold is 3m0s]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7月-30-11-29-53-node1214-dockerd-8959-time-”2019-07-30T11-29-53-72335999-08-00”-level-error-msg-”containerd-start-container”-error-”oci-runtime-error-container-linux-go-262-starting-container-process-caused-quot-process-linux-go-339-container-init-caused-quot-quot-quot-n”-id-f39bdcbcd5b57c6fad86f625cfe5fa70740f095b5e49aa221cfb6c165034c43f"><span class="nav-number">2.</span> <span class="nav-text">7月 30 11:29:53 node1214 dockerd[8959]: time=”2019-07-30T11:29:53.72335999+08:00” level=error msg=”containerd: start container” error=”oci runtime error: container_linux.go:262: starting container process caused &quot;process_linux.go:339: container init caused \&quot;\&quot;&quot;\n” id=f39bdcbcd5b57c6fad86f625cfe5fa70740f095b5e49aa221cfb6c165034c43f</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-ps卡住"><span class="nav-number">3.</span> <span class="nav-text">docker ps卡住</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#镜像清理"><span class="nav-number"></span> <span class="nav-text">镜像清理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#spring-cloud-gateway-and-zuul"><span class="nav-number">0.1.</span> <span class="nav-text">spring cloud gateway and zuul</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#kubernetes-python-api"><span class="nav-number">1.</span> <span class="nav-text">kubernetes python api</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -383,7 +384,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-count">84</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -396,7 +397,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">65</span>
+        <span class="site-state-item-count">66</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

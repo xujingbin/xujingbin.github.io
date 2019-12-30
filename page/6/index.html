@@ -140,7 +140,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">65</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">66</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -150,7 +150,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">83</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">84</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -200,6 +200,87 @@
             
 
   <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/27/jenkins/k8s%E4%B9%8Bjenkins%E6%90%AD%E5%BB%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xujingbin">
+      <meta itemprop="description" content="个人运维笔记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="运维笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/27/jenkins/k8s%E4%B9%8Bjenkins%E6%90%AD%E5%BB%BA/" class="post-title-link" itemprop="url">jenkins部署到k8s</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2019-11-27 16:12:04 / 修改时间：16:28:12" itemprop="dateCreated datePublished" datetime="2019-11-27T16:12:04+08:00">2019-11-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/k8s/" itemprop="url" rel="index">
+                    <span itemprop="name">k8s</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/k8s/jenkins/" itemprop="url" rel="index">
+                    <span itemprop="name">jenkins</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="在k8s上部署jenkins，解决部署并发量问题和slave管理问题"><a href="#在k8s上部署jenkins，解决部署并发量问题和slave管理问题" class="headerlink" title="在k8s上部署jenkins，解决部署并发量问题和slave管理问题"></a>在k8s上部署jenkins，解决部署并发量问题和slave管理问题</h1><p>本文提供了slave的dockerfile，master直接采用官方镜像，部署在测试环境，所以存储用的节点的本地存储</p>
+<h2 id="参考站点https-www-kancloud-cn-huyipow-kubernetes-716441"><a href="#参考站点https-www-kancloud-cn-huyipow-kubernetes-716441" class="headerlink" title="参考站点https://www.kancloud.cn/huyipow/kubernetes/716441"></a>参考站点<a href="https://www.kancloud.cn/huyipow/kubernetes/716441" target="_blank" rel="noopener">https://www.kancloud.cn/huyipow/kubernetes/716441</a></h2><h2 id="dockerfile-jnlp"><a href="#dockerfile-jnlp" class="headerlink" title="dockerfile jnlp"></a>dockerfile jnlp</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from jenkins/jnlp-slave:3.35-5-alpine</span><br><span class="line">USER root</span><br><span class="line">RUN apk update</span><br><span class="line">RUN apk add docker</span><br><span class="line">RUN apk add python</span><br><span class="line">RUN apk add py-pip \</span><br><span class="line">&amp;&amp; pip install requests \</span><br><span class="line">&amp;&amp; pip install kubernetes \</span><br><span class="line">&amp;&amp; rm -rf /var/cache/apk/*</span><br><span class="line">ENTRYPOINT [&quot;jenkins-agent&quot;]</span><br></pre></td></tr></table></figure>
+
+<h3 id="jenkins-yaml"><a href="#jenkins-yaml" class="headerlink" title="jenkins.yaml"></a>jenkins.yaml</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">apiVersion: extensions/v1beta1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: jenkins</span><br><span class="line">  namespace: kube-ops</span><br><span class="line">spec:</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: jenkins</span><br><span class="line">    spec:</span><br><span class="line">      terminationGracePeriodSeconds: 10</span><br><span class="line">      serviceAccountName: jenkins</span><br><span class="line">      containers:</span><br><span class="line">      - name: jenkins</span><br><span class="line">        image: jenkins/jenkins:lts</span><br><span class="line">        imagePullPolicy: IfNotPresent</span><br><span class="line">        ports:</span><br><span class="line">        - containerPort: 8080</span><br><span class="line">          name: web</span><br><span class="line">          protocol: TCP</span><br><span class="line">        - containerPort: 50000</span><br><span class="line">          name: agent</span><br><span class="line">          protocol: TCP</span><br><span class="line">        resources:</span><br><span class="line">          limits:</span><br><span class="line">            cpu: 2000m</span><br><span class="line">            memory: 4Gi</span><br><span class="line">          requests:</span><br><span class="line">            cpu: 1000m</span><br><span class="line">            memory: 2Gi</span><br><span class="line">        livenessProbe:</span><br><span class="line">          httpGet:</span><br><span class="line">            path: /login</span><br><span class="line">            port: 8080</span><br><span class="line">          initialDelaySeconds: 60</span><br><span class="line">          timeoutSeconds: 5</span><br><span class="line">          failureThreshold: 12</span><br><span class="line">        readinessProbe:</span><br><span class="line">          httpGet:</span><br><span class="line">            path: /login</span><br><span class="line">            port: 8080</span><br><span class="line">          initialDelaySeconds: 60</span><br><span class="line">          timeoutSeconds: 5</span><br><span class="line">          failureThreshold: 12</span><br><span class="line">        volumeMounts:</span><br><span class="line">        - name: jenkinshome</span><br><span class="line">          subPath: jenkins</span><br><span class="line">          mountPath: /var/jenkins_home</span><br><span class="line">        env:</span><br><span class="line">        - name: LIMITS_MEMORY</span><br><span class="line">          valueFrom:</span><br><span class="line">            resourceFieldRef:</span><br><span class="line">              resource: limits.memory</span><br><span class="line">              divisor: 1Mi</span><br><span class="line">        - name: JAVA_OPTS</span><br><span class="line">          value: -Xmx$(LIMITS_MEMORY)m -XshowSettings:vm -Dhudson.slaves.NodeProvisioner.initialDelay=0 -Dhudson.slaves.NodeProvisioner.MARGIN=50 -Dhudson.slaves.NodeProvisioner.MARGIN0=0.85 -Duser.timezone=Asia/Shanghai</span><br><span class="line">      securityContext:</span><br><span class="line">        fsGroup: 1000</span><br><span class="line">      nodeSelector:</span><br><span class="line">        kubernetes.io/hostname: node1215</span><br><span class="line">      volumes:</span><br><span class="line">      - hostPath:</span><br><span class="line">          path: /data/jenkins/</span><br><span class="line">          type: &quot;&quot;</span><br><span class="line">        name: jenkinshome</span><br><span class="line">#      - name: jenkinshome</span><br><span class="line">#        persistentVolumeClaim:</span><br><span class="line">#          claimName: opspvc</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: jenkins</span><br><span class="line">  namespace: kube-ops</span><br><span class="line">  labels:</span><br><span class="line">    app: jenkins</span><br><span class="line">spec:</span><br><span class="line">  selector:</span><br><span class="line">    app: jenkins</span><br><span class="line">  ports:</span><br><span class="line">  - name: web</span><br><span class="line">    port: 8080</span><br><span class="line">    targetPort: web</span><br><span class="line">    nodePort: 30080</span><br><span class="line">  - name: agent</span><br><span class="line">    port: 50000</span><br><span class="line">    targetPort: agent</span><br><span class="line">  type: NodePort</span><br></pre></td></tr></table></figure>
+
+<h3 id="rbac-yaml"><a href="#rbac-yaml" class="headerlink" title="rbac.yaml"></a>rbac.yaml</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: ServiceAccount</span><br><span class="line">metadata:</span><br><span class="line">  name: jenkins</span><br><span class="line">  namespace: kube-ops</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">kind: Role</span><br><span class="line">apiVersion: rbac.authorization.k8s.io/v1beta1</span><br><span class="line">metadata:</span><br><span class="line">  name: jenkins</span><br><span class="line">  namespace: kube-ops</span><br><span class="line">rules:</span><br><span class="line">  - apiGroups: [&quot;&quot;]</span><br><span class="line">    resources: [&quot;pods&quot;]</span><br><span class="line">    verbs: [&quot;create&quot;,&quot;delete&quot;,&quot;get&quot;,&quot;list&quot;,&quot;patch&quot;,&quot;update&quot;,&quot;watch&quot;]</span><br><span class="line">  - apiGroups: [&quot;&quot;]</span><br><span class="line">    resources: [&quot;pods/exec&quot;]</span><br><span class="line">    verbs: [&quot;create&quot;,&quot;delete&quot;,&quot;get&quot;,&quot;list&quot;,&quot;patch&quot;,&quot;update&quot;,&quot;watch&quot;]</span><br><span class="line">  - apiGroups: [&quot;&quot;]</span><br><span class="line">    resources: [&quot;pods/log&quot;]</span><br><span class="line">    verbs: [&quot;get&quot;,&quot;list&quot;,&quot;watch&quot;]</span><br><span class="line">  - apiGroups: [&quot;&quot;]</span><br><span class="line">    resources: [&quot;secrets&quot;]</span><br><span class="line">    verbs: [&quot;get&quot;]</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">apiVersion: rbac.authorization.k8s.io/v1beta1</span><br><span class="line">kind: RoleBinding</span><br><span class="line">metadata:</span><br><span class="line">  name: jenkins</span><br><span class="line">  namespace: kube-ops</span><br><span class="line">roleRef:</span><br><span class="line">  apiGroup: rbac.authorization.k8s.io</span><br><span class="line">  kind: Role</span><br><span class="line">  name: jenkins</span><br><span class="line">subjects:</span><br><span class="line">  - kind: ServiceAccount</span><br><span class="line">    name: jenkins</span><br><span class="line">    namespace: kube-ops</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
         
   
   
@@ -950,82 +1031,6 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/14/db/es/backup-restore/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xujingbin">
-      <meta itemprop="description" content="个人运维笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="运维笔记">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/08/14/db/es/backup-restore/" class="post-title-link" itemprop="url">db/es/backup-restore</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-08-14 09:37:19" itemprop="dateCreated datePublished" datetime="2019-08-14T09:37:19+08:00">2019-08-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-08-15 11:14:46" itemprop="dateModified" datetime="2019-08-15T11:14:46+08:00">2019-08-15</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="es备份-恢复"><a href="#es备份-恢复" class="headerlink" title="es备份 恢复"></a>es备份 恢复</h1><h2 id="es集群支持多副本高可用"><a href="#es集群支持多副本高可用" class="headerlink" title="es集群支持多副本高可用"></a>es集群支持多副本高可用</h2><h2 id="物理备份直接备份data文件夹和应用文件夹"><a href="#物理备份直接备份data文件夹和应用文件夹" class="headerlink" title="物理备份直接备份data文件夹和应用文件夹"></a>物理备份直接备份data文件夹和应用文件夹</h2><p>目前只备份应用配置文件elasticsearch.yml jvm.options kibana.yml到/data/backup</p>
-<h2 id="逻辑备份方式对比snapshot-vs-elasticdump"><a href="#逻辑备份方式对比snapshot-vs-elasticdump" class="headerlink" title="逻辑备份方式对比snapshot vs elasticdump"></a>逻辑备份方式对比snapshot vs elasticdump</h2><p>  elasticdump will simply scan one index in your remote ES cluster and will either dump the JSON data into a file it can then replay to rebuild the index in the same or some other ES instance (remote or local).<br>elasticdump can also store the data it pumps from your remote ES directly into your local instance (instead of storing the data into a file).<br>Snapshot/restore is the official way of backuping your index data. There are various targets (filesystem, S3, etc), but the main idea is that you do a first snapshot and then all subsequent snapshots will be incremental, i.e. the snapshot process will only store what has changed since the last run.<br>In your case, you can go either way, but using elasticdump is straightforward if all you want to do is to have a local copy of your production data.</p>
-<p>note：elasticdump操作性更强，可直接在不同版本，不同es之间直接导数据，备份json文件，官方snapshot则支持增量备份，备份到不同文件系统中。具体性能对比未测试</p>
-<h2 id="elasticdump插件"><a href="#elasticdump插件" class="headerlink" title="elasticdump插件"></a>elasticdump插件</h2><p>官网安装<a href="https://www.npmjs.com/package/elasticdump" target="_blank" rel="noopener">https://www.npmjs.com/package/elasticdump</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">elasticdump --help</span><br><span class="line">elasticdump \</span><br><span class="line">  --input=http://172.16.12.21:9200/logstash-2019.08.04 \</span><br><span class="line">  --output=http://192.168.67.111:9200/logstash-2019.08.04 \</span><br><span class="line">  --type=data</span><br></pre></td></tr></table></figure>
-<h2 id="snapshot"><a href="#snapshot" class="headerlink" title="snapshot"></a>snapshot</h2><h3 id="创建备份仓库"><a href="#创建备份仓库" class="headerlink" title="创建备份仓库"></a>创建备份仓库</h3><p>在elasticsearch.yml增加<code>path.repo: [&quot;/data/es_backup&quot;]</code>，创建备份目录/data/backup/，chown es:es /data/backup/</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">在kibana上操作</span><br><span class="line"> 创建仓库</span><br><span class="line">PUT /_snapshot/backup</span><br><span class="line">&#123;</span><br><span class="line">  &quot;type&quot;: &quot;fs&quot;,</span><br><span class="line">  &quot;settings&quot;: &#123;</span><br><span class="line">    &quot;location&quot;: &quot;/data/backup/all&quot;,</span><br><span class="line">    &quot;compress&quot;: true</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"> 查看仓库</span><br><span class="line"> GET /_snapshot</span><br></pre></td></tr></table></figure>
-<h3 id="备份"><a href="#备份" class="headerlink" title="备份"></a>备份</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">执行备份全部索引</span><br><span class="line">PUT /_snapshot/backup/all</span><br><span class="line">查看所有备份</span><br><span class="line">GET /_snapshot/backup/_all</span><br><span class="line">查看备份状态</span><br><span class="line">GET /_snapshot/_status</span><br><span class="line">8.15日上午10：59分备份36个索引，47,214,397个文档，30.7GB，11：11分结束,耗时12分钟左右</span><br><span class="line">删除备份</span><br><span class="line">DELETE /_snapshot/backup/all</span><br></pre></td></tr></table></figure>
-<h3 id="恢复备份"><a href="#恢复备份" class="headerlink" title="恢复备份"></a>恢复备份</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">恢复所有备份</span><br><span class="line">POST /_snapshot/backup/all/_restore</span><br><span class="line">只恢复部分索引</span><br><span class="line">POST /_snapshot/backup/all/_restore</span><br><span class="line">&#123;</span><br><span class="line">    &quot;indices&quot;: &quot;logstash-2019.08.04&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="文档参考"><a href="#文档参考" class="headerlink" title="文档参考"></a>文档参考</h2><p><a href="https://blog.51cto.com/landanhero/1912049" target="_blank" rel="noopener">https://blog.51cto.com/landanhero/1912049</a><br><a href="https://www.elastic.co/guide/en/elasticsearch/reference/7.3/modules-snapshots.html#_version_compatibility" target="_blank" rel="noopener">https://www.elastic.co/guide/en/elasticsearch/reference/7.3/modules-snapshots.html#_version_compatibility</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1074,7 +1079,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-count">84</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1087,7 +1092,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">65</span>
+        <span class="site-state-item-count">66</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
